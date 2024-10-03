@@ -1,0 +1,96 @@
+main {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 120px;
+}
+
+.tab-buttons {
+    display: flex;
+    margin-right: 650px;
+    gap: 6px;
+}
+
+.tab-btn {
+    width: 41px;
+    height: 20px;
+    border: none;
+    font-weight: 500;
+    padding: 8px;
+}
+
+.tab_degustador {
+    background-color: #72882C;
+}
+
+.tab_cozinheiro {
+    background-color: #E94B3C;
+}
+
+.tab_editor {
+    background-color: #FF7F11;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 900px;
+    height: 500px;
+    background-color: #FF7F11;
+    border-radius: 57px;
+    padding: 16px;
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.img_logo {
+    padding: 30px;
+    width: 250px;
+    height: 250px;
+    background-color: white;
+    border-radius: 200px;
+}
+
+
+.links_separar {
+    width: 7px;
+    height: 400px;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    margin-right: 130px;
+    margin-left: 50px;
+}
+
+.form {
+    display: flex;
+    justify-content: flex-start;
+
+    .entrada_login {
+        border: none;
+        border-radius: 37px;
+        width: 300px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .texto {
+        color: white;
+        font-weight: 600;
+        font-size: 19px;
+    }
+
+    .btn_enviar {
+        padding: 10px 70px;
+        background-color: #CC5E00;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        color: white;
+        font-weight: 600;
+        margin: 0px 0px 0px 40px;
+        font-size: 19px;
+    }
+
+}
