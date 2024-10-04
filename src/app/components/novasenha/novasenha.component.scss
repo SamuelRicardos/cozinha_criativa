@@ -42,31 +42,10 @@ main {
     display: flex;
     justify-content: flex-start;
 
-    .links {
-        display: flex;
-        justify-content: space-between;
-        font-size: 12px;
-        padding: 5px 0px 20px 0px;
-
-        .links_texto_senha {
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .links_texto_cadastro {
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .links_texto_cadastro:hover {
-            text-decoration: underline;
-        }
-
-        .links_texto_senha:hover {
-            text-decoration: underline;
-        }
+    .titulo {
+        color: white;
+        margin-bottom: 50px;
+        text-align: center;
     }
 
     .entrada_login {
@@ -74,6 +53,7 @@ main {
         border-radius: 37px;
         width: 300px;
         padding: 10px;
+        margin-bottom: 10px;
     }
 
     .texto {
