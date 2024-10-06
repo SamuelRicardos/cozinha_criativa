@@ -3,16 +3,24 @@
         <img src="../../../assets/logo (2).png" class="img_logo" alt="Imagem degustador">
         <hr class="links_separar">
         <div class="form">
-            <form action="">
+            <form [formGroup]="loginForm">
                 <label for="" class="texto">Email</label><br>
-                <input class="entrada_login" placeholder="Insira seu email"/><br>
+                <input class="entrada_login"
+                formControlName="email"
+                inputName="email"
+                type="email"
+                placeholder="Insira seu email"/><br>
                 <Label class="texto">Senha</Label><br>
-                <input class="entrada_login" placeholder="Insira sua senha"/><br>
+                <input class="entrada_login"
+                formControlName="password"
+                inputName="password"
+                type="password"
+                 placeholder="Insira sua senha"/><br>
                 <div class="links">
                     <button class="links_texto_senha" (click)="senha()">Esqueci a minha senha</button>
                     <button class="links_texto_cadastro" (click)="navigate()">Não possui login?</button>
                 </div>
-                <button class="btn_enviar">Login</button>
+                <button class="btn_enviar" (click)="submit()">Login</button>
             </form>
         </div>
     </div>

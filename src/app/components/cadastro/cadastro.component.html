@@ -3,14 +3,29 @@
         <img src="../../../assets/logo (2).png" class="img_logo" alt="Imagem degustador">
         <hr class="links_separar">
         <div class="form">
-            <form action="">
+            <form [formGroup]="cadastroForm">
                 <label for="" class="texto">Nome</label><br>
-                <input class="entrada_login" placeholder="Insira seu nome"/><br>
+                <input
+                formControlName="name"
+                inputName="name" 
+                class="entrada_login"
+                type="text"
+                placeholder="Insira seu nome"/><br>
                 <Label class="texto">Email</Label><br>
-                <input class="entrada_login" placeholder="Insira seu email"/><br>
+                <input
+                formControlName="email"
+                inputName="email"
+                type="email"
+                class="entrada_login" 
+                placeholder="Insira seu email"/><br>
                 <Label class="texto">Senha</Label><br>
-                <input class="entrada_login" placeholder="Insira a sua senha"/><br>
-                <button class="btn_enviar">Cadastrar</button>
+                <input
+                formControlName="password"
+                inputName="password"
+                type="password"
+                class="entrada_login" 
+                placeholder="Insira a sua senha"/><br>
+                <button class="btn_enviar" (click)="cadastro()">Cadastrar</button>
             </form>
         </div>
     </div>
