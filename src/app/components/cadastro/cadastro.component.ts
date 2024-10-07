@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 interface SignupForm {
   name: FormControl,
@@ -20,9 +21,11 @@ interface SignupForm {
 })
 export class CadastroComponent {
   cadastroForm!: FormGroup<SignupForm>;
+
   constructor(
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private toastr: ToastrService
   ) {
     this.cadastroForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -33,12 +36,12 @@ export class CadastroComponent {
 
   cadastro() {
     this.loginService.signup(this.cadastroForm.value.name, this.cadastroForm.value.email, this.cadastroForm.value.password).subscribe({
-      next: () => alert("sucesso"),
-      error: () => alert("erro")
-    })
+      next: () => {
+        this.toastr.success("Cadastro feito com sucesso!"),
+        this.router.navigate(['']);
+       },
+      error: () => this.toastr.error("Erro inesperado! Tente novamente.")
+    });
   }
 
-  navigate(){
-    this.router.navigate(["login"])
-  }
 }
