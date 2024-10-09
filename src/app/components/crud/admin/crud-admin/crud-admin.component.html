@@ -1,0 +1,39 @@
+<header class="cabecalho">
+    <a href="#">
+        <h1>
+            <img src="../../../../../assets/logo (3).png">
+        </h1>
+    </a>
+
+        <nav class="menu">
+            <ul>
+                <li>
+                    <a href="#">Funcionarios</a>
+                    <a href="#">Restaurantes</a>
+                    <a href="#">Receitas</a>
+                    <a href="#">Livros</a>
+                    <a class="cargo_usuario">Administrador</a>
+                </li>
+            </ul>   
+        </nav>
+</header>
+<main>
+    <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Quantity</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+            <tr>
+                <td>{{ product.code }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.category }}</td>
+                <td>{{ product.quantity }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</main>

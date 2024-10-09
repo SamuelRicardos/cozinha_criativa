@@ -3,6 +3,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { SenhaComponent } from './components/senha/senha.component';
 import { NovasenhaComponent } from './components/novasenha/novasenha.component';
+import { CrudAdminComponent } from './components/crud/admin/crud-admin/crud-admin.component';
 
 export const routes: Routes = [
     {
@@ -20,5 +21,9 @@ export const routes: Routes = [
     {
         path: "novasenha",
         component: NovasenhaComponent
+    },
+    {
+        path:"crud_admin",
+        component: CrudAdminComponent
     }
 ];
