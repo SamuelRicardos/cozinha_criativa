@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { TableModule } from 'primeng/table';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -8,6 +8,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { FuncionarioService } from '../../../../services/funcionarios.service';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-crud-admin',
@@ -20,7 +22,9 @@ import { FuncionarioService } from '../../../../services/funcionarios.service';
     InputIconModule,
     InputTextModule,
     MultiSelectModule,
-    DropdownModule
+    DropdownModule,
+    CardModule,
+    ButtonModule
   ],
   providers: [
     FuncionarioService
@@ -30,7 +34,8 @@ import { FuncionarioService } from '../../../../services/funcionarios.service';
 })
 export class CrudAdminComponent implements OnInit {
 
-  products!: any;
+  products: any[] = [];
+  @ViewChild('dt2') dt2!: Table;
 
   constructor(private funcionarioService: FuncionarioService ) {}
 
@@ -42,5 +47,10 @@ this.getFuncionario()
     this.funcionarioService.getFuncionario().subscribe((data: any) => {
       this.products = data;
   });
+  }
+
+  filtroFuncionarios(event: Event) {
+    const inputValue = (event.target as HTMLInputElement).value;
+    this.dt2.filterGlobal(inputValue, 'contains');
   }
 }

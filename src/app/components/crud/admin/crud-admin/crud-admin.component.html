@@ -13,13 +13,21 @@
                     <a href="#">Receitas</a>
                     <a href="#">Livros</a>
                     <a class="cargo_usuario">Administrador</a>
+                        <i class="pi pi-bars" style="font-size: 1.5rem"></i>
                 </li>
             </ul>   
         </nav>
 </header>
 <main>
+    <p-card>
+        <div class="header-content">
+            <h2>Funcionários</h2>
+            <p-button label="Submit" class="submit-btn"></p-button>
+        </div>
     <p-table
-    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']" 
+    #dt2
+    dataKey="id"
+    [globalFilterFields]="['nome', 'cargo', 'dtadmissao']" 
     [paginator]="true" 
     [rows]="5" 
     [rowsPerPageOptions]="[5,10,20]" 
@@ -41,7 +49,10 @@
                 <td>{{ product.nome }}</td>
                 <td>{{ product.cargo }}</td>
                 <td>{{ product.dtadmissao}}</td>
-                <td></td>
+                <td>
+                        <i class="pi pi-pencil"></i>
+                        <i class="pi pi-trash"></i>
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="caption">
@@ -53,9 +64,12 @@
                     <input 
                         pInputText 
                         type="text" 
-                        placeholder="Pesquisar funcionário" />
+                        placeholder="Pesquisar"
+                        (input)="filtroFuncionarios($event)"
+                         />
                 </p-iconField>
             </div>
         </ng-template>    
     </p-table>
+</p-card>
 </main>

@@ -2,7 +2,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 0px 15px;
+    padding: 0px 10px;
 
     .menu {
 
@@ -36,9 +36,23 @@
 main {
 display: flex;
 justify-content: center;
-
 }
 
-:host ::ng-deep .p-datatable {
-    border-radius: 20px;
-    }
+:host ::ng-deep td i{
+    margin-left: 25px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+}
+
+:host ::ng-deep .p-card .p-card-body{
+    padding-top: 0rem;
+}
+
+::host ::ng-deep .p-button {
+    background: orange;
+}
