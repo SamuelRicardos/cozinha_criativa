@@ -18,22 +18,44 @@
         </nav>
 </header>
 <main>
-    <p-table [value]="products" [tableStyle]="{ 'min-width': '50rem' }">
+    <p-table
+    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']" 
+    [paginator]="true" 
+    [rows]="5" 
+    [rowsPerPageOptions]="[5,10,20]" 
+    [value]="products" 
+    [tableStyle]="{ 'min-width': '60rem' }"
+    [scrollable]="true"
+    scrollHeight="370px"
+    >
         <ng-template pTemplate="header">
             <tr>
-                <th>Code</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Quantity</th>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Data de Admissão</th>
+                <th>Editar/Deletar</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
             <tr>
-                <td>{{ product.code }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.category }}</td>
-                <td>{{ product.quantity }}</td>
+                <td>{{ product.nome }}</td>
+                <td>{{ product.cargo }}</td>
+                <td>{{ product.dtadmissao}}</td>
+                <td></td>
             </tr>
         </ng-template>
+        <ng-template pTemplate="caption">
+            <div class="flex">
+                <p-iconField iconPosition="left" class="ml-auto">
+                    <p-inputIcon>
+                        <i class="pi pi-search"></i>
+                    </p-inputIcon>
+                    <input 
+                        pInputText 
+                        type="text" 
+                        placeholder="Pesquisar funcionário" />
+                </p-iconField>
+            </div>
+        </ng-template>    
     </p-table>
 </main>

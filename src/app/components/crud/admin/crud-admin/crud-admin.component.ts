@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DropdownModule } from 'primeng/dropdown';
 import { FuncionarioService } from '../../../../services/funcionarios.service';
 
 @Component({
@@ -8,7 +14,13 @@ import { FuncionarioService } from '../../../../services/funcionarios.service';
   standalone: true,
   imports: [
     TableModule,
-    CommonModule
+    CommonModule,
+    TagModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    MultiSelectModule,
+    DropdownModule
   ],
   providers: [
     FuncionarioService

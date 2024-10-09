@@ -2,7 +2,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 20px 15px;
+    padding: 0px 15px;
 
     .menu {
 
@@ -17,7 +17,7 @@
             list-style-type: none;
 
             &.cargo_usuario {
-                margin-left: 550px;
+                margin-left: 450px;
                 font-size: 25px;
                 font-weight: 600;
             }
@@ -32,3 +32,13 @@
 
     }
 }
+
+main {
+display: flex;
+justify-content: center;
+
+}
+
+:host ::ng-deep .p-datatable {
+    border-radius: 20px;
+    }

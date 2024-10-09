@@ -11,18 +11,68 @@ export class FuncionarioService {
     constructor(private httpClient: HttpClient){}
 
     getFuncionario(): Observable<any[]> {
-        const data = [{
+        const data = [
+            {
             id: '1000',
-            code: 'f230fh0g3',
-            name: 'Bamboo Watch',
-            description: 'Product Description',
-            image: 'bamboo-watch.jpg',
-            price: 65,
-            category: 'Accessories',
-            quantity: 24,
-            inventoryStatus: 'INSTOCK',
-            rating: 5
-        }];
+            nome: 'Samuel Ricardo',
+            cargo: 'Administrador',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '2000',
+            nome: 'Tonhas',
+            cargo: 'Cozinheiro',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '3000',
+            nome: 'Bryan Gomes',
+            cargo: 'Editor',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '4000',
+            nome: 'José',
+            cargo: 'Editor',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '5000',
+            nome: 'João Vitor',
+            cargo: 'Cozinheiro',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '6000',
+            nome: 'Agostinho',
+            cargo: 'Cozinheiro',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '6000',
+            nome: 'Agostinho',
+            cargo: 'Cozinheiro',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '6000',
+            nome: 'Agostinho',
+            cargo: 'Cozinheiro',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '6000',
+            nome: 'Agostinho',
+            cargo: 'Cozinheiro',
+            dtadmissao: '09/10/2024'
+        },
+        {
+            id: '6000',
+            nome: 'Agostinho',
+            cargo: 'Cozinheiro',
+            dtadmissao: '09/10/2024'
+        }
+    ];
         return of(data); // Retorna um array com os dados
     }
 }
