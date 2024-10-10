@@ -4,6 +4,7 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { SenhaComponent } from './components/senha/senha.component';
 import { NovasenhaComponent } from './components/novasenha/novasenha.component';
 import { CrudAdminComponent } from './components/crud/admin/crud-admin/crud-admin.component';
+import { CrudAdminRestaurantesComponent } from './components/crud/admin/crud-admin-restaurantes/crud-admin-restaurantes.component';
 
 export const routes: Routes = [
     {
@@ -23,7 +24,11 @@ export const routes: Routes = [
         component: NovasenhaComponent
     },
     {
-        path:"crud_admin",
+        path:"crud_admin_funcionarios",
         component: CrudAdminComponent
+    },
+    {
+        path:"crud_admin_restaurantes",
+        component: CrudAdminRestaurantesComponent
     }
 ];
