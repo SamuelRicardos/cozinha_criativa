@@ -58,7 +58,24 @@ justify-content: center;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-:host ::ng-deep .p-button {
+:host ::ng-deep .btn_restaurante .p-button {
+    background: #FF7F11 !important;
+    border: none;
+}
+
+
+:host ::ng-deep .btn_pencil .p-button {
+    background: white;
+    color: #FF7F11;
+    margin-right: 10px;
+}
+
+:host ::ng-deep .btn_trash .p-button {
+    background: white;
+    color: #FF7F11;
+}
+
+:host ::ng-deep .btn_bars .p-button {
     background: #FF7F11;
     border: none;
 }

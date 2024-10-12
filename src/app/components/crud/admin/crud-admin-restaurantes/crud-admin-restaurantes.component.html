@@ -13,7 +13,7 @@
                     <a href="crud_admin_receitas" class="link_receitas">Receitas</a>
                     <a href="#" class="link_livros">Livros</a>
                     <a class="cargo_usuario">Administrador</a>
-                        <i class="pi pi-bars" style="font-size: 1.5rem"></i>
+                    <p-button class="btn_bars" icon="pi pi-bars"></p-button>
                 </li>
             </ul>   
         </nav>
@@ -22,7 +22,7 @@
     <p-card>
         <div class="header-content">
             <h2>Restaurantes</h2>
-            <p-button label="Adicionar restaurante"></p-button>
+            <p-button class="btn_restaurante" label="Adicionar restaurante"></p-button>
         </div>
     <p-table
     #dt2
@@ -50,8 +50,8 @@
                 <td>{{ product.estadoRestaurante }}</td>
                 <td>{{ product.dtadmissao}}</td>
                 <td>
-                        <i class="pi pi-pencil"></i>
-                        <i class="pi pi-trash"></i>
+                    <p-button class="btn_pencil" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" />
+                    <p-button class="btn_trash"  icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" />
                 </td>
             </tr>
         </ng-template>
