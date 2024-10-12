@@ -1,19 +1,18 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
+import { CommonModule } from '@angular/common';
 import { TagModule } from 'primeng/tag';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-import { FuncionarioService } from '../../../../services/funcionarios.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { RestauranteService } from '../../../../services/restaurantes.service';
+import { ReceitaService } from '../../../../services/receitas.service';
 
 @Component({
-  selector: 'app-crud-admin-restaurantes',
+  selector: 'app-crud-admin-receitas',
   standalone: true,
   imports: [
     TableModule,
@@ -27,26 +26,26 @@ import { RestauranteService } from '../../../../services/restaurantes.service';
     CardModule,
     ButtonModule
   ],
-  templateUrl: './crud-admin-restaurantes.component.html',
-  styleUrl: './crud-admin-restaurantes.component.scss'
+  templateUrl: './crud-admin-receitas.component.html',
+  styleUrl: './crud-admin-receitas.component.scss'
 })
-export class CrudAdminRestaurantesComponent implements OnInit {
+export class CrudAdminReceitasComponent {
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
 
-  constructor(private restauranteService: RestauranteService ) {}
+  constructor(private receitaService: ReceitaService) { }
 
   ngOnInit() {
-this.getFuncionario()
+    this.getReceitas()
   }
 
-  getFuncionario(): any {
-    this.restauranteService.getRestaurante().subscribe((dataRestaurante: any) => {
-      this.products = dataRestaurante;
-  });
+  getReceitas(): any {
+    this.receitaService.getReceitas().subscribe((dataReceitas: any) => {
+      this.products = dataReceitas;
+    });
   }
 
-  filtroRestaurantes(event: Event) {
+  filtroReceitas(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
     this.dt2.filterGlobal(inputValue, 'contains');
   }
