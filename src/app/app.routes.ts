@@ -6,6 +6,7 @@ import { NovasenhaComponent } from './components/novasenha/novasenha.component';
 import { CrudAdminComponent } from './components/crud/admin/crud-admin/crud-admin.component';
 import { CrudAdminRestaurantesComponent } from './components/crud/admin/crud-admin-restaurantes/crud-admin-restaurantes.component';
 import { CrudAdminReceitasComponent } from './components/crud/admin/crud-admin-receitas/crud-admin-receitas.component';
+import { CrudAdminLivrosComponent } from './components/crud/admin/crud-admin-livros/crud-admin-livros.component';
 
 export const routes: Routes = [
     {
@@ -35,5 +36,9 @@ export const routes: Routes = [
     {
         path:"crud_admin_receitas",
         component: CrudAdminReceitasComponent
+    },
+    {
+        path: "crud_admin_livros",
+        component: CrudAdminLivrosComponent
     }
 ];

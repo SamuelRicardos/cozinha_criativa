@@ -21,37 +21,58 @@
 <main>
     <p-card>
         <div class="header-content">
-            <h2>Restaurantes</h2>
-            <p-button class="btn_restaurante" label="Adicionar restaurante"></p-button>
+            <h2>Livros</h2>
+            <p-button class="btn_receita" label="Adicionar livro"></p-button>
         </div>
     <p-table
     #dt2
     dataKey="id"
-    [globalFilterFields]="['nomeRestaurante', 'estadoRestaurante', 'dtadmissao']" 
+    [globalFilterFields]="['nomeLivro']" 
     [paginator]="true" 
     [rows]="5" 
     [rowsPerPageOptions]="[5,10,20]" 
     [value]="products" 
-    [tableStyle]="{ 'min-width': '60rem' }"
+    [tableStyle]="{ 'min-width': '25rem' }"
     [scrollable]="true"
     scrollHeight="370px"
     >
         <ng-template pTemplate="header">
             <tr>
                 <th>Nome</th>
-                <th>Estado</th>
-                <th>Data de Admissão</th>
-                <th>Editar/Deletar</th>
+                <th>Funcionalidades</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
             <tr>
-                <td>{{ product.nomeRestaurante }}</td>
-                <td>{{ product.estadoRestaurante }}</td>
-                <td>{{ product.dtadmissao}}</td>
+                <td>{{ product.nomeLivro }}</td>
                 <td>
-                    <p-button class="btn_pencil" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" />
-                    <p-button class="btn_trash"  icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" />
+                    <p-button 
+                    class="btn_pencil" 
+                    icon="pi pi-search" 
+                    [rounded]="true" 
+                    [text]="true" 
+                    [raised]="true" 
+                    [pTooltip]="visualizarReceita"
+                    tooltipPosition="bottom"
+                    />
+                    <p-button 
+                    class="btn_pencil" 
+                    icon="pi pi-print" 
+                    [rounded]="true" 
+                    [text]="true" 
+                    [raised]="true"
+                    [pTooltip]="imprimirReceita"
+                    tooltipPosition="bottom"
+                    />
+                    <p-button 
+                    class="btn_trash"  
+                    icon="pi pi-pencil" 
+                    [rounded]="true" 
+                    [text]="true" 
+                    [raised]="true" 
+                    [pTooltip]="editarReceita"
+                    tooltipPosition="bottom"
+                    />
                 </td>
             </tr>
         </ng-template>
@@ -65,7 +86,7 @@
                         pInputText 
                         type="text" 
                         placeholder="Pesquisar"
-                        (input)="filtroRestaurantes($event)"
+                        (input)="filtroReceitas($event)"
                          />
                 </p-iconField>
             </div>
