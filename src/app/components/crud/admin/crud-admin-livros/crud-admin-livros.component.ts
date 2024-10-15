@@ -11,6 +11,9 @@ import { Table, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { LivroService } from '../../../../services/livros.service';
 import { TooltipModule } from 'primeng/tooltip';
+import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-crud-admin-livros',
@@ -26,7 +29,12 @@ import { TooltipModule } from 'primeng/tooltip';
     DropdownModule,
     CardModule,
     ButtonModule,
-    TooltipModule
+    TooltipModule,
+    DialogModule,
+    DynamicDialogModule
+  ],
+  providers: [
+    MessageService
   ],
   templateUrl: './crud-admin-livros.component.html',
   styleUrl: './crud-admin-livros.component.scss'
@@ -37,13 +45,23 @@ export class CrudAdminLivrosComponent {
   editarReceita: string = "Editar receita"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
+  visible: boolean = false;
 
 
-  constructor(private livroService: LivroService) { }
+  constructor(
+    private livroService: LivroService,
+    public messagemService: MessageService
+  ) { }
 
   ngOnInit() {
     this.getLivros()
   }
+
+  
+
+  showDialog() {
+    this.visible = true;
+}
 
   getLivros(): any {
     this.livroService.getLivros().subscribe((dataLivros: any) => {

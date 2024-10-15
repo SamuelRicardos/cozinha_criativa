@@ -9,29 +9,29 @@ export class LivroService {
     getLivros(): Observable<any[]> {
         const dataLivros = [
             {
-                'nomeLivro': 'Legumes e vegetais',
-                'descricaoLivro': 'Bom demais da conta',
-                'dtLancamento': '01/10/2025'
+                'nomeLivro': 'Viagem ao centro da terra',
+                'autorLivro': 'Julio Verne',
+                'isbn': '978-3-16-148410-0'
             },
             {
-                'nomeLivro': 'Tome sopa',
-                'descricaoLivro': 'Só tem receita de sopa',
-                'dtLancamento': '01/10/2025'
+                'nomeLivro': 'Mil léguas submarinas',
+                'autorLivro': 'Julio Verne',
+                'isbn': '978-0-14-312755-0'
             },
             {
-                'nomeLivro': 'Hakuna Matata',
-                'descricaoLivro': 'Isso é viver, é aprender!',
-                'dtLancamento': '02/10/2025'
+                'nomeLivro': 'Dom Casmurro',
+                'autorLivro': 'Machado de Assis',
+                'isbn': '978-1-86197-876-9'
             },
             {
-                'nomeLivro': 'Legumes e vegetais',
-                'descricaoLivro': 'Bom demais da conta',
-                'dtLancamento': '01/10/2025'
+                'nomeLivro': 'Vidas secas',
+                'autorLivro': 'Graciliano Ramos',
+                'isbn': '978-0-452-28423-4'
             },
             {
-                'nomeLivro': 'Legumes e vegetais',
-                'descricaoLivro': 'Bom demais da conta',
-                'dtLancamento': '01/10/2025'
+                'nomeLivro': 'O Cortiço',
+                'autorLivro': 'Aluísio Azevedo',
+                'isbn': '978-1-4088-5797-2'
             },
         ]
 
