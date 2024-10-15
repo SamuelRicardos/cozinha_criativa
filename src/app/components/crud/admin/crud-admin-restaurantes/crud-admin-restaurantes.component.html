@@ -39,7 +39,38 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Nome</th>
-                <th>Estado</th>
+                <th>
+                    Estados
+                    <p-columnFilter 
+                    field="products" 
+                    matchMode="in" 
+                    display="menu" 
+                    [showMatchModes]="false" 
+                    [showOperator]="false" 
+                    [showAddButton]="false"
+                    [showApplyButton]="true"
+                    [showClearButton]="true"
+                    
+                    >
+                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                            <p-multiSelect
+                            [ngModel]="valoresSelecionados" 
+                            [options]="products"
+                            [filter]="true"
+                            [showToggleAll]="false"
+                            placeholder="Selecionar" 
+                            (onChange)="filtroRest($event.value)" 
+                            optionLabel="estadoRestaurante">
+                            
+                                <ng-template let-product pTemplate="item">
+                                    <span class="ml-1 mt-1">{{ product.estadoRestaurante }}</span>
+                                </ng-template>
+                            
+                            </p-multiSelect>
+                        </ng-template>
+                        
+                    </p-columnFilter>
+                </th>
                 <th>Data de Admissão</th>
                 <th>Editar/Deletar</th>
             </tr>
