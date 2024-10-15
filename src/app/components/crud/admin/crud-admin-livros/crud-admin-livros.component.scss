@@ -20,6 +20,18 @@
                 color: #FF7F11;
                }
 
+               &.link_restaurantes:focus {
+                color: #FF7F11;
+               }
+
+               &.link_receitas:focus {
+                color: #FF7F11;
+               }
+
+               &.link_livros:focus {
+                color: #FF7F11;
+               }
+
             &.cargo_usuario {
                 margin-left: 400px;
                 font-size: 25px;

@@ -39,18 +39,18 @@ export class CrudAdminRestaurantesComponent implements OnInit {
 
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
-valoresSelecionados: any[] = [];
+  valoresSelecionados: any[] = [];
 
-  constructor(private restauranteService: RestauranteService ) {}
+  constructor(private restauranteService: RestauranteService) { }
 
   ngOnInit() {
-this.getFuncionario()
+    this.getFuncionario()
   }
 
   getFuncionario(): any {
     this.restauranteService.getRestaurante().subscribe((dataRestaurante: any) => {
       this.products = dataRestaurante;
-  });
+    });
   }
 
   filtroRestaurantes(event: Event) {
@@ -62,5 +62,9 @@ this.getFuncionario()
     const estados = estadosSelecionados.map(est => est.estadoRestaurante);
 
     this.dt2.filter(estados, 'estadoRestaurante', 'in');
-}
+  }
+
+  limparFiltro() {
+    this.valoresSelecionados= [];
+  }
 }

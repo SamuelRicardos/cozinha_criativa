@@ -47,7 +47,11 @@
         <ng-template pTemplate="body" let-product>
             <tr>
                 <td>{{ product.nomeReceitas }}</td>
-                <td>{{ product.descricao }}</td>
+                <td>
+                    <p class="descricao" [pTooltip]="product.descricao" tooltipPosition="right">
+                        {{ product.descricao }}
+                    </p>
+                    </td>
                 <td>{{ product.dtlancamento}}</td>
                 <td>
                     <p-button 

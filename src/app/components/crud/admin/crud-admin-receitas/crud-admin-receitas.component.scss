@@ -20,6 +20,18 @@
                 color: #FF7F11;
                }
 
+               &.link_restaurantes:focus {
+                color: #FF7F11;
+               }
+
+               &.link_receitas:focus {
+                color: #FF7F11;
+               }
+
+               &.link_livros:focus {
+                color: #FF7F11;
+               }
+
             &.cargo_usuario {
                 margin-left: 400px;
                 font-size: 25px;
@@ -87,4 +99,11 @@ justify-content: center;
 :host ::ng-deep .p-button:hover {
     box-shadow: 0 0 0 0.2rem rgba(255, 127, 17, 0.5); /* foco laranja */
     outline: none; /* remove o outline padrão do foco */
+}
+
+.descricao {
+    white-space: nowrap;
+    overflow: hidden;  
+    text-overflow: ellipsis;
+    width: 200px;
 }

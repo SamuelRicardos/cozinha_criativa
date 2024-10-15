@@ -49,23 +49,23 @@
                     [showOperator]="false" 
                     [showAddButton]="false"
                     [showApplyButton]="true"
-                    [showClearButton]="true"
+                    [showClearButton]="false"
                     
                     >
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                             <p-multiSelect
-                            [ngModel]="valoresSelecionados" 
+                            [(ngModel)]="valoresSelecionados" 
                             [options]="products"
                             [filter]="true"
                             [showToggleAll]="false"
                             placeholder="Selecionar" 
-                            (onChange)="filtroRest($event.value)" 
+                            (onChange)="filtroRest($event.value)"
                             optionLabel="estadoRestaurante">
                             
                                 <ng-template let-product pTemplate="item">
                                     <span class="ml-1 mt-1">{{ product.estadoRestaurante }}</span>
                                 </ng-template>
-                            
+                                
                             </p-multiSelect>
                         </ng-template>
                         
