@@ -11,6 +11,8 @@ import { FuncionarioService } from '../../../../services/funcionarios.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-crud-admin',
@@ -26,7 +28,9 @@ import { TooltipModule } from 'primeng/tooltip';
     DropdownModule,
     CardModule,
     ButtonModule,
-    TooltipModule
+    TooltipModule,
+    MenuModule,
+    AvatarModule
   ],
   providers: [
     FuncionarioService
@@ -39,21 +43,46 @@ export class CrudAdminComponent implements OnInit {
   excluirFuncionario: string = "Excluir funcionário"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
+  items: any;
 
-  constructor(private funcionarioService: FuncionarioService ) {}
+  constructor(private funcionarioService: FuncionarioService) { }
 
   ngOnInit() {
-this.getFuncionario()
+    this.getFuncionario()
+    this.itemsMenu();
   }
 
   getFuncionario(): any {
     this.funcionarioService.getFuncionario().subscribe((data: any) => {
       this.products = data;
-  });
+    });
   }
 
   filtroFuncionarios(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
     this.dt2.filterGlobal(inputValue, 'contains');
   }
+
+  itemsMenu() {
+    this.items = [
+      {
+        label: 'Perfil',
+        items: [
+          {
+            label: 'Administrador',
+            icon: 'pi pi-user',
+        },
+            {
+                label: 'Configurações',
+                icon: 'pi pi-cog',
+            },
+            {
+                label: 'Sair',
+                icon: 'pi pi-sign-out',
+            }
+        ]
+    },
+    ];
+  }
+
 }
