@@ -10,6 +10,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ReceitaService } from '../../../../services/receitas.service';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -24,12 +25,15 @@ import { ReceitaService } from '../../../../services/receitas.service';
     MultiSelectModule,
     DropdownModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    TooltipModule
   ],
   templateUrl: './crud-admin-receitas.component.html',
   styleUrl: './crud-admin-receitas.component.scss'
 })
 export class CrudAdminReceitasComponent {
+  editarReceitas: string = "Editar receitas"
+  excluirReceitas: string = "Excluir receitas"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
 

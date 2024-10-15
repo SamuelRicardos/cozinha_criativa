@@ -7,10 +7,10 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-import { FuncionarioService } from '../../../../services/funcionarios.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { RestauranteService } from '../../../../services/restaurantes.service';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-crud-admin-restaurantes',
@@ -25,12 +25,16 @@ import { RestauranteService } from '../../../../services/restaurantes.service';
     MultiSelectModule,
     DropdownModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    TooltipModule
   ],
   templateUrl: './crud-admin-restaurantes.component.html',
   styleUrl: './crud-admin-restaurantes.component.scss'
 })
 export class CrudAdminRestaurantesComponent implements OnInit {
+  editarRestaurante: string = "Editar restaurante"
+  excluirRestaurante: string = "Excluir restaurante"
+
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
 

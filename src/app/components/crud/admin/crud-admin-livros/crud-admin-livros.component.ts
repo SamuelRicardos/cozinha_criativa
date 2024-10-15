@@ -40,9 +40,9 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
   styleUrl: './crud-admin-livros.component.scss'
 })
 export class CrudAdminLivrosComponent {
-  visualizarReceita: string = "Ver receita"
-  imprimirReceita: string = "Imprimir receita"
-  editarReceita: string = "Editar receita"
+  visualizarLivro: string = "Ver livro"
+  imprimirLivro: string = "Imprimir livro"
+  editarLivro: string = "Editar livro"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   visible: boolean = false;

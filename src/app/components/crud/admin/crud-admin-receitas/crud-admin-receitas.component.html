@@ -50,8 +50,24 @@
                 <td>{{ product.descricao }}</td>
                 <td>{{ product.dtlancamento}}</td>
                 <td>
-                    <p-button class="btn_pencil" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" />
-                    <p-button class="btn_trash"  icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" />
+                    <p-button 
+                    class="btn_pencil" 
+                    icon="pi pi-pencil" 
+                    [rounded]="true" 
+                    [text]="true" 
+                    [raised]="true"
+                    [pTooltip]="editarReceitas"
+                    tooltipPosition="bottom"
+                     />
+                    <p-button 
+                    class="btn_trash"  
+                    icon="pi pi-trash" 
+                    [rounded]="true" 
+                    [text]="true" 
+                    [raised]="true"
+                    [pTooltip]="excluirReceitas"
+                    tooltipPosition="bottom"
+                     />
                 </td>
             </tr>
         </ng-template>

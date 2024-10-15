@@ -10,6 +10,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { FuncionarioService } from '../../../../services/funcionarios.service';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-crud-admin',
@@ -24,7 +25,8 @@ import { ButtonModule } from 'primeng/button';
     MultiSelectModule,
     DropdownModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    TooltipModule
   ],
   providers: [
     FuncionarioService
@@ -33,7 +35,8 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './crud-admin.component.scss'
 })
 export class CrudAdminComponent implements OnInit {
-
+  editarFuncionario: string = "Editar funcionário"
+  excluirFuncionario: string = "Excluir funcionário"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
 
