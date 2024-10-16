@@ -11,6 +11,8 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { ReceitaService } from '../../../../services/receitas.service';
 import { TooltipModule } from 'primeng/tooltip';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -26,7 +28,9 @@ import { TooltipModule } from 'primeng/tooltip';
     DropdownModule,
     CardModule,
     ButtonModule,
-    TooltipModule
+    TooltipModule,
+    MenuModule,
+    AvatarModule
   ],
   templateUrl: './crud-admin-receitas.component.html',
   styleUrl: './crud-admin-receitas.component.scss'
@@ -36,11 +40,13 @@ export class CrudAdminReceitasComponent {
   excluirReceitas: string = "Excluir receitas"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
+  items: any;
 
   constructor(private receitaService: ReceitaService) { }
 
   ngOnInit() {
-    this.getReceitas()
+    this.getReceitas();
+    this.itemsMenu();
   }
 
   getReceitas(): any {
@@ -52,5 +58,27 @@ export class CrudAdminReceitasComponent {
   filtroReceitas(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
     this.dt2.filterGlobal(inputValue, 'contains');
+  }
+
+  itemsMenu() {
+    this.items = [
+      {
+        label: 'Perfil',
+        items: [
+          {
+            label: 'Administrador',
+            icon: 'pi pi-user',
+        },
+            {
+                label: 'Configurações',
+                icon: 'pi pi-cog',
+            },
+            {
+                label: 'Sair',
+                icon: 'pi pi-sign-out',
+            }
+        ]
+    },
+    ];
   }
 }

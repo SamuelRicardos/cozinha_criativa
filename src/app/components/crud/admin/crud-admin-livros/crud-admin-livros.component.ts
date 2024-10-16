@@ -14,6 +14,8 @@ import { TooltipModule } from 'primeng/tooltip';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-crud-admin-livros',
@@ -31,7 +33,9 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     ButtonModule,
     TooltipModule,
     DialogModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    MenuModule,
+    AvatarModule
   ],
   providers: [
     MessageService
@@ -46,7 +50,7 @@ export class CrudAdminLivrosComponent {
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   visible: boolean = false;
-
+items: any;
 
   constructor(
     private livroService: LivroService,
@@ -72,5 +76,27 @@ export class CrudAdminLivrosComponent {
   filtroReceitas(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
     this.dt2.filterGlobal(inputValue, 'contains');
+  }
+
+  itemsMenu() {
+    this.items = [
+      {
+        label: 'Perfil',
+        items: [
+          {
+            label: 'Administrador',
+            icon: 'pi pi-user',
+        },
+            {
+                label: 'Configurações',
+                icon: 'pi pi-cog',
+            },
+            {
+                label: 'Sair',
+                icon: 'pi pi-sign-out',
+            }
+        ]
+    },
+    ];
   }
 }

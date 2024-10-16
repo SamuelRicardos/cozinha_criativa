@@ -9,7 +9,7 @@
         a {
             font-size: 20px;
             text-transform: capitalize;
-            padding: 10px 27px;
+            margin: 10px 20px;
             transition: 0.2s;
             color: #000000;
             text-decoration: none;
@@ -33,8 +33,8 @@
                }
 
             &.cargo_usuario {
-                margin-left: 400px;
-                font-size: 25px;
+                margin-left: 450px;
+                font-size: 23px;
                 font-weight: 600;
             }
 
@@ -49,20 +49,16 @@
     }
 }
 
-main {
-display: flex;
-justify-content: center;
-}
-
-:host ::ng-deep td i{
-    margin-left: 25px;
-}
-
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0;
+}
+
+main {
+display: flex;
+justify-content: center;
 }
 
 :host ::ng-deep .p-card .p-card-body{
@@ -74,6 +70,7 @@ justify-content: center;
     background: #FF7F11 !important;
     border: none;
 }
+
 
 :host ::ng-deep .btn_pencil .p-button {
     background: white;
@@ -87,8 +84,13 @@ justify-content: center;
 }
 
 :host ::ng-deep .btn_bars .p-button {
-    background: #FF7F11;
+    color: #FF7F11;
+    background: none;
     border: none;
+    padding: 0;
+    margin-bottom: 12px;
+    width: 20px;
+    outline: none;
 }
 
 :host ::ng-deep .p-button:focus {
@@ -101,45 +103,9 @@ justify-content: center;
     outline: none; /* remove o outline padrão do foco */
 }
 
-.input_modal {
-    width: 97%;
-    margin: 10px 0px;
-}
-
-.label_modal{
-    color: white;
-}
-:host ::ng-deep .button_modal_voltar .p-button {
-color: white;
-background: #CC5E00;
-border: none;
-}
-
-:host ::ng-deep .button_modal_save .p-button {
-    color: white;
-    background: #CC5E00;
-    border: none;
-}
-
-:host ::ng-deep .p-dialog-content {
-    background: #FF7F11;
-}
-
-:host ::ng-deep .p-dialog-footer {
-    background: #FF7F11;
-}
-
-:host ::ng-deep .p-dialog-header {
+:host ::ng-deep .p-avatar {
     background: #FF7F11;
     color: white;
-}
-
-:host ::ng-deep .p-dialog-header .p-dialog-header-icon {
-    color: white;
-    background-color: #FF7F11;
-}
-
-:host ::ng-deep .input_modal:focus{
-    box-shadow: 0 0 0 0.2rem rgba(249, 165, 75, 0.5);  /* foco laranja mais claro */
-    outline: none; /* remove o outline padrão do foco */
+    margin-left: 12px;
+    padding: 23px;
 }

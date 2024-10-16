@@ -13,7 +13,9 @@
                     <a href="crud_admin_receitas" class="link_receitas">Receitas</a>
                     <a href="crud_admin_livros" class="link_livros">Livros</a>
                     <a class="cargo_usuario">Administrador</a>
-                    <p-button class="btn_bars" icon="pi pi-bars"></p-button>
+                    <p-button class="btn_bars" (onClick)="menu.toggle($event)" icon=" pi pi-angle-down"/>
+                    <p-menu #menu [model]="items" [popup]="true" styleClass="w-full md:w-15rem"></p-menu>
+                    <p-avatar icon="pi pi-user" class="mr-2" shape="circle" styleClass="w-full" />
                 </li>
             </ul>   
         </nav>

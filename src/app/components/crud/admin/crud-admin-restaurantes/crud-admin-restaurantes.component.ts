@@ -12,6 +12,8 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { RestauranteService } from '../../../../services/restaurantes.service';
 import { TooltipModule } from 'primeng/tooltip';
+import { MenuModule } from 'primeng/menu';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-crud-admin-restaurantes',
@@ -28,7 +30,9 @@ import { TooltipModule } from 'primeng/tooltip';
     CardModule,
     ButtonModule,
     TooltipModule,
-    FormsModule
+    FormsModule,
+    MenuModule,
+    AvatarModule
   ],
   templateUrl: './crud-admin-restaurantes.component.html',
   styleUrl: './crud-admin-restaurantes.component.scss'
@@ -40,11 +44,13 @@ export class CrudAdminRestaurantesComponent implements OnInit {
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   valoresSelecionados: any[] = [];
+  items: any;
 
   constructor(private restauranteService: RestauranteService) { }
 
   ngOnInit() {
     this.getFuncionario()
+    this.itemsMenu();
   }
 
   getFuncionario(): any {
@@ -66,5 +72,27 @@ export class CrudAdminRestaurantesComponent implements OnInit {
 
   limparFiltro() {
     this.valoresSelecionados= [];
+  }
+
+  itemsMenu() {
+    this.items = [
+      {
+        label: 'Perfil',
+        items: [
+          {
+            label: 'Administrador',
+            icon: 'pi pi-user',
+        },
+            {
+                label: 'Configurações',
+                icon: 'pi pi-cog',
+            },
+            {
+                label: 'Sair',
+                icon: 'pi pi-sign-out',
+            }
+        ]
+    },
+    ];
   }
 }

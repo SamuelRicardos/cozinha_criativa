@@ -9,7 +9,7 @@
         a {
             font-size: 20px;
             text-transform: capitalize;
-            padding: 10px 27px;
+            margin: 10px 20px;
             transition: 0.2s;
             color: #000000;
             text-decoration: none;
@@ -33,8 +33,8 @@
                }
 
             &.cargo_usuario {
-                margin-left: 400px;
-                font-size: 25px;
+                margin-left: 450px;
+                font-size: 23px;
                 font-weight: 600;
             }
 
@@ -49,20 +49,16 @@
     }
 }
 
-main {
-display: flex;
-justify-content: center;
-}
-
-:host ::ng-deep td i{
-    margin-left: 25px;
-}
-
 .header-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0;
+}
+
+main {
+display: flex;
+justify-content: center;
 }
 
 :host ::ng-deep .p-card .p-card-body{
@@ -88,8 +84,13 @@ justify-content: center;
 }
 
 :host ::ng-deep .btn_bars .p-button {
-    background: #FF7F11;
+    color: #FF7F11;
+    background: none;
     border: none;
+    padding: 0;
+    margin-bottom: 12px;
+    width: 20px;
+    outline: none;
 }
 
 :host ::ng-deep .p-button:focus {
@@ -100,4 +101,11 @@ justify-content: center;
 :host ::ng-deep .p-button:hover {
     box-shadow: 0 0 0 0.2rem rgba(255, 127, 17, 0.5); /* foco laranja */
     outline: none; /* remove o outline padrão do foco */
+}
+
+:host ::ng-deep .p-avatar {
+    background: #FF7F11;
+    color: white;
+    margin-left: 12px;
+    padding: 23px;
 }
