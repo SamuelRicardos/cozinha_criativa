@@ -109,3 +109,39 @@ justify-content: center;
     margin-left: 12px;
     padding: 23px;
 }
+
+.input_modal {
+    width: 97%;
+    margin: 10px 0px;
+}
+.label_modal{
+    color: white;
+}
+:host ::ng-deep .button_modal_voltar .p-button {
+color: white;
+background: #CC5E00;
+border: none;
+}
+:host ::ng-deep .button_modal_save .p-button {
+    color: white;
+    background: #CC5E00;
+    border: none;
+}
+:host ::ng-deep .p-dialog-content {
+    background: #FF7F11;
+}
+:host ::ng-deep .p-dialog-footer {
+    background: #FF7F11;
+}
+:host ::ng-deep .p-dialog-header {
+    background: #FF7F11;
+    color: white;
+}
+:host ::ng-deep .p-dialog-header .p-dialog-header-icon {
+    color: white;
+    background-color: #FF7F11;
+}
+:host ::ng-deep .input_modal:focus{
+    box-shadow: 0 0 0 0.2rem rgba(249, 165, 75, 0.5);  /* foco laranja mais claro */
+    outline: none; /* remove o outline padrão do foco */
+}

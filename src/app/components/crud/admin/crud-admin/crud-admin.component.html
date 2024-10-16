@@ -26,7 +26,7 @@
     <p-card>
         <div class="header-content">
             <h2>Funcionários</h2>
-            <p-button class="btn_funcionario"   label="Adicionar funcionário"></p-button>
+            <p-button class="btn_funcionario" (onClick)="showDialog()"   label="Adicionar funcionário"></p-button>
         </div>
     <p-table
     #dt2
@@ -93,3 +93,24 @@
     </p-table>
 </p-card>
 </main>
+
+<p-dialog header="Adicionar funcionário" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
+    <div class="">
+        <label for="username" class="label_modal">Nome</label><br>
+        <input pInputText class="input_modal" [placeholder]="inserirFuncionario" autocomplete="off" />
+    </div>
+    <div class="">
+        <label for="email" class="label_modal">Cargo</label><br>
+        <input pInputText class="input_modal" [placeholder]="inserirCargo" autocomplete="off" />
+    </div>
+    <div class="">
+        <label for="email" class="label_modal">Data de admissão</label><br>
+        <input pInputText type="date" class="input_modal" autocomplete="off" />
+    </div>
+    <ng-template pTemplate="footer">
+        <div>
+            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+        </div>
+    </ng-template>
+</p-dialog>

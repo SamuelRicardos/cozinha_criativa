@@ -13,6 +13,8 @@ import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-crud-admin',
@@ -29,8 +31,11 @@ import { AvatarModule } from 'primeng/avatar';
     CardModule,
     ButtonModule,
     TooltipModule,
+    DialogModule,
+    DynamicDialogModule,
     MenuModule,
-    AvatarModule
+    AvatarModule,
+    
   ],
   providers: [
     FuncionarioService
@@ -41,9 +46,12 @@ import { AvatarModule } from 'primeng/avatar';
 export class CrudAdminComponent implements OnInit {
   editarFuncionario: string = "Editar funcionário"
   excluirFuncionario: string = "Excluir funcionário"
+  inserirFuncionario: string = "Insira um nome de funcionário"
+  inserirCargo: string = "Insira um cargo"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   items: any;
+  visible: boolean = false;
 
   constructor(private funcionarioService: FuncionarioService) { }
 
@@ -62,6 +70,10 @@ export class CrudAdminComponent implements OnInit {
     const inputValue = (event.target as HTMLInputElement).value;
     this.dt2.filterGlobal(inputValue, 'contains');
   }
+
+  showDialog() {
+    this.visible = true;
+}
 
   itemsMenu() {
     this.items = [

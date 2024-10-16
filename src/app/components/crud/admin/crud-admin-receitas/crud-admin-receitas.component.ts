@@ -13,6 +13,8 @@ import { ReceitaService } from '../../../../services/receitas.service';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -29,6 +31,8 @@ import { AvatarModule } from 'primeng/avatar';
     CardModule,
     ButtonModule,
     TooltipModule,
+    DialogModule,
+    DynamicDialogModule,
     MenuModule,
     AvatarModule
   ],
@@ -41,6 +45,7 @@ export class CrudAdminReceitasComponent {
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   items: any;
+  visible: boolean = false;
 
   constructor(private receitaService: ReceitaService) { }
 
@@ -80,5 +85,9 @@ export class CrudAdminReceitasComponent {
         ]
     },
     ];
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }

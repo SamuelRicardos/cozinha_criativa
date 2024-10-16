@@ -24,7 +24,7 @@
     <p-card>
         <div class="header-content">
             <h2>Receitas</h2>
-            <p-button class="btn_receita" label="Adicionar receita"></p-button>
+            <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar receita"></p-button>
         </div>
     <p-table
     #dt2
@@ -95,3 +95,23 @@
     </p-table>
 </p-card>
 </main>
+<p-dialog header="Adicionar receita" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
+    <div class="">
+        <label for="username" class="label_modal">Nome da receita</label><br>
+        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira o nome de uma receita" />
+    </div>
+    <div class="">
+        <label for="email" class="label_modal">Descrição</label><br>
+        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira a descricao de uma receita" />
+    </div>
+    <div class="">
+        <label for="email" class="label_modal">Data de lançamento</label><br>
+        <input pInputText class="input_modal" autocomplete="off" type="date"/>
+    </div>
+    <ng-template pTemplate="footer">
+        <div>
+            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+        </div>
+    </ng-template>
+</p-dialog>

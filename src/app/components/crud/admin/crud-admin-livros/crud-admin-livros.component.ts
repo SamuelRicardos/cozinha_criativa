@@ -47,6 +47,9 @@ export class CrudAdminLivrosComponent {
   visualizarLivro: string = "Ver livro"
   imprimirLivro: string = "Imprimir livro"
   editarLivro: string = "Editar livro"
+  inserirLivro: string = "Insira o nome de um livro"
+  inserirAutor: string = "Insira um autor de um livro"
+  inserirISBN: string = "Insira o ISBN de um livro"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   visible: boolean = false;
@@ -58,7 +61,8 @@ items: any;
   ) { }
 
   ngOnInit() {
-    this.getLivros()
+    this.getLivros();
+    this.itemsMenu();
   }
 
   

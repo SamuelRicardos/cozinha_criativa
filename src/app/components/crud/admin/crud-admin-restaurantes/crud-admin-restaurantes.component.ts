@@ -14,6 +14,8 @@ import { RestauranteService } from '../../../../services/restaurantes.service';
 import { TooltipModule } from 'primeng/tooltip';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-crud-admin-restaurantes',
@@ -31,6 +33,8 @@ import { AvatarModule } from 'primeng/avatar';
     ButtonModule,
     TooltipModule,
     FormsModule,
+    DialogModule,
+    DynamicDialogModule,
     MenuModule,
     AvatarModule
   ],
@@ -40,11 +44,14 @@ import { AvatarModule } from 'primeng/avatar';
 export class CrudAdminRestaurantesComponent implements OnInit {
   editarRestaurante: string = "Editar restaurante"
   excluirRestaurante: string = "Excluir restaurante"
+  inserirRestaurante: string = "Insira um nome de restaurante"
+  inserirEstados: string = "Insira um estado"
 
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   valoresSelecionados: any[] = [];
   items: any;
+  visible: boolean = false;
 
   constructor(private restauranteService: RestauranteService) { }
 
@@ -94,5 +101,9 @@ export class CrudAdminRestaurantesComponent implements OnInit {
         ]
     },
     ];
+  }
+
+  showDialog() {
+    this.visible = true;
   }
 }

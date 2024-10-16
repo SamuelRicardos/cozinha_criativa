@@ -103,15 +103,15 @@
 <p-dialog header="Cadastrar livro" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
     <div class="">
         <label for="username" class="label_modal">Nome do livro</label><br>
-        <input pInputText class="input_modal" autocomplete="off" />
+        <input pInputText class="input_modal" [placeholder]="inserirLivro" autocomplete="off" />
     </div>
     <div class="">
         <label for="email" class="label_modal">Autor</label><br>
-        <input pInputText class="input_modal" autocomplete="off" />
+        <input pInputText class="input_modal" [placeholder]="inserirAutor" autocomplete="off" />
     </div>
     <div class="">
         <label for="email" class="label_modal">ISBN</label><br>
-        <input pInputText class="input_modal" autocomplete="off" />
+        <input pInputText class="input_modal" [placeholder]="inserirISBN" autocomplete="off" />
     </div>
     <ng-template pTemplate="footer">
         <div>
