@@ -2,14 +2,14 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 0px 10px;
-    
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+
     .menu {
 
         a {
             font-size: 20px;
             text-transform: capitalize;
-            margin: 10px 20px;
+            margin: 0px 20px;
             transition: 0.2s;
             color: #000000;
             text-decoration: none;
@@ -18,22 +18,22 @@
 
             &.link_funcionarios:focus {
                 color: #FF7F11;
-               }
+            }
 
-               &.link_restaurantes:focus {
+            &.link_restaurantes:focus {
                 color: #FF7F11;
-               }
+            }
 
-               &.link_receitas:focus {
+            &.link_receitas:focus {
                 color: #FF7F11;
-               }
+            }
 
-               &.link_livros:focus {
+            &.link_livros:focus {
                 color: #FF7F11;
-               }
+            }
 
             &.cargo_usuario {
-                margin-left: 450px;
+                margin-left: 550px;
                 font-size: 23px;
                 font-weight: 600;
             }
@@ -57,11 +57,12 @@
 }
 
 main {
-display: flex;
-justify-content: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }
 
-:host ::ng-deep .p-card .p-card-body{
+:host ::ng-deep .p-card .p-card-body {
     padding-top: 0rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -94,13 +95,17 @@ justify-content: center;
 }
 
 :host ::ng-deep .p-button:focus {
- box-shadow: 0 0 0 0.2rem rgba(255, 127, 17, 0.5); /* foco laranja */
-    outline: none; /* remove o outline padrão do foco */
+    box-shadow: 0 0 0 0.2rem rgba(255, 127, 17, 0.5);
+    /* foco laranja */
+    outline: none;
+    /* remove o outline padrão do foco */
 }
 
 :host ::ng-deep .p-button:hover {
-    box-shadow: 0 0 0 0.2rem rgba(255, 127, 17, 0.5); /* foco laranja */
-    outline: none; /* remove o outline padrão do foco */
+    box-shadow: 0 0 0 0.2rem rgba(255, 127, 17, 0.5);
+    /* foco laranja */
+    outline: none;
+    /* remove o outline padrão do foco */
 }
 
 :host ::ng-deep .p-avatar {
@@ -112,11 +117,10 @@ justify-content: center;
 
 .descricao {
     white-space: nowrap;
-    overflow: hidden;  
+    overflow: hidden;
     text-overflow: ellipsis;
     width: 200px;
 }
-
 
 .input_modal {
     width: 97%;
@@ -125,6 +129,7 @@ justify-content: center;
 .label_modal{
     color: white;
 }
+
 :host ::ng-deep .button_modal_voltar .p-button {
 color: white;
 background: #CC5E00;
@@ -153,4 +158,3 @@ border: none;
     box-shadow: 0 0 0 0.2rem rgba(249, 165, 75, 0.5);  /* foco laranja mais claro */
     outline: none; /* remove o outline padrão do foco */
 }
-

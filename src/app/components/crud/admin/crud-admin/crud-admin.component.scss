@@ -2,14 +2,14 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    padding: 0px 10px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
     
     .menu {
 
         a {
             font-size: 20px;
             text-transform: capitalize;
-            margin: 10px 20px;
+            margin: 0px 20px;
             transition: 0.2s;
             color: #000000;
             text-decoration: none;
@@ -33,7 +33,7 @@
                }
 
             &.cargo_usuario {
-                margin-left: 450px;
+                margin-left: 550px;
                 font-size: 23px;
                 font-weight: 600;
             }
@@ -59,6 +59,7 @@
 main {
 display: flex;
 justify-content: center;
+margin-top: 50px;
 }
 
 :host ::ng-deep .p-card .p-card-body{
