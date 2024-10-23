@@ -38,7 +38,7 @@ export class LoginComponent {
   submit(){
     this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
       next: () => this.tostr.success("Login feito com sucesso!"),
-      error: () => this.tostr.error("Erro inesperado! Tente novamente.")
+      error: () => this.tostr.error("Usuário não cadastrado!")
     })
   }
 
