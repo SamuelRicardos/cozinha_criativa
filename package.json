@@ -18,9 +18,13 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "jspdf": "^2.5.2",
+    "ng2-pdf-viewer": "^10.3.3",
+    "ngx-extended-pdf-viewer": "^22.0.0-alpha.2",
     "ngx-toastr": "^19.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.11",
+    "quill": "^2.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"

@@ -16,6 +16,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
+import { TestPdfComponent } from "../../../test/test-pdf/test-pdf.component";
 
 @Component({
   selector: 'app-crud-admin-livros',
@@ -35,8 +36,9 @@ import { AvatarModule } from 'primeng/avatar';
     DialogModule,
     DynamicDialogModule,
     MenuModule,
-    AvatarModule
-  ],
+    AvatarModule,
+    TestPdfComponent
+],
   providers: [
     MessageService
   ],
