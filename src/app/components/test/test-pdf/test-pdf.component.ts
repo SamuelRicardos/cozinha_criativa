@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AvatarModule } from 'primeng/avatar';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { TooltipModule } from 'primeng/tooltip';
 
 @Component({
   selector: 'app-test-pdf',
@@ -21,7 +22,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ButtonModule,
     InputTextModule,
     AvatarModule,
-    PdfViewerModule
+    PdfViewerModule,
+    TooltipModule
   ],
   templateUrl: './test-pdf.component.html',
   styleUrl: './test-pdf.component.scss'
@@ -30,6 +32,7 @@ export class TestPdfComponent implements OnInit {
 @ViewChild('content', {static: false}) el!: ElementRef;
 descricaoReceitas: any[] = [];
 visible: boolean = false;
+imprimirLivro: string = "Imprimir livro"
 
   constructor(private receitasService: ReceitaService) {}
 
@@ -38,34 +41,57 @@ visible: boolean = false;
   }
 
   criacaoPDF() {
+    const doc = new jsPDF();
     const margins = {
       top: 30,
       bottom: 30,
       left: 10,
       right: 10
-    }
-    const doc = new jsPDF();
+    };
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.getWidth() - margins.left - margins.right;
+    let y = margins.top;
+
     doc.setFont('Times');
     doc.setFontSize(18);
-    const pageWidth = doc.internal.pageSize.getWidth() - 20;  // Margem de 10 unidades em ambos os lados
-    doc.text('Minhas receitas', margins.left , margins.top);
-    
-    doc.setFontSize(12);
-    doc.text(this.descricaoReceitas[0].descricao, margins.left, 50);
+    doc.text('Minhas Receitas', margins.left, y);
+    y += 10;  // Espaçamento após o título
 
-    doc.save('test.pdf')
+    // Iterar sobre cada receita
+    this.descricaoReceitas.forEach((receita, index) => {
+      doc.setFontSize(14);
+      y += 10;
+      doc.text(`Receita: ${receita.nomeReceitas}`, margins.left, y);
+      y += 10;
 
-    // Define a largura da página (por exemplo, 180 unidades, descontando margens)
-    // const pageWidth = doc.internal.pageSize.getWidth() - 20;  // Margem de 10 unidades em ambos os lados
-    // const text = this.descricaoReceitas[0].descricao;
-    
-    // Quebrar o texto para caber na página
-    // const splitText = doc.splitTextToSize(text, pageWidth);
+      // Preparar e dividir o texto em linhas
+      doc.setFontSize(12);
+      const splitDescricao = doc.splitTextToSize(receita.descricao, pageWidth);
+      splitDescricao.forEach((line: string | string[]) => {
+        if (y + 10 > pageHeight - margins.bottom) {
+          doc.addPage();  // Nova página se ultrapassar o limite
+          y = margins.top;
+        }
+        doc.text(line, margins.left, y);
+        y += 10;
+      });
 
-    // Adicionar o texto quebrado ao PDF
-    // doc.text(splitText, 10, 10);
-    // Salvar o PDF e abrir em uma nova aba
-    // doc.output('bloburl');
+      // Adicionar data de lançamento
+      y += 5;
+      doc.setFontSize(10);
+      doc.text(`Data de lançamento: ${receita.dtlancamento}`, margins.left, y);
+
+      // Adicionar nova página se houver próxima receita
+      if (index < this.descricaoReceitas.length - 1) {
+        doc.addPage();
+        y = margins.top;
+      }
+    });
+
+    // Salvar e abrir o PDF na visualização
+    const pdfBlob = doc.output('blob');
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    window.open(pdfUrl);  // Abre o PDF na mesma página (ou altere para iframe se precisar exibir inline)
   }
 
   showDialog() {

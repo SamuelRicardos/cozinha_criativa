@@ -1,5 +1,10 @@
-<div #content>
-    <h2>Receita</h2>
-    <p>{{ this.descricaoReceitas[0].descricao }}</p>
-    <button (click)="criacaoPDF()">Gerar PDF</button>
-</div>
+<p-button 
+class="btn_pencil" 
+icon="pi pi-print" 
+[rounded]="true" 
+[text]="true" 
+[raised]="true"
+(click)="criacaoPDF()"
+[pTooltip]="imprimirLivro"
+tooltipPosition="bottom">
+</p-button>
