@@ -54,13 +54,13 @@ export class CrudAdminLivrosComponent {
   inserirLivro: string = "Insira o nome de um livro"
   inserirAutor: string = "Insira um autor de um livro"
   inserirISBN: string = "Insira o ISBN de um livro"
-  products: any[] = [];
+  livro: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   visible: boolean = false;
 items: any;
 descricaoReceitas: any[] = [];
 logoUrl = '../../../../../assets/logo_melhorzinha.png'
-
+livroIdDois: any;
   constructor(
     private livroService: LivroService,
     public messagemService: MessageService,
@@ -81,12 +81,12 @@ logoUrl = '../../../../../assets/logo_melhorzinha.png'
 
   getLivros(): any {
     this.livroService.getLivros().subscribe((dataLivros: any) => {
-      this.products = dataLivros;
+      this.livro = dataLivros;
     });
   }
   
   getReceitas(): any {
-    this.receitaService.getReceitas().subscribe((dataReceitas) => {
+    this.receitaService.getReceitasPorLivroId(this.livroIdDois).subscribe((dataReceitas) => {
       this.descricaoReceitas = dataReceitas;
     })
   }
@@ -118,7 +118,9 @@ logoUrl = '../../../../../assets/logo_melhorzinha.png'
     ];
   }
 
-  async criacaoPDF() {
+  async criacaoPDF(livroId: number) {
+    this.receitaService.getReceitasPorLivroId(livroId).subscribe(receitas => {
+      this.descricaoReceitas = receitas;
     const doc = new jsPDF();
     const margins = { top: 30, bottom: 30, left: 10, right: 10 };
     const pageHeight = doc.internal.pageSize.getHeight();
@@ -255,6 +257,7 @@ indice.forEach((item, index) => {
     const pdfBlob = doc.output('blob');
     const pdfUrl = URL.createObjectURL(pdfBlob);
     window.open(pdfUrl); // Abre o PDF na mesma página
+  });
 }
 
 baixarPDF() {

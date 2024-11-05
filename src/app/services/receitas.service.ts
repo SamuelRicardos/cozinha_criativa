@@ -9,31 +9,30 @@ import { Observable, of } from "rxjs";
 export class ReceitaService {
     constructor(private httpClient: HttpClient) { }
 
+    getReceitasPorLivroId(livroId: number): Observable<any[]> {
+        const dataReceitas = [
+            { id: 1, nomeReceitas: "Feijoada", descricao: "Descrição da Feijoada", imagemUrl: "../../../../../assets/Feijoada.jpg", dtlancamento: "23/09/2024", livroId: 1 },
+            { id: 2, nomeReceitas: "Parmegiana", descricao: "Descrição da Parmegiana", imagemUrl: "../../../../../assets/Parmegiana.jpg", dtlancamento: "24/09/2024", livroId: 1 },
+            { id: 3, nomeReceitas: "Cuscuz", descricao: "Descrição do Cuscuz", imagemUrl: "../../../../../assets/cuscuz.jpg", dtlancamento: "04/11/2024", livroId: 2 },
+        ];
+        
+        const receitasFiltradas = dataReceitas.filter(receita => receita.livroId === livroId);
+        return of(receitasFiltradas);
+    }
+
     getReceitas(): Observable<any[]> {
         const dataReceitas = [
             {
                 "nomeReceitas": "Feijoada",
-                "descricao": "A feijoada é um dos pratos mais tradicionais do Brasil...",
-                "imagemUrl": "../../../../../assets/Feijoada.jpg",
-                "dtlancamento": "23/09/2024",
-                "livroNome": "Viagem ao centro da terra"
+                "descricao": "Uma comida deliciosa",
+                "dtlancamento": "23/09/2024"
             },
             {
                 "nomeReceitas": "Parmegiana",
-                "descricao": "A parmegiana, um prato clássico de origem italiana...",
-                "imagemUrl": "../../../../../assets/Parmegiana.jpg",
-                "dtlancamento": "24/09/2024",
-                "livroNome": "Mil léguas submarinas"
-            },
-            {
-                "nomeReceitas": "Cuscuz",
-                "descricao": "O cuscuz é muito mais do que um simples prato...",
-                "imagemUrl": "../../../../../assets/cuscuz.jpg",
-                "dtlancamento": "04/11/2024",
-                "livroNome": "Dom Casmurro"
+                "descricao": "Uma comida deliciosa",
+                "dtlancamento": "24/09/2024"
             }
-        ];
-    
+        ]
         return of(dataReceitas);
     }
 }

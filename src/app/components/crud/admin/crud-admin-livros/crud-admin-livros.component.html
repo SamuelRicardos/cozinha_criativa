@@ -29,7 +29,7 @@
     [paginator]="true" 
     [rows]="5" 
     [rowsPerPageOptions]="[5,10,20]" 
-    [value]="products" 
+    [value]="livro" 
     [tableStyle]="{ 'min-width': '55rem' }"
     [scrollable]="true"
     scrollHeight="370px"
@@ -54,10 +54,10 @@
                     [rounded]="true" 
                     [text]="true" 
                     [raised]="true"
-                    (click)="criacaoPDF()"
+                    (click)="criacaoPDF(product.id)" 
                     [pTooltip]="visualizarLivro"
-                    tooltipPosition="bottom"
-                    />
+                    tooltipPosition="bottom"/>
+
                     <p-button 
                     class="btn_pencil" 
                     icon="pi pi-download" 
