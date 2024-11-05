@@ -59,6 +59,7 @@ export class CrudAdminLivrosComponent {
   visible: boolean = false;
 items: any;
 descricaoReceitas: any[] = [];
+logoUrl = '../../../../../assets/logo_melhorzinha.png'
 
   constructor(
     private livroService: LivroService,
@@ -117,62 +118,144 @@ descricaoReceitas: any[] = [];
     ];
   }
 
-  criacaoPDF() {
-    // Imagem da Receita
-    // Nome da Receita
-    // Descricao da Receita
-    // Ingredientes da receita
-    // Modo de preparo da Receita
+  async criacaoPDF() {
     const doc = new jsPDF();
-    const margins = {
-      top: 30,
-      bottom: 30,
-      left: 10,
-      right: 10
-    };
+    const margins = { top: 30, bottom: 30, left: 10, right: 10 };
     const pageHeight = doc.internal.pageSize.getHeight();
     const pageWidth = doc.internal.pageSize.getWidth() - margins.left - margins.right;
     let y = margins.top;
 
     doc.setFont('Times');
-    doc.setFontSize(18);
-    doc.text('Minhas Receitas', margins.left, y);
-    y += 10;  // Espaçamento após o título
+    doc.setFontSize(24);
 
-    // Iterar sobre cada receita
+    // Capa
+    doc.addImage(this.logoUrl, 'PNG', 80, 47, 50, 50);
+    doc.text('Livro de Receitas', 105, 120, { align: 'center' });
+    doc.setFontSize(16);
+    doc.text('As melhores receitas com os ingredientes perfeitos', 105, 140, { align: 'center' });
+    doc.addPage();  // Adiciona nova página após a capa para o índice
+
+    // Preparar o índice com placeholders para número de página das receitas
+    const indice = this.descricaoReceitas.map((receita) => ({ nome: receita.nomeReceitas, page: 0 }));
+
+    // Variável para acompanhar a página atual
+    let pageIndex = 2; // Páginas 1 e 2 são capa e índice
+
+    // Iterar sobre cada receita para adicionar conteúdo e coletar numeração
     this.descricaoReceitas.forEach((receita, index) => {
-      doc.setFontSize(14);
-      y += 10;
-      doc.text(`Receita: ${receita.nomeReceitas}`, margins.left, y);
-      y += 10;
+        pageIndex++; // Avança para a próxima página
+        indice[index].page = pageIndex; // Define a página correta no índice para cada receita
 
-      // Preparar e dividir o texto em linhas
-      doc.setFontSize(12);
-      const splitDescricao = doc.splitTextToSize(receita.descricao, pageWidth);
-      splitDescricao.forEach((line: string | string[]) => {
-        if (y + 10 > pageHeight - margins.bottom) {
-          doc.addPage();  // Nova página se ultrapassar o limite
-          y = margins.top;
-        }
-        doc.text(line, margins.left, y);
-        y += 10;
-      });
-
-      // Adicionar data de lançamento
-      y += 5;
-      doc.setFontSize(10);
-      doc.text(`Data de lançamento: ${receita.dtlancamento}`, margins.left, y);
-
-      // Adicionar nova página se houver próxima receita
-      if (index < this.descricaoReceitas.length - 1) {
+        // Adiciona nova página para a receita
         doc.addPage();
         y = margins.top;
-      }
+
+        // Título da receita
+        doc.setFontSize(18);
+        doc.text(`Receita: ${receita.nomeReceitas}`, margins.left, y);
+        y += 10;
+
+        // Imagem da receita, se existir
+        if (receita.imagemUrl) {
+            doc.addImage(receita.imagemUrl, 'PNG', margins.left, y, 50, 50);
+            y += 60;
+        }
+
+        // Descrição
+        doc.setFontSize(12);
+        const splitDescricao = doc.splitTextToSize(receita.descricao, pageWidth);
+        splitDescricao.forEach((line: string | string[]) => {
+            if (y + 10 > pageHeight - margins.bottom) {
+                doc.addPage();
+                pageIndex++;
+                y = margins.top;
+            }
+            doc.text(line, margins.left, y);
+            y += 10;
+        });
+
+        // Ingredientes
+        y += 10;
+        doc.setFontSize(14);
+        doc.text('Ingredientes:', margins.left, y);
+        y += 10;
+        const ingredientes = doc.splitTextToSize(receita.ingredientes, pageWidth);
+        ingredientes.forEach((line: string | string[]) => {
+            if (y + 10 > pageHeight - margins.bottom) {
+                doc.addPage();
+                pageIndex++;
+                y = margins.top;
+            }
+            doc.text(line, margins.left, y);
+            y += 10;
+        });
+
+        // Modo de preparo
+        y += 10;
+        doc.text('Modo de Preparo:', margins.left, y);
+        y += 10;
+        const modoPreparo = doc.splitTextToSize(receita.modoPreparo, pageWidth);
+        modoPreparo.forEach((line: string | string[]) => {
+            if (y + 10 > pageHeight - margins.bottom) {
+                doc.addPage();
+                pageIndex++;
+                y = margins.top;
+            }
+            doc.text(line, margins.left, y);
+            y += 10;
+        });
+
+        // Porções e Data de lançamento
+        y += 10;
+        doc.text('Porções:', margins.left, y);
+        y += 10;
+        const quantidadePessoas = doc.splitTextToSize(receita.quantidadePessoas, pageWidth);
+        quantidadePessoas.forEach((line: string | string[]) => {
+            if (y + 10 > pageHeight - margins.bottom) {
+                doc.addPage();
+                pageIndex++;
+                y = margins.top;
+            }
+            doc.text(line, margins.left, y);
+            y += 10;
+        });
+
+        y += 10;
+        doc.text('Data de lançamento:', margins.left, y);
+        y += 10;
+        const dataLancamento = doc.splitTextToSize(receita.dtlancamento, pageWidth);
+        dataLancamento.forEach((line: string | string[]) => {
+            if (y + 10 > pageHeight - margins.bottom) {
+                doc.addPage();
+                pageIndex++;
+                y = margins.top;
+            }
+            doc.text(line, margins.left, y);
+            y += 10;
+        });
+
+        // Número da página no canto inferior direito
+        doc.setFontSize(10);
+        doc.text(`${pageIndex}`, pageWidth + margins.left, pageHeight - 10);
     });
 
-    // Salvar e abrir o PDF na visualização
+// Volta para a página do índice (página 2) e adiciona entradas com números corretos
+doc.setPage(2);
+y = margins.top + 15;
+doc.setFontSize(14);
+doc.text('Índice', pageWidth / 2 + margins.left, margins.top, { align: 'center' });
+
+indice.forEach((item, index) => {
+    // Use `item.page` para o número correto da página de cada receita
+    doc.text(`${index + 1}. ${item.nome} ................................... ${item.page}`, margins.left, y);
+    y += 10;
+});
+
+    // Salva e abre o PDF na visualização
     const pdfBlob = doc.output('blob');
     const pdfUrl = URL.createObjectURL(pdfBlob);
-    window.open(pdfUrl);  // Abre o PDF na mesma página (ou altere para iframe se precisar exibir inline)
-  }
+    window.open(pdfUrl); // Abre o PDF na mesma página
+}
+
+
 }
