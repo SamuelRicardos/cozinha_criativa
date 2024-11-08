@@ -207,16 +207,31 @@ ingredientes.forEach((ingrediente) => {
         y += 10;
         doc.text('Modo de Preparo:', margins.left, y);
         y += 10;
-        const modoPreparo = doc.splitTextToSize(receita.modoPreparo, pageWidth);
-        modoPreparo.forEach((line: string | string[]) => {
-          if (y + 10 > pageHeight - margins.bottom) {
-            doc.addPage();
-            pageIndex++;
-            y = margins.top;
-          }
-          doc.text(line, margins.left, y);
-          y += 10;
-        });
+        let modoPreparo: string[] = [];
+        if (typeof receita.modoPreparo === 'string') {
+            // Divide a string em frases após cada ponto final seguido de espaço, quebra de linha, ou fim da string
+            modoPreparo = receita.modoPreparo.split(/(?<=\.)\s*/);
+        } else if (Array.isArray(receita.modoPreparo)) {
+            modoPreparo = receita.modoPreparo;
+        } else {
+            modoPreparo = []; // Caso não seja string ou array, define um array vazio
+        }
+        
+        // Renderiza cada etapa do modo de preparo no PDF
+        modoPreparo.forEach((etapa) => {
+            const textoEtapa = `- ${etapa.trim()}`; // Adiciona o hífen antes de cada etapa
+            const linhasEtapa = doc.splitTextToSize(textoEtapa, pageWidth - margins.left - margins.right);
+        
+            linhasEtapa.forEach((linha: string | string[]) => {
+                if (y + 10 > pageHeight - margins.bottom) {
+                    doc.addPage();
+                    pageIndex++;
+                    y = margins.top;
+                }
+                doc.text(linha, margins.left, y);
+                y += 10;
+            });
+        })
 
         // Porções e Data de lançamento
         y += 10;

@@ -1,21 +1,21 @@
 <header class="cabecalho">
-            <img style="width: 120px; height: 100px;" src="../../../../../assets/logo (3).png">
-    
-        <nav class="menu">
-            <ul>
-                <li>
-                    <a href="crud_admin_funcionarios" class="link_funcionarios">Funcionários</a>
-                    <a href="crud_admin_restaurantes" class="link_restaurantes">Restaurantes</a>
-                    <a href="crud_admin_receitas" class="link_receitas">Receitas</a>
-                    <a href="crud_admin_livros" class="link_livros">Livros</a>
-                    <a class="cargo_usuario">Administrador</a>
-                    <p-button class="btn_bars" (onClick)="menu.toggle($event)" icon=" pi pi-angle-down"/>
-                    <p-menu #menu [model]="items" [popup]="true" styleClass="w-full md:w-15rem"></p-menu>
-                    <p-avatar icon="pi pi-user" class="mr-2" shape="circle" styleClass="w-full" />
-                </li>
-            </ul>   
-        </nav>
-        
+    <img style="width: 120px; height: 100px;" src="../../../../../assets/logo (3).png">
+
+    <nav class="menu">
+        <ul>
+            <li>
+                <a href="crud_admin_funcionarios" class="link_funcionarios">Funcionários</a>
+                <a href="crud_admin_restaurantes" class="link_restaurantes">Restaurantes</a>
+                <a href="crud_admin_receitas" class="link_receitas">Receitas</a>
+                <a href="crud_admin_livros" class="link_livros">Livros</a>
+                <a class="cargo_usuario">Administrador</a>
+                <p-button class="btn_bars" (onClick)="menu.toggle($event)" icon=" pi pi-angle-down" />
+                <p-menu #menu [model]="items" [popup]="true" styleClass="w-full md:w-15rem"></p-menu>
+                <p-avatar icon="pi pi-user" class="mr-2" shape="circle" styleClass="w-full" />
+            </li>
+        </ul>
+    </nav>
+
 </header>
 
 <main>
@@ -24,92 +24,94 @@
             <h2>Receitas</h2>
             <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar receita"></p-button>
         </div>
-    <p-table
-    #dt2
-    dataKey="id"
-    [globalFilterFields]="['nomeReceitas', 'descricao', 'dtlancamento']" 
-    [paginator]="true" 
-    [rows]="5" 
-    [rowsPerPageOptions]="[5,10,20]" 
-    [value]="products" 
-    [tableStyle]="{ 'min-width': '60rem' }"
-    [scrollable]="true"
-    scrollHeight="370px"
-    >
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Nome</th>
-                <th>Descrição</th>
-                <th>Data de lançamento</th>
-                <th>Editar/Deletar</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td>{{ product.nomeReceitas }}</td>
-                <td>
-                    <p class="descricao" [pTooltip]="product.descricao" tooltipPosition="right">
-                        {{ product.descricao }}
-                    </p>
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeReceitas', 'descricao', 'dtlancamento']"
+            [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="products"
+            [tableStyle]="{ 'min-width': '60rem' }" [scrollable]="true" scrollHeight="370px">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Descrição</th>
+                    <th>Data de lançamento</th>
+                    <th>Editar/Deletar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.nomeReceitas }}</td>
+                    <td>{{ product.categoria }}</td>
+                    <td>
+                        <p class="descricao" [pTooltip]="product.descricao" tooltipPosition="right">
+                            {{ product.descricao }}
+                        </p>
                     </td>
-                <td>{{ product.dtlancamento}}</td>
-                <td>
-                    <p-button 
-                    class="btn_pencil" 
-                    icon="pi pi-pencil" 
-                    [rounded]="true" 
-                    [text]="true" 
-                    [raised]="true"
-                    [pTooltip]="editarReceitas"
-                    tooltipPosition="bottom"
-                     />
-                    <p-button 
-                    class="btn_trash"  
-                    icon="pi pi-trash" 
-                    [rounded]="true" 
-                    [text]="true" 
-                    [raised]="true"
-                    [pTooltip]="excluirReceitas"
-                    tooltipPosition="bottom"
-                     />
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <p-iconField iconPosition="left" class="ml-auto">
-                    <p-inputIcon>
-                        <i class="pi pi-search"></i>
-                    </p-inputIcon>
-                    <input 
-                        pInputText 
-                        type="text" 
-                        placeholder="Pesquisar"
-                        (input)="filtroReceitas($event)"
-                         />
-                </p-iconField>
-            </div>
-        </ng-template>    
-    </p-table>
-</p-card>
+                    <td>{{ product.dtlancamento}}</td>
+                    <td>
+                        <p-button class="btn_pencil" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true"
+                            [pTooltip]="editarReceitas" tooltipPosition="bottom" />
+                        <p-button class="btn_trash" icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true"
+                            [pTooltip]="excluirReceitas" tooltipPosition="bottom" />
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <p-iconField iconPosition="left" class="ml-auto">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" placeholder="Pesquisar" (input)="filtroReceitas($event)" />
+                    </p-iconField>
+                </div>
+            </ng-template>
+        </p-table>
+    </p-card>
 </main>
-<p-dialog header="Adicionar receita" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
-    <div class="">
-        <label for="username" class="label_modal">Nome da receita</label><br>
-        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira o nome de uma receita" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Descrição</label><br>
-        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira a descricao de uma receita" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Data de lançamento</label><br>
-        <input pInputText class="input_modal" autocomplete="off" type="date"/>
-    </div>
-    <ng-template pTemplate="footer">
-        <div>
-            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+
+<form [formGroup]="receitasForm">
+    <p-dialog header="Adicionar receita" [modal]="true" [(visible)]="visible"
+        [style]="{ width: '80rem', height: '80rem'}">
+        <div class="campos_input_menores">
+            <div class="div_nome_receita">
+                <label class="label_modal">Nome da receita</label><br>
+                <input pInputText formControlName="nome_receita" class="input_modal" autocomplete="off"
+                    placeholder="Insira o nome de uma receita" [style]="{ width: '22.94rem'}" />
+            </div>
+            <div class="div_categoria">
+                <label class="label_modal">Categoria</label><br>
+                <p-dropdown optionLabel="name" placeholder="Selecione a categoria da receita" />
+            </div>
+            <div class="div_quantidade_pessoas">
+                <label class="label_modal">Quantidade de pessoas</label><br>
+                <input pInputText formControlName="quantidade_pessoas" class="input_modal" autocomplete="off"
+                    type="number" placeholder="Para quantas pessoas?" />
+            </div>
+            <div class="div_upload_imagem">
+                <label class="label_modal">Baixar arquivo</label>
+                <p-fileUpload class="" mode="basic" chooseLabel="Escolha uma imagem" chooseIcon="pi pi-upload" name="demo[]"
+                     accept="image/*" maxFileSize="1000000" (onUpload)="onUpload()"/>
+            </div>
         </div>
-    </ng-template>
-</p-dialog>
+
+        <div class="campo_input_maiores">
+            <div class="descricao_receitas">
+                <label class="label_modal">Descrição da receita</label>
+                <p-editor formControlName="descricao" [(ngModel)]="text" [style]="{ height: '100px' }" />
+            </div>
+        <div class="ingredientes">
+                <label class="label_modal">Ingredientes</label>
+                <p-editor formControlName="ingredientes" [(ngModel)]="text" [style]="{ height: '100px' }" />
+        </div>
+            <div class="modo_de_preparo">
+                <label class="label_modal">Modo de preparo</label>
+                <p-editor formControlName="modo_de_preparo" [(ngModel)]="text" [style]="{ height: '100px' }" />
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <div>
+                <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+                <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+            </div>
+        </ng-template>
+    </p-dialog>
+</form>
