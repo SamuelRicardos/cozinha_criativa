@@ -5,6 +5,17 @@ main {
     align-items: center;
     padding-top: 120px;
 }
+input:-ms-input-placeholder  {
+    font-size:17px;
+  }
+
+input::-webkit-input-placeholder {
+    font-size:17px;
+  }
+
+input:-moz-placeholder {
+    font-size:17px;
+  }
 
 .content {
     display: flex;
@@ -73,12 +84,12 @@ main {
         border: none;
         border-radius: 37px;
         width: 300px;
-        padding: 10px;
+        padding: 15px;
     }
 
     .texto {
         color: white;
-        font-weight: 600;
+        font-weight:700;
         font-size: 19px;
     }
 

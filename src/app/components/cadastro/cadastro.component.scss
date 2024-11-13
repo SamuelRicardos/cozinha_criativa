@@ -6,6 +6,19 @@ main {
     padding-top: 120px;
 }
 
+:host ::ng-deep .p-dropdown {
+    border: none;
+    border-radius: 37px;
+    width: 300px;
+    margin-bottom: -10px;
+
+    .texto {
+        color: white;
+        font-weight: 600;
+        font-size: 7px;
+    }
+}
+
 .tab-buttons {
     display: flex;
     margin-right: 650px;
@@ -63,6 +76,17 @@ main {
     margin-left: 50px;
 }
 
+input:-ms-input-placeholder  {
+    font-size:17px;
+  }
+
+input::-webkit-input-placeholder {
+    font-size:17px;
+  }
+
+input:-moz-placeholder {
+    font-size:17px;
+  }
 .form {
     display: flex;
     justify-content: flex-start;
@@ -71,13 +95,13 @@ main {
         border: none;
         border-radius: 37px;
         width: 300px;
-        padding: 10px;
+        padding: 15px;
         margin-bottom: 10px;
     }
 
     .texto {
         color: white;
-        font-weight: 600;
+        font-weight:700;
         font-size: 19px;
     }
 
