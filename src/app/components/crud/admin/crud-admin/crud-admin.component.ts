@@ -15,6 +15,9 @@ import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-crud-admin',
@@ -35,6 +38,8 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
     DynamicDialogModule,
     MenuModule,
     AvatarModule,
+    FormsModule,
+    ReactiveFormsModule
     
   ],
   providers: [
@@ -48,12 +53,24 @@ export class CrudAdminComponent implements OnInit {
   excluirFuncionario: string = "Excluir funcionário"
   inserirFuncionario: string = "Insira um nome de funcionário"
   inserirCargo: string = "Insira um cargo"
+  inserirRg: string = "Insira um rg"
+  inserirSalario: string = "Insira um salário"
   products: any[] = [];
   @ViewChild('dt2') dt2!: Table;
   items: any;
   visible: boolean = false;
+  receitasForm!: FormGroup<any>;
 
-  constructor(private funcionarioService: FuncionarioService) { }
+  constructor(
+    private funcionarioService: FuncionarioService,
+    private tostr: ToastrService
+  ) {
+    this.receitasForm = new FormGroup({
+      nome: new FormControl('', [Validators.required]),
+      rg: new FormControl('', [Validators.required]),
+      salario: new FormControl('', [Validators.required])
+    })
+   }
 
   ngOnInit() {
     this.getFuncionario()
@@ -61,8 +78,9 @@ export class CrudAdminComponent implements OnInit {
   }
 
   getFuncionario(): any {
-    this.funcionarioService.getFuncionario().subscribe((data: any) => {
+    this.funcionarioService.listarTodosFuncionarios().subscribe((data: any) => {
       this.products = data;
+      console.log(this.products)
     });
   }
 
@@ -97,4 +115,12 @@ export class CrudAdminComponent implements OnInit {
     ];
   }
 
+  enviarFuncionarios() {
+    this.funcionarioService.adicionarFuncionarios(this.receitasForm.value.nome, this.receitasForm.value.rg, this.receitasForm.value.salario).subscribe({
+      next: () => {
+        this.tostr.success("Funcionário adicionado com sucesso!")
+      },
+      error: () => this.tostr.error("Não foi possível adicionar o funcionário, tente novamente")
+    })
+  }
 }

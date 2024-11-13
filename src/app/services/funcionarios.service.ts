@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Observable, tap } from "rxjs";
 
 @Injectable({
     providedIn: "root"
@@ -8,71 +8,19 @@ import { Observable, of } from "rxjs";
 
 export class FuncionarioService {
 
-    constructor(private httpClient: HttpClient){}
+    apiUrl: string = "http://localhost:8080/funcionario"
 
-    getFuncionario(): Observable<any[]> {
-        const data = [
-            {
-            id: '1000',
-            nome: 'Samuel Ricardo',
-            cargo: 'Administrador',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '2000',
-            nome: 'Tonhas',
-            cargo: 'Cozinheiro',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '3000',
-            nome: 'Bryan Gomes',
-            cargo: 'Editor',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '4000',
-            nome: 'José',
-            cargo: 'Editor',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '5000',
-            nome: 'João Vitor',
-            cargo: 'Cozinheiro',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '6000',
-            nome: 'Agostinho',
-            cargo: 'Cozinheiro',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '6000',
-            nome: 'Agostinho',
-            cargo: 'Cozinheiro',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '6000',
-            nome: 'Agostinho',
-            cargo: 'Cozinheiro',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '6000',
-            nome: 'Agostinho',
-            cargo: 'Cozinheiro',
-            dtadmissao: '09/10/2024'
-        },
-        {
-            id: '6000',
-            nome: 'Agostinho',
-            cargo: 'Cozinheiro',
-            dtadmissao: '09/10/2024'
-        }
-    ];
-        return of(data); // Retorna um array com os dados
+    constructor(private httpClient: HttpClient) { }
+
+    listarTodosFuncionarios(): Observable<any> {
+        return this.httpClient.get<any>(`${this.apiUrl}/`);
+    }
+
+    adicionarFuncionarios(nome: string, rg: string, salario: number) {
+        return this.httpClient.post<any>(`${this.apiUrl}/`, { nome, rg, salario }).pipe(
+            tap((value: { nome: string; rg: string; salario: number }) => {
+                sessionStorage.setItem("nome", value.nome),
+                sessionStorage.setItem("rg", value.rg)
+            }));
     }
 }
