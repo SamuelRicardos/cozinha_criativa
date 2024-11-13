@@ -68,6 +68,7 @@
                     [text]="true" 
                     [raised]="true"
                     [pTooltip]="excluirFuncionario"
+                    (onClick)="deletarFuncionarios(product.id_funcionario)"
                     tooltipPosition="bottom"
                      />
                 </td>
@@ -99,15 +100,15 @@
         <input pInputText class="input_modal" formControlName="nome" [placeholder]="inserirFuncionario" autocomplete="off" />
     </div>
     <div class="">
-        <label for="email" class="label_modal">Cargo</label><br>
+        <label for="cargo" class="label_modal">Cargo</label><br>
         <input pInputText class="input_modal" [placeholder]="inserirCargo" autocomplete="off" />
     </div>
     <div class="">
-        <label for="email" class="label_modal">RG</label><br>
+        <label for="rg" class="label_modal">RG</label><br>
         <input pInputText class="input_modal" formControlName="rg" [placeholder]="inserirRg" autocomplete="off" />
     </div>
     <div class="">
-        <label for="email" class="label_modal">Salário</label><br>
+        <label for="salario" class="label_modal">Salário</label><br>
         <input pInputText class="input_modal" formControlName="salario" [placeholder]="inserirSalario" autocomplete="off" />
     </div>
     <ng-template pTemplate="footer">

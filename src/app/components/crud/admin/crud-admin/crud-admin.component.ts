@@ -40,7 +40,7 @@ import { ToastrService } from 'ngx-toastr';
     AvatarModule,
     FormsModule,
     ReactiveFormsModule
-    
+
   ],
   providers: [
     FuncionarioService
@@ -60,6 +60,7 @@ export class CrudAdminComponent implements OnInit {
   items: any;
   visible: boolean = false;
   receitasForm!: FormGroup<any>;
+  id: any;
 
   constructor(
     private funcionarioService: FuncionarioService,
@@ -70,7 +71,7 @@ export class CrudAdminComponent implements OnInit {
       rg: new FormControl('', [Validators.required]),
       salario: new FormControl('', [Validators.required])
     })
-   }
+  }
 
   ngOnInit() {
     this.getFuncionario()
@@ -91,7 +92,7 @@ export class CrudAdminComponent implements OnInit {
 
   showDialog() {
     this.visible = true;
-}
+  }
 
   itemsMenu() {
     this.items = [
@@ -101,26 +102,38 @@ export class CrudAdminComponent implements OnInit {
           {
             label: 'Administrador',
             icon: 'pi pi-user',
-        },
-            {
-                label: 'Configurações',
-                icon: 'pi pi-cog',
-            },
-            {
-                label: 'Sair',
-                icon: 'pi pi-sign-out',
-            }
+          },
+          {
+            label: 'Configurações',
+            icon: 'pi pi-cog',
+          },
+          {
+            label: 'Sair',
+            icon: 'pi pi-sign-out',
+          }
         ]
-    },
+      },
     ];
   }
 
   enviarFuncionarios() {
     this.funcionarioService.adicionarFuncionarios(this.receitasForm.value.nome, this.receitasForm.value.rg, this.receitasForm.value.salario).subscribe({
       next: () => {
-        this.tostr.success("Funcionário adicionado com sucesso!")
+        this.tostr.success("Funcionário adicionado com sucesso!"),
+        this.getFuncionario();
       },
       error: () => this.tostr.error("Não foi possível adicionar o funcionário, tente novamente")
+    })
+  }
+
+  deletarFuncionarios(id: number) {
+    this.funcionarioService.deletarFuncionario(id).subscribe({
+      next: () => {
+        this.tostr.success("Funcionário deletado com sucesso!"),
+        this.getFuncionario();
+        this.visible = false;
+      },
+      error: () => this.tostr.error("Não foi possível deletar o funcionário, tente novamente")
     })
   }
 }
