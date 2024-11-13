@@ -4,15 +4,13 @@ import { LoginService } from '../../services/login.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { DropdownModule } from 'primeng/dropdown';
+import { CargosService } from '../../services/cargos.service';
 
-interface cargos {
-  name: string;
-  code: string;
-}
 interface SignupForm {
-  name: FormControl,
+  nome: FormControl,
+  rg: FormControl,
   email: FormControl,
-  cargo: FormControl,
+  nome_cargo: FormControl,
   password: FormControl
 }
 
@@ -29,41 +27,44 @@ interface SignupForm {
 })
 
 export class CadastroComponent implements OnInit{
-  cargos: cargos[] | undefined;
-
-  CargoSelecionado: cargos | undefined;
+  cargos: any[] = [];
 
 
   ngOnInit() {
-      this.cargos = [
-          { name: 'Cozinheiro', code: ''},
-          { name: 'Editor', code:''},
-          { name: 'Degustador',code: ''}
-      ];
+this.getCargos()
   }
   cadastroForm!: FormGroup<SignupForm>;
   
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private cargosService: CargosService
   ) {
     this.cadastroForm = new FormGroup({
-      name: new FormControl("", [Validators.required]),
+      nome: new FormControl("", [Validators.required]),
+      rg: new FormControl("", [Validators.required]),
       email: new FormControl("", [Validators.required, Validators.email]),
-      cargo: new FormControl("", [Validators.required]),
+      nome_cargo: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required, Validators.minLength(6)])
     });
   }
   
   cadastro() {
-    this.loginService.signup(this.cadastroForm.value.name, this.cadastroForm.value.email, this.cadastroForm.value.cargo, this.cadastroForm.value.password).subscribe({
+    this.loginService.signup(this.cadastroForm.value.nome, this.cadastroForm.value.email,this.cadastroForm.value.nome_cargo, this.cadastroForm.value.rg, this.cadastroForm.value.password).subscribe({
       next: () => {
         this.toastr.success("Cadastro feito com sucesso!"),
         this.router.navigate(['']);
       },
       error: () => this.toastr.error("Erro inesperado! Tente novamente.")
     });
+  }
+
+  getCargos() {
+    this.cargosService.getCargos().subscribe((cargos) => {
+      this.cargos = cargos;
+      console.log(cargos)
+    })
   }
 
 }

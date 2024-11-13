@@ -5,17 +5,20 @@
         <div class="form">
             <form [formGroup]="cadastroForm">
                 <label for="" class="texto">Nome</label><br>
-                <input  formControlName="name" class="entrada_login" type="text" placeholder="Insira seu nome"/><br>
+                <input  formControlName="nome" class="entrada_login" type="text" placeholder="Insira seu nome"/><br>
 
                 <Label class="texto">Email</Label><br>
                 <input formControlName="email" class="entrada_login" type="email" placeholder="Insira seu email"/><br>
+
+                <Label class="texto">RG</Label><br>
+                <input formControlName="rg" class="entrada_login" type="email" placeholder="Insira seu rg"/><br>
 
                 <Label class="texto">Cargos</Label><br>
                 <div class="card flex justify-content-center">
                     <p-dropdown
                         [options]="cargos" 
-                        formControlName="cargo" 
-                        optionLabel="name"
+                        formControlName="nome_cargo"
+                        optionLabel="nome_cargo"
                         placeholder="Selecione um cargo" />
                 </div><br>
 

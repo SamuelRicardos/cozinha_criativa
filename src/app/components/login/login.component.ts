@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 
 interface LoginForm {
   email: FormControl,
-  password: FormControl
+  senha: FormControl
 }
 
 @Component({
@@ -31,13 +31,15 @@ export class LoginComponent {
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6)])
+      senha: new FormControl('', [Validators.required, Validators.minLength(6)])
     })
   }
 
   submit(){
-    this.loginService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
-      next: () => this.tostr.success("Login feito com sucesso!"),
+    this.loginService.login(this.loginForm.value.email, this.loginForm.value.senha).subscribe({
+      next: () => { this.tostr.success("Login feito com sucesso!")
+        this.router.navigate(['crud_admin_funcionarios']);
+       },
       error: () => this.tostr.error("Usuário não cadastrado!")
     })
   }
