@@ -16,9 +16,9 @@ export class FuncionarioService {
         return this.httpClient.get<any>(`${this.apiUrl}/`);
     }
 
-    adicionarFuncionarios(nome: string, rg: string, salario: number) {
-        return this.httpClient.post<any>(`${this.apiUrl}/`, { nome, rg, salario }).pipe(
-            tap((value: { nome: string; rg: string; salario: number }) => {
+    adicionarFuncionarios(nome: string, nome_cargo: string, rg: string, salario: number) {
+        return this.httpClient.post<any>(`${this.apiUrl}/`, { nome, nome_cargo, rg, salario }).pipe(
+            tap((value: { nome: string; nome_cargo:string; rg: string; salario: number }) => {
                 sessionStorage.setItem("nome", value.nome),
                 sessionStorage.setItem("rg", value.rg)
             }));

@@ -48,7 +48,7 @@
         <ng-template pTemplate="body" let-product>
             <tr>
                 <td>{{ product.nome }}</td>
-                <td>{{ product.cargo }}</td>
+                <td>{{ product.cargo?.nome }}</td>
                 <td>{{ product.salario }}</td>
                 <td>{{ product.data_adm | date: 'dd/MM/yyyy'}}</td>
                 <td>
@@ -101,7 +101,7 @@
     </div>
     <div class="">
         <label for="cargo" class="label_modal">Cargo</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirCargo" autocomplete="off" />
+        <input pInputText class="input_modal" formControlName="nome_cargo" [placeholder]="inserirCargo" autocomplete="off" />
     </div>
     <div class="">
         <label for="rg" class="label_modal">RG</label><br>

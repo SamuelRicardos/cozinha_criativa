@@ -69,7 +69,8 @@ export class CrudAdminComponent implements OnInit {
     this.receitasForm = new FormGroup({
       nome: new FormControl('', [Validators.required]),
       rg: new FormControl('', [Validators.required]),
-      salario: new FormControl('', [Validators.required])
+      salario: new FormControl('', [Validators.required]),
+      nome_cargo: new FormControl('', [Validators.required])
     })
   }
 
@@ -117,7 +118,7 @@ export class CrudAdminComponent implements OnInit {
   }
 
   enviarFuncionarios() {
-    this.funcionarioService.adicionarFuncionarios(this.receitasForm.value.nome, this.receitasForm.value.rg, this.receitasForm.value.salario).subscribe({
+    this.funcionarioService.adicionarFuncionarios(this.receitasForm.value.nome, this.receitasForm.value.nome_cargo, this.receitasForm.value.rg, this.receitasForm.value.salario).subscribe({
       next: () => {
         this.tostr.success("Funcionário adicionado com sucesso!"),
         this.getFuncionario();
@@ -130,8 +131,8 @@ export class CrudAdminComponent implements OnInit {
     this.funcionarioService.deletarFuncionario(id).subscribe({
       next: () => {
         this.tostr.success("Funcionário deletado com sucesso!"),
-        this.getFuncionario();
         this.visible = false;
+        this.getFuncionario();
       },
       error: () => this.tostr.error("Não foi possível deletar o funcionário, tente novamente")
     })
