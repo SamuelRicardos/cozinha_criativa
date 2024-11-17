@@ -8,25 +8,12 @@ import { Observable, of } from "rxjs";
 
 export class CargosService {
 
+    apiUrl: string = "http://localhost:8080/cargo"
+
     constructor(private httpClient: HttpClient) { }
 
-    getCargos(): Observable<any[]> {
-        const cargos = [
-            {
-                
-                nome_cargo: "degustador"
-            },
-            {
-                
-                nome_cargo: "cozinheiro"
-            },
-            {
-                
-                nome_cargo: "editor"
-            }
-        ]
-
-        return of(cargos);
+    getCargos(): Observable<any> {
+        return this.httpClient.get<any>(`${this.apiUrl}/`);
     }
 
 }

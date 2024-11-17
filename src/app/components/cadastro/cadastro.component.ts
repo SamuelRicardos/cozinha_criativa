@@ -51,9 +51,17 @@ this.getCargos()
   }
   
   cadastro() {
-    this.loginService.signup(this.cadastroForm.value.nome, this.cadastroForm.value.email,this.cadastroForm.value.nome_cargo, this.cadastroForm.value.rg, this.cadastroForm.value.password).subscribe({
+    const nomeCargo = this.cadastroForm.value.nome_cargo?.nome; // Extrai o nome do cargo selecionado
+  
+    this.loginService.signup(
+      this.cadastroForm.value.nome,
+      this.cadastroForm.value.email,
+      nomeCargo, // Passa apenas o nome do cargo
+      this.cadastroForm.value.rg,
+      this.cadastroForm.value.password
+    ).subscribe({
       next: () => {
-        this.toastr.success("Cadastro feito com sucesso!"),
+        this.toastr.success("Cadastro feito com sucesso!");
         this.router.navigate(['']);
       },
       error: () => this.toastr.error("Erro inesperado! Tente novamente.")
@@ -63,7 +71,7 @@ this.getCargos()
   getCargos() {
     this.cargosService.getCargos().subscribe((cargos) => {
       this.cargos = cargos;
-      console.log(cargos)
+      console.log(this.cargos)
     })
   }
 

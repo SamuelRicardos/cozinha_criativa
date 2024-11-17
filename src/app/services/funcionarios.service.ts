@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { catchError, Observable, tap, throwError } from "rxjs";
 
@@ -13,8 +13,25 @@ export class FuncionarioService {
     constructor(private httpClient: HttpClient) { }
 
     listarTodosFuncionarios(): Observable<any> {
-        return this.httpClient.get<any>(`${this.apiUrl}/`);
-    }
+        return this.httpClient.get<any>(`${this.apiUrl}/`).pipe(
+          catchError(this.handleError)
+        );
+      }
+
+    private handleError(error: HttpErrorResponse): Observable<never> {
+        if (error.error instanceof ErrorEvent) {
+          // Erro no lado do cliente
+          console.error('Ocorreu um erro no cliente:', error.error.message);
+        } else {
+          // Erro no lado do servidor
+          console.error(
+            `Erro no servidor: Código ${error.status}, ` +
+            `Mensagem: ${error.message}`
+          );
+        }
+        // Retorna uma mensagem de erro para o consumidor do serviço
+        return throwError(() => new Error('Erro ao processar a solicitação. Por favor, tente novamente mais tarde.'));
+      }
 
     adicionarFuncionarios(nome: string, nome_cargo: string, rg: string, salario: number) {
         return this.httpClient.post<any>(`${this.apiUrl}/`, { nome, nome_cargo, rg, salario }).pipe(
