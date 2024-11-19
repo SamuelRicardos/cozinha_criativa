@@ -17,6 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { CargosService } from '../../../../services/cargos.service';
 
 
 @Component({
@@ -59,14 +60,16 @@ export class CrudAdminComponent implements OnInit {
   @ViewChild('dt2') dt2!: Table;
   items: any;
   visible: boolean = false;
-  receitasForm!: FormGroup<any>;
+  funcionariosForm!: FormGroup<any>;
   id: any;
+  cargos: any[] = [];
 
   constructor(
     private funcionarioService: FuncionarioService,
-    private tostr: ToastrService
+    private tostr: ToastrService,
+    private cargoService: CargosService
   ) {
-    this.receitasForm = new FormGroup({
+    this.funcionariosForm = new FormGroup({
       nome: new FormControl('', [Validators.required]),
       rg: new FormControl('', [Validators.required]),
       salario: new FormControl('', [Validators.required]),
@@ -75,14 +78,14 @@ export class CrudAdminComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getFuncionario()
+    this.getFuncionario();
+    this.getCargo();
     this.itemsMenu();
   }
 
   getFuncionario(): any {
     this.funcionarioService.listarTodosFuncionarios().subscribe((data: any) => {
       this.products = data;
-      console.log(this.products)
     });
   }
 
@@ -118,10 +121,11 @@ export class CrudAdminComponent implements OnInit {
   }
 
   enviarFuncionarios() {
-    this.funcionarioService.adicionarFuncionarios(this.receitasForm.value.nome, this.receitasForm.value.nome_cargo, this.receitasForm.value.rg, this.receitasForm.value.salario).subscribe({
+    this.funcionarioService.adicionarFuncionarios(this.funcionariosForm.value.nome, this.funcionariosForm.value.nome_cargo?.nome, this.funcionariosForm.value.rg, this.funcionariosForm.value.salario).subscribe({
       next: () => {
         this.tostr.success("Funcionário adicionado com sucesso!"),
-        this.getFuncionario();
+          this.getFuncionario();
+          this.funcionariosForm.reset();
       },
       error: () => this.tostr.error("Não foi possível adicionar o funcionário, tente novamente")
     })
@@ -131,10 +135,16 @@ export class CrudAdminComponent implements OnInit {
     this.funcionarioService.deletarFuncionario(id).subscribe({
       next: () => {
         this.tostr.success("Funcionário deletado com sucesso!"),
-        this.visible = false;
         this.getFuncionario();
       },
       error: () => this.tostr.error("Não foi possível deletar o funcionário, tente novamente")
+    })
+  }
+
+  getCargo() {
+    this.cargoService.getCargos().subscribe((cargos) => {
+      this.cargos = cargos;
+      console.log(this.cargos)
     })
   }
 }
