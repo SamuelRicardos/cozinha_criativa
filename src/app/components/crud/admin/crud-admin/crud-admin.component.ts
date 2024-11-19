@@ -80,10 +80,11 @@ export class CrudAdminComponent implements OnInit {
 
   inicializarFormulario(): void {
     this.funcionariosForm = new FormGroup({
+      id_funcionario: new FormControl('', [Validators.required]), // Controle para o ID
       nome: new FormControl('', [Validators.required]),
       rg: new FormControl('', [Validators.required]),
       salario: new FormControl('', [Validators.required]),
-      nome_cargo: new FormControl(null, [Validators.required]),
+      nome_cargo: new FormControl('', [Validators.required]),
     });
   }
 
@@ -111,6 +112,39 @@ export class CrudAdminComponent implements OnInit {
   showDialog() {
     this.visible = true;
   }
+
+  abrirModalEdicao(funcionario: any) {
+    console.log(funcionario.cargo.nome)
+    this.funcionariosForm.patchValue({
+  
+        id_funcionario: funcionario.id_funcionario,
+        nome: funcionario.nome,
+        rg: funcionario.rg,
+        salario: funcionario.salario,
+        nome_cargo: funcionario.cargo// Ajuste para acessar o nome do cargo
+    });
+    this.visible = true; // Abre a modal
+}
+
+alterarFuncionarios() {
+  const funcionario = this.funcionariosForm.value; // Captura os dados do formulário
+  const id = funcionario?.id_funcionario; // Extrai o ID do funcionário
+console.log(funcionario)
+  if (id) { // Verifica se está no modo de edição
+      this.funcionarioService.updateFuncionario(funcionario, id).subscribe({
+          next: () => {
+              this.tostr.success('Funcionário atualizado com sucesso!');
+              this.carregarFuncionarios(); // Atualiza a lista de funcionários
+              this.visible = false; // Fecha a modal
+          },
+          error: (err: { message: string }) => {
+              this.tostr.error('Erro ao atualizar funcionário: ' + err.message);
+          }
+      });
+  } else {
+      this.tostr.error('ID do funcionário não encontrado para edição.');
+  }
+}
 
   enviarFuncionarios(): void {
     // Marca todos os campos como "tocados" para exibir mensagens de erro

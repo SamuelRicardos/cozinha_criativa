@@ -41,6 +41,15 @@ export class FuncionarioService {
             }));
     }
 
+    updateFuncionario(funcionario: any, id: number) {
+      return this.httpClient.put(`${this.apiUrl}/${id}`, funcionario).pipe(
+          catchError((error) => {
+              console.error('Erro ao atualizar funcionário:', error);
+              return throwError(() => error);
+          })
+      );
+  }
+
     deletarFuncionario(id: number) {
         return this.httpClient.delete<any>(`${this.apiUrl}/${id}`).pipe(
             tap(() => {
