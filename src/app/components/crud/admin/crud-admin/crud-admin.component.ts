@@ -61,6 +61,8 @@ export class CrudAdminComponent implements OnInit {
   @ViewChild('dt2') dt2!: Table;
   items: any;
   visible: boolean = false;
+  isEditMode: boolean = false; // Determina se é adição ou alteração
+  funcionarioSelecionado: any; // Armazena o funcionário selecionado para edição
   funcionariosForm!: FormGroup<any>;
   id: any;
   cargos: any[] = [];
@@ -80,7 +82,7 @@ export class CrudAdminComponent implements OnInit {
 
   inicializarFormulario(): void {
     this.funcionariosForm = new FormGroup({
-      id_funcionario: new FormControl('', [Validators.required]), // Controle para o ID
+      id_funcionario: new FormControl(''), // Controle para o ID
       nome: new FormControl('', [Validators.required]),
       rg: new FormControl('', [Validators.required]),
       salario: new FormControl('', [Validators.required]),
@@ -110,43 +112,57 @@ export class CrudAdminComponent implements OnInit {
   }
 
   showDialog() {
+    this.isEditMode = false;
+    this.resetarFormulario();
     this.visible = true;
   }
 
-  abrirModalEdicao(funcionario: any) {
+  abrirModalEdicao(funcionario: any): void {
+    this.isEditMode = true;
+    this.funcionarioSelecionado = funcionario;
     this.funcionariosForm.patchValue({
-        id_funcionario: funcionario.id_funcionario,
-        nome: funcionario.nome,
-        rg: funcionario.rg,
-        salario: funcionario.salario,
-        nome_cargo: funcionario.cargo // Apenas o nome do cargo
+      id_funcionario: funcionario.id_funcionario,
+      nome: funcionario.nome,
+      nome_cargo: funcionario.cargo,
+      rg: funcionario.rg,
+      salario: funcionario.salario,
     });
-    this.visible = true; // Abre a modal
-}
+    this.visible = true;
+  }
 
-alterarFuncionarios() {
-  const funcionario = {
+  // Salvar ou alterar funcionário
+  salvarOuAlterarFuncionario(): void {
+    
+    if (this.isEditMode) {
+      this.alterarFuncionarios();
+    } else {
+      this.enviarFuncionarios();
+    }
+  }
+
+  alterarFuncionarios() {
+    const funcionario = {
       ...this.funcionariosForm.value,
       nome_cargo: this.funcionariosForm.value.nome_cargo?.nome // Garante que seja apenas o nome
-  };
+    };
 
-  const id = funcionario?.id_funcionario; // Extrai o ID do funcionário
+    const id = funcionario?.id_funcionario; // Extrai o ID do funcionário
 
-  if (id) {
+    if (id) {
       this.funcionarioService.updateFuncionario(funcionario, id).subscribe({
-          next: () => {
-              this.tostr.success('Funcionário atualizado com sucesso!');
-              this.carregarFuncionarios(); // Atualiza a lista de funcionários
-              this.visible = false; // Fecha a modal
-          },
-          error: (err: { message: string }) => {
-              this.tostr.error('Erro ao atualizar funcionário: ' + err.message);
-          }
+        next: () => {
+          this.tostr.success('Funcionário atualizado com sucesso!');
+          this.carregarFuncionarios(); // Atualiza a lista de funcionários
+          this.visible = false; // Fecha a modal
+        },
+        error: (err: { message: string }) => {
+          this.tostr.error('Erro ao atualizar funcionário: ' + err.message);
+        }
       });
-  } else {
+    } else {
       this.tostr.error('ID do funcionário não encontrado para edição.');
+    }
   }
-}
 
   enviarFuncionarios(): void {
     // Marca todos os campos como "tocados" para exibir mensagens de erro
@@ -215,5 +231,6 @@ alterarFuncionarios() {
 
   resetarFormulario() {
     this.funcionariosForm.reset(); // Reseta todos os campos do formulário
+    this.funcionarioSelecionado = null;
   }
 }
