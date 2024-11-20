@@ -114,23 +114,25 @@ export class CrudAdminComponent implements OnInit {
   }
 
   abrirModalEdicao(funcionario: any) {
-    console.log(funcionario.cargo.nome)
     this.funcionariosForm.patchValue({
-  
         id_funcionario: funcionario.id_funcionario,
         nome: funcionario.nome,
         rg: funcionario.rg,
         salario: funcionario.salario,
-        nome_cargo: funcionario.cargo// Ajuste para acessar o nome do cargo
+        nome_cargo: funcionario.cargo // Apenas o nome do cargo
     });
     this.visible = true; // Abre a modal
 }
 
 alterarFuncionarios() {
-  const funcionario = this.funcionariosForm.value; // Captura os dados do formulário
+  const funcionario = {
+      ...this.funcionariosForm.value,
+      nome_cargo: this.funcionariosForm.value.nome_cargo?.nome // Garante que seja apenas o nome
+  };
+
   const id = funcionario?.id_funcionario; // Extrai o ID do funcionário
-console.log(funcionario)
-  if (id) { // Verifica se está no modo de edição
+
+  if (id) {
       this.funcionarioService.updateFuncionario(funcionario, id).subscribe({
           next: () => {
               this.tostr.success('Funcionário atualizado com sucesso!');
