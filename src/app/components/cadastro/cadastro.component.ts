@@ -62,7 +62,7 @@ this.getCargos()
     ).subscribe({
       next: () => {
         this.toastr.success("Cadastro feito com sucesso!");
-        this.router.navigate(['']);
+        this.router.navigate(["login"]);
       },
       error: () => this.toastr.error("Erro inesperado! Tente novamente.")
     });

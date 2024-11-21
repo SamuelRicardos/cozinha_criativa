@@ -14,7 +14,7 @@ import { TestPdfComponent } from './components/test/test-pdf/test-pdf.component'
 
 export const routes: Routes = [
     {
-        path: "",
+        path: "login",
         component: LoginComponent
     },
     {

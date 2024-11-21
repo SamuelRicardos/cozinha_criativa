@@ -35,13 +35,31 @@ export class LoginComponent {
     })
   }
 
-  submit(){
-    this.loginService.login(this.loginForm.value.email, this.loginForm.value.senha).subscribe({
-      next: () => { this.tostr.success("Login feito com sucesso!")
-        this.router.navigate(['crud_admin_funcionarios']);
-       },
+  submit() {
+    const { email, senha } = this.loginForm.value;
+    this.loginService.login(email, senha).subscribe({
+      next: (response) => {
+        this.tostr.success("Login feito com sucesso!");
+  
+        localStorage.setItem('token', response.token);
+
+        switch (response.nome_cargo) {
+          case 'editor':
+            this.router.navigate(['crud_editor_livros']);
+            break;
+          case 'degustador':
+            this.router.navigate(['crud_editor_livros']);
+            break;
+          case 'cozinheiro':
+            this.router.navigate(['crud_cozinheiro_receitas']);
+            break;
+          default:
+            this.tostr.warning("Cargo não reconhecido, redirecionando para a página padrão.");
+            this.router.navigate(['login']);
+        }
+      },
       error: () => this.tostr.error("Usuário não cadastrado!")
-    })
+    });
   }
 
 
