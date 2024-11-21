@@ -79,7 +79,7 @@ export class CrudEditorReceitasComponent {
         label: 'Perfil',
         items: [
           {
-            label: 'Administrador',
+            label: 'Editor',
             icon: 'pi pi-user',
         },
             {

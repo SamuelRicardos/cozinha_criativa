@@ -79,7 +79,7 @@ export class CrudCozinheiroReceitasComponent {
         label: 'Perfil',
         items: [
           {
-            label: 'Administrador',
+            label: 'Cozinheiro',
             icon: 'pi pi-user',
         },
             {
