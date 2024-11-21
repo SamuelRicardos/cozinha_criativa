@@ -15,6 +15,7 @@ import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crud-editor-receitas',
@@ -46,11 +47,19 @@ export class CrudEditorReceitasComponent {
   items: any;
   visible: boolean = false;
 
-  constructor(private receitaService: ReceitaService) { }
+  constructor(
+    private receitaService: ReceitaService,
+    private router: Router
+
+  ) { }
 
   ngOnInit() {
     this.getReceitas();
     this.itemsMenu();
+  }
+
+  isActive(route: string): boolean {
+    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
   }
 
   getReceitas(): any {

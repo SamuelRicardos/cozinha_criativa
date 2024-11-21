@@ -16,6 +16,7 @@ import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crud-admin-restaurantes',
@@ -53,7 +54,15 @@ export class CrudAdminRestaurantesComponent implements OnInit {
   items: any;
   visible: boolean = false;
 
-  constructor(private restauranteService: RestauranteService) { }
+  constructor(
+    private restauranteService: RestauranteService,
+    private router: Router
+    
+  ) { }
+
+  isActive(route: string): boolean {
+    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
+  }
 
   ngOnInit() {
     this.getFuncionario()

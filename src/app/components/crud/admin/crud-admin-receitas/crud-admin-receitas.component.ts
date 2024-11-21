@@ -19,6 +19,7 @@ import { FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsMo
 import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -62,7 +63,8 @@ export class CrudAdminReceitasComponent {
 
   constructor(
     private receitaService: ReceitaService,
-    private messagemService: MessageService
+    private messagemService: MessageService,
+    private router: Router
   ) {
     this.receitasForm = new FormGroup({
       nome_receita: new FormControl('', [Validators.required, Validators.email]),
@@ -87,6 +89,10 @@ export class CrudAdminReceitasComponent {
   filtroReceitas(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;
     this.dt2.filterGlobal(inputValue, 'contains');
+  }
+
+  isActive(route: string): boolean {
+    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
   }
 
   itemsMenu() {

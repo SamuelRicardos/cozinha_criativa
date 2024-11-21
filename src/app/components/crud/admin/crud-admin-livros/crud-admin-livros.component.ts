@@ -19,6 +19,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { TestPdfComponent } from "../../../test/test-pdf/test-pdf.component";
 import { jsPDF } from "jspdf";
 import { ReceitaService } from '../../../../services/receitas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crud-admin-livros',
@@ -63,7 +64,8 @@ export class CrudAdminLivrosComponent {
   constructor(
     private livroService: LivroService,
     public messagemService: MessageService,
-    private receitaService: ReceitaService
+    private receitaService: ReceitaService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -72,7 +74,9 @@ export class CrudAdminLivrosComponent {
     this.getReceitas()
   }
 
-
+  isActive(route: string): boolean {
+    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
+  }
 
   showDialog() {
     this.visible = true;

@@ -19,6 +19,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ToastrService } from 'ngx-toastr';
 import { CargosService } from '../../../../services/cargos.service';
 import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -70,7 +71,8 @@ export class CrudAdminComponent implements OnInit {
   constructor(
     private funcionarioService: FuncionarioService,
     private tostr: ToastrService,
-    private cargoService: CargosService
+    private cargoService: CargosService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -78,6 +80,10 @@ export class CrudAdminComponent implements OnInit {
     this.carregarFuncionarios();
     this.carregarCargos();
     this.configurarMenu();
+  }
+
+  isActive(route: string): boolean {
+    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
   }
   
   inicializarFormulario(): void {

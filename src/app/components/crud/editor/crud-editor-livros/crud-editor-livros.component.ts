@@ -17,6 +17,7 @@ import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { ReceitaService } from '../../../../services/receitas.service';
 import { jsPDF } from "jspdf";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -58,7 +59,8 @@ items: any;
 
   constructor(
     private livroService: LivroService,
-    private receitaService: ReceitaService
+    private receitaService: ReceitaService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -66,8 +68,10 @@ items: any;
     this.itemsMenu();
   }
 
+  isActive(route: string): boolean {
+    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
+  }
   
-
   showDialog() {
     this.visible = true;
 }
