@@ -79,7 +79,7 @@ export class CrudAdminComponent implements OnInit {
     this.carregarCargos();
     this.configurarMenu();
   }
-
+  
   inicializarFormulario(): void {
     this.funcionariosForm = new FormGroup({
       id_funcionario: new FormControl(''), // Controle para o ID

@@ -4,49 +4,46 @@
     align-items: center;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 
-    .menu {
+    .menu a {
+        font-size: 20px;
+        text-transform: capitalize;
+        margin: 0px 20px;
+        transition: color 0.2s ease-in-out;
+        color: #000000;
+        text-decoration: none;
+        position: relative;
+        list-style-type: none;
 
-        a {
-            font-size: 20px;
-            text-transform: capitalize;
-            margin: 0px 20px;
-            transition: 0.2s;
-            color: #000000;
-            text-decoration: none;
-            position: relative;
-            list-style-type: none;
-
-            &.link_funcionarios:focus {
-                color: #FF7F11;
-            }
-
-            &.link_restaurantes:focus {
-                color: #FF7F11;
-            }
-
-            &.link_receitas:focus {
-                color: #FF7F11;
-            }
-
-            &.link_livros:focus {
-                color: #FF7F11;
-            }
-
-            &.cargo_usuario {
-                margin-left: 955px;
-                font-size: 23px;
-                font-weight: 600;
-            }
-
+        &.cargo_usuario {
+            margin-left: 950px;
+            font-size: 23px;
+            font-weight: 600;
         }
-
-        li {
-            list-style-type: none;
-        }
-
-
-
     }
+    
+    .menu a::after {
+        content: "";
+        position: absolute;
+        bottom: -5px; /* Posiciona a linha logo abaixo do texto */
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background-color: #FF7F11;
+        transition: width 0.3s ease-in-out;
+    }
+    
+    .menu a:hover {
+        color: #FF7F11;
+    }
+    
+    .menu a:hover::after {
+        width: 100%; /* Linha cresce da esquerda para a direita ao passar o mouse */
+    }
+
+    li {
+        list-style-type: none;
+    }
+
 }
 
 .header-content {
