@@ -55,7 +55,7 @@ export class CrudCozinheiroReceitasComponent {
 
   ngOnInit() {
     this.getReceitas();
-    this.itemsMenu();
+    this.configurarMenu();
   }
 
   isActive(route: string): boolean {
@@ -73,26 +73,27 @@ export class CrudCozinheiroReceitasComponent {
     this.dt2.filterGlobal(inputValue, 'contains');
   }
 
-  itemsMenu() {
+  configurarMenu(): void {
     this.items = [
       {
         label: 'Perfil',
         items: [
+          { label: 'Cozinheiro', icon: 'pi pi-user' },
+          { label: 'Configurações', icon: 'pi pi-cog' },
           {
-            label: 'Cozinheiro',
-            icon: 'pi pi-user',
-        },
-            {
-                label: 'Configurações',
-                icon: 'pi pi-cog',
-            },
-            {
-                label: 'Sair',
-                icon: 'pi pi-sign-out',
-            }
-        ]
-    },
+            label: 'Sair',
+            icon: 'pi pi-sign-out',
+            command: () => this.sairDaConta(), // Chama a função logout ao clicar
+          },
+        ],
+      },
     ];
+  }
+
+  sairDaConta(): void {
+    // Aqui você pode limpar qualquer dado armazenado na sessão
+    sessionStorage.clear(); // Opcional: Remove todos os dados da sessão
+    this.router.navigate(['/login']); // Redireciona para a tela de login
   }
 
   showDialog() {

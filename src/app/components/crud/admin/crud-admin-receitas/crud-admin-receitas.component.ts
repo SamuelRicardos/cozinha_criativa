@@ -20,6 +20,8 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
 import { Router } from '@angular/router';
+import { CargosService } from '../../../../services/cargos.service';
+import { catchError, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -55,7 +57,8 @@ export class CrudAdminReceitasComponent {
   @ViewChild('dt2') dt2!: Table;
   editarReceitas: string = "Editar receitas"
   excluirReceitas: string = "Excluir receitas"
-  products: any[] = [];
+  receitas: any[] = [];
+  receitasDescricao: any[] = [];
   items: any;
   visible: boolean = false;
   receitasForm!: FormGroup<any>;
@@ -64,25 +67,66 @@ export class CrudAdminReceitasComponent {
   constructor(
     private receitaService: ReceitaService,
     private messagemService: MessageService,
-    private router: Router
+    private router: Router,
   ) {
     this.receitasForm = new FormGroup({
-      nome_receita: new FormControl('', [Validators.required, Validators.email]),
-      quantidade_pessoas: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      nome: new FormControl('', [Validators.required, Validators.email]),
+      num_porcao: new FormControl('', [Validators.required, Validators.minLength(6)]),
       descricao: new FormControl('', Validators.required),
-      ingredientes: new FormControl('', Validators.required),
-      modo_de_preparo: new FormControl('', Validators.required)
+      nome_categoria: new FormControl('', Validators.required),
+      modo_preparo: new FormControl('', Validators.required),
+      ind_inedita: new FormControl('', Validators.required)
     })
-   }
+  }
 
   ngOnInit() {
     this.getReceitas();
-    this.itemsMenu();
+    this.getReceitasDescricao();
+    this.configurarMenu();
+  }
+
+  enviarReceitas(): void {
+  
+    // Obtém os valores do formulário
+    const receita = this.receitasForm.value;
+  
+    // Envia os dados ao serviço
+    this.receitaService
+      .adicionarReceitas(
+        receita.nome,
+        receita.descricao,
+        receita.nome_categoria?.descricao, // Verifique se este campo está no formato esperado pelo backend
+        receita.modo_preparo,
+        receita.num_porcao,
+        receita.ind_inedita
+      )
+      .pipe(
+        // Trata possíveis erros na requisição
+        catchError((error) => {
+          this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao adicionar receita.' });
+          return throwError(() => new Error(error));
+        })
+      )
+      .subscribe(() => {
+        this.messagemService.add({ severity: 'success', summary: 'Sucesso', detail: 'Receita adicionada com sucesso.' });
+        this.getReceitas(); // Atualiza a lista de receitas
+        this.visible = false;    // Fecha a modal
+      });
   }
 
   getReceitas(): any {
     this.receitaService.getReceitas().subscribe((dataReceitas: any) => {
-      this.products = dataReceitas;
+      this.receitas = dataReceitas;
+      console.log(this.receitas)
+    });
+  }
+
+  getReceitasDescricao(): any {
+    this.receitaService.getReceitas().subscribe((dataReceitas: any) => {
+      this.receitasDescricao = dataReceitas.map((receita: any) => ({
+        descricao: receita.categoria?.descricao,
+      }));
+      console.log(this.receitasDescricao);
     });
   }
 
@@ -92,29 +136,30 @@ export class CrudAdminReceitasComponent {
   }
 
   isActive(route: string): boolean {
-    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
+    return this.router.url === route;
   }
 
-  itemsMenu() {
+  configurarMenu(): void {
     this.items = [
       {
         label: 'Perfil',
         items: [
+          { label: 'Administrador', icon: 'pi pi-user' },
+          { label: 'Configurações', icon: 'pi pi-cog' },
           {
-            label: 'Administrador',
-            icon: 'pi pi-user',
-        },
-            {
-                label: 'Configurações',
-                icon: 'pi pi-cog',
-            },
-            {
-                label: 'Sair',
-                icon: 'pi pi-sign-out',
-            }
-        ]
-    },
+            label: 'Sair',
+            icon: 'pi pi-sign-out',
+            command: () => this.sairDaConta(), // Chama a função logout ao clicar
+          },
+        ],
+      },
     ];
+  }
+
+  sairDaConta(): void {
+    // Aqui você pode limpar qualquer dado armazenado na sessão
+    sessionStorage.clear(); // Opcional: Remove todos os dados da sessão
+    this.router.navigate(['/login']); // Redireciona para a tela de login
   }
 
   showDialog() {
@@ -123,5 +168,5 @@ export class CrudAdminReceitasComponent {
 
   onUpload() {
     this.messagemService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
-}
+  }
 }

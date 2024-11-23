@@ -39,6 +39,7 @@ scrollHeight="370px"
 <ng-template pTemplate="header">
     <tr>
         <th>Nome</th>
+        <th>Categoria</th>
         <th>Descrição</th>
         <th>Data de lançamento</th>
         <th>Ver/Editar</th>
@@ -46,13 +47,14 @@ scrollHeight="370px"
 </ng-template>
 <ng-template pTemplate="body" let-product>
     <tr>
-        <td>{{ product.nomeReceitas }}</td>
+        <td>{{ product.nome }}</td>
         <td>
-            <p class="descricao" [pTooltip]="product.descricao" tooltipPosition="right">
-                {{ product.descricao }}
+            <p>
+                {{ product.categoria?.descricao }}
             </p>
-            </td>
-        <td>{{ product.dtlancamento}}</td>
+        </td>
+        <td class="descricao" [pTooltip]="product.descricao" tooltipPosition="right">{{ product.descricao }}</td>
+        <td>{{ product.data_inclusao | date: 'dd/MM/yyyy'}}</td>
         <td>
             <p-button 
             class="btn_pencil" 

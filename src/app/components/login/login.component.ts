@@ -48,7 +48,7 @@ export class LoginComponent {
             this.router.navigate(['crud_editor_livros']);
             break;
           case 'degustador':
-            this.router.navigate(['crud_editor_livros']);
+            this.router.navigate(['crud_admin_funcionarios']);
             break;
           case 'cozinheiro':
             this.router.navigate(['crud_cozinheiro_receitas']);

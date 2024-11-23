@@ -72,11 +72,10 @@
                     icon="pi pi-eye" 
                     [rounded]="true" 
                     [text]="true" 
-                    [raised]="true"
-                    (click)="criacaoPDF(product.id)" 
+                    [raised]="true" 
                     [pTooltip]="visualizarLivro"
                     tooltipPosition="bottom"/>
-
+                    <!-- (click)="criacaoPDF(product.id)" -->
                     <p-button 
                     class="btn_pencil" 
                     icon="pi pi-download" 
@@ -84,9 +83,9 @@
                     [text]="true" 
                     [raised]="true"
                     [pTooltip]="baixarLivro"
-                    (click)="baixarPDF()"
                     tooltipPosition="bottom">
                 </p-button>
+                <!-- (click)="baixarPDF()" -->
                     <p-button 
                     class="btn_trash"  
                     icon="pi pi-pencil" 

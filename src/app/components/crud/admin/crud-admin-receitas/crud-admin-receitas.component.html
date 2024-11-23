@@ -42,8 +42,8 @@
             <h2>Receitas</h2>
             <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar receita"></p-button>
         </div>
-        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeReceitas', 'descricao', 'dtlancamento']"
-            [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="products"
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nome', 'categoria.descricao', 'data_inclusao']"
+            [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="receitas"
             [tableStyle]="{ 'min-width': '60rem' }" [scrollable]="true" scrollHeight="370px">
             <ng-template pTemplate="header">
                 <tr>
@@ -56,14 +56,14 @@
             </ng-template>
             <ng-template pTemplate="body" let-product>
                 <tr>
-                    <td>{{ product.nomeReceitas }}</td>
-                    <td>{{ product.categoria }}</td>
+                    <td>{{ product.nome }}</td>
+                    <td>{{ product.categoria?.descricao }}</td>
                     <td>
                         <p class="descricao" [pTooltip]="product.descricao" tooltipPosition="right">
                             {{ product.descricao }}
                         </p>
                     </td>
-                    <td>{{ product.dtlancamento}}</td>
+                    <td>{{ product.data_inclusao | date: 'dd/MM/yyyy'}}</td>
                     <td>
                         <p-button class="btn_pencil" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true"
                             [pTooltip]="editarReceitas" tooltipPosition="bottom" />
@@ -92,16 +92,16 @@
         <div class="campos_input_menores">
             <div class="div_nome_receita">
                 <label class="label_modal">Nome da receita</label><br>
-                <input pInputText formControlName="nome_receita" class="input_modal" autocomplete="off"
+                <input pInputText formControlName="nome" class="input_modal" autocomplete="off"
                     placeholder="Insira o nome de uma receita" [style]="{ width: '22.94rem'}" />
             </div>
             <div class="div_categoria">
                 <label class="label_modal">Categoria</label><br>
-                <p-dropdown optionLabel="name" placeholder="Selecione a categoria da receita" />
+                <p-dropdown optionLabel="descricao" formControlName="nome_categoria" [options]="receitasDescricao" placeholder="Selecione a categoria da receita" />
             </div>
             <div class="div_quantidade_pessoas">
                 <label class="label_modal">Quantidade de pessoas</label><br>
-                <input pInputText formControlName="quantidade_pessoas" class="input_modal" autocomplete="off"
+                <input pInputText formControlName="num_porcao" class="input_modal" autocomplete="off"
                     type="number" placeholder="Para quantas pessoas?" />
             </div>
             <div class="div_upload_imagem">
@@ -114,21 +114,22 @@
         <div class="campo_input_maiores">
             <div class="descricao_receitas">
                 <label class="label_modal">Descrição da receita</label>
-                <p-editor formControlName="descricao" [(ngModel)]="text" [style]="{ height: '100px' }" />
+                <p-editor formControlName="descricao" [style]="{ height: '100px' }" />
             </div>
         <div class="ingredientes">
-                <label class="label_modal">Ingredientes</label>
-                <p-editor formControlName="ingredientes" [(ngModel)]="text" [style]="{ height: '100px' }" />
+                <label class="label_modal">Ind_inedita</label>
+                <input pInputText formControlName="ind_inedita" class="input_modal" autocomplete="off"
+                type="number" placeholder="Para quantas pessoas?" />
         </div>
             <div class="modo_de_preparo">
                 <label class="label_modal">Modo de preparo</label>
-                <p-editor formControlName="modo_de_preparo" [(ngModel)]="text" [style]="{ height: '100px' }" />
+                <p-editor formControlName="modo_preparo" [style]="{ height: '100px' }" />
             </div>
         </div>
         <ng-template pTemplate="footer">
             <div>
                 <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-                <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+                <p-button label="Adicionar" class="button_modal_save" (onClick)="enviarReceitas()" />
             </div>
         </ng-template>
     </p-dialog>
