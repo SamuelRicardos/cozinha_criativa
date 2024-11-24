@@ -44,7 +44,7 @@
     <p-table
     #dt2
     dataKey="id"
-    [globalFilterFields]="['nome', 'cargo.nome', 'data_adm', 'salario']" 
+    [globalFilterFields]="['nome', 'nome_cargo', 'data_adm', 'salario']" 
     [paginator]="true" 
     [rows]="5" 
     [rowsPerPageOptions]="[5,10,20]" 
@@ -65,7 +65,7 @@
         <ng-template pTemplate="body" let-product>
             <tr>
                 <td>{{ product.nome }}</td>
-                <td>{{ product.cargo?.nome }}</td>
+                <td>{{ product.nome_cargo }}</td>
                 <td>{{ product.salario | currency: 'BRL':'symbol' }}</td>
                 <td>{{ product.data_adm | date: 'dd/MM/yyyy'}}</td>
                 <td>

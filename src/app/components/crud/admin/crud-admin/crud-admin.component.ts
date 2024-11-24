@@ -126,13 +126,20 @@ export class CrudAdminComponent implements OnInit {
   abrirModalEdicao(funcionario: any): void {
     this.isEditMode = true;
     this.funcionarioSelecionado = funcionario;
+  
+    // Encontrar o cargo correspondente na lista
+    const cargoSelecionado = this.cargos.find(
+      (cargo) => cargo.nome === funcionario.nome_cargo
+    );
+  
     this.funcionariosForm.patchValue({
       id_funcionario: funcionario.id_funcionario,
       nome: funcionario.nome,
-      nome_cargo: funcionario.cargo,
       rg: funcionario.rg,
       salario: funcionario.salario,
+      nome_cargo: cargoSelecionado, // Passar o objeto completo
     });
+  
     this.visible = true;
   }
 
