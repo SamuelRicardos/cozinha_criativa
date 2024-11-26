@@ -3,9 +3,7 @@
     <nav class="menu">
         <ul>
             <li>
-                <a 
-                    href="crud_cozinheiro_receitas" 
-                    class="link_receitas" 
+                <a href="crud_cozinheiro_receitas" class="link_receitas"
                     [ngClass]="{ 'active-link': isActive('/crud_cozinheiro_receitas') }">
                     Receitas
                 </a>
@@ -16,102 +14,70 @@
             </li>
         </ul>
     </nav>
-  </header>
+</header>
 
 <main>
-<p-card>
-<div class="header-content">
-    <h2>Receitas</h2>
-    <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar receita"></p-button>
-</div>
-<p-table
-#dt2
-dataKey="id"
-[globalFilterFields]="['nomeReceitas', 'descricao', 'dtlancamento']" 
-[paginator]="true" 
-[rows]="5" 
-[rowsPerPageOptions]="[5,10,20]" 
-[value]="products" 
-[tableStyle]="{ 'min-width': '60rem' }"
-[scrollable]="true"
-scrollHeight="370px"
->
-<ng-template pTemplate="header">
-    <tr>
-        <th>Nome</th>
-        <th>Categoria</th>
-        <th>Descrição</th>
-        <th>Data de lançamento</th>
-        <th>Ver/Editar</th>
-    </tr>
-</ng-template>
-<ng-template pTemplate="body" let-product>
-    <tr>
-        <td>{{ product.nome }}</td>
-        <td>
-            <p>
-                {{ product.categoria?.descricao }}
-            </p>
-        </td>
-        <td class="descricao" [pTooltip]="product.descricao" tooltipPosition="right">{{ product.descricao }}</td>
-        <td>{{ product.data_inclusao | date: 'dd/MM/yyyy'}}</td>
-        <td>
-            <p-button 
-            class="btn_pencil" 
-            icon="pi pi-eye" 
-            [rounded]="true" 
-            [text]="true" 
-            [raised]="true"
-            [pTooltip]="editarReceitas"
-            tooltipPosition="bottom"
-             />
-            <p-button 
-            class="btn_trash"  
-            icon="pi pi-pencil" 
-            [rounded]="true" 
-            [text]="true" 
-            [raised]="true"
-            [pTooltip]="excluirReceitas"
-            tooltipPosition="bottom"
-             />
-        </td>
-    </tr>
-</ng-template>
-<ng-template pTemplate="caption">
-    <div class="flex">
-        <p-iconField iconPosition="left" class="ml-auto">
-            <p-inputIcon>
-                <i class="pi pi-search"></i>
-            </p-inputIcon>
-            <input 
-                pInputText 
-                type="text" 
-                placeholder="Pesquisar"
-                (input)="filtroReceitas($event)"
-                 />
-        </p-iconField>
-    </div>
-</ng-template>    
-</p-table>
-</p-card>
+    <p-card>
+        <div class="header-content">
+            <h2>Receitas</h2>
+            <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar receita"></p-button>
+        </div>
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeReceitas', 'descricao', 'dtlancamento']"
+            [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="products"
+            [tableStyle]="{ 'min-width': '60rem' }" [scrollable]="true" scrollHeight="370px">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Descrição</th>
+                    <th>Data de lançamento</th>
+                    <th>Ver/Editar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.nome }}</td>
+                    <td>{{ product.nomeCategoria }}</td>
+                    <td>{{ product.descricao }}</td>
+                    <td>{{ product.data_inclusao | date: 'dd/MM/yyyy'}}</td>
+                    <td>
+                        <p-button class="btn_pencil" icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true"
+                            [pTooltip]="verReceitas" tooltipPosition="bottom" />
+                        <p-button class="btn_trash" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true"
+                            [pTooltip]="editarReceitas" tooltipPosition="bottom" />
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <p-iconField iconPosition="left" class="ml-auto">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" placeholder="Pesquisar" (input)="filtroReceitas($event)" />
+                    </p-iconField>
+                </div>
+            </ng-template>
+        </p-table>
+    </p-card>
 </main>
 <p-dialog header="Adicionar receita" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
-<div class="">
-<label for="username" class="label_modal">Nome da receita</label><br>
-<input pInputText class="input_modal" autocomplete="off" placeholder="Insira o nome de uma receita" />
-</div>
-<div class="">
-<label for="email" class="label_modal">Descrição</label><br>
-<input pInputText class="input_modal" autocomplete="off" placeholder="Insira a descricao de uma receita" />
-</div>
-<div class="">
-<label for="email" class="label_modal">Data de lançamento</label><br>
-<input pInputText class="input_modal" autocomplete="off" type="date"/>
-</div>
-<ng-template pTemplate="footer">
-<div>
-    <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-    <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
-</div>
-</ng-template>
+    <div class="">
+        <label for="username" class="label_modal">Nome da receita</label><br>
+        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira o nome de uma receita" />
+    </div>
+    <div class="">
+        <label for="email" class="label_modal">Descrição</label><br>
+        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira a descricao de uma receita" />
+    </div>
+    <div class="">
+        <label for="email" class="label_modal">Data de lançamento</label><br>
+        <input pInputText class="input_modal" autocomplete="off" type="date" />
+    </div>
+    <ng-template pTemplate="footer">
+        <div>
+            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+        </div>
+    </ng-template>
 </p-dialog>
