@@ -16,7 +16,6 @@ import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
-import { TestPdfComponent } from "../../../test/test-pdf/test-pdf.component";
 import { jsPDF } from "jspdf";
 import { ReceitaService } from '../../../../services/receitas.service';
 import { Router } from '@angular/router';
