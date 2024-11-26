@@ -10,7 +10,7 @@ import { CrudAdminLivrosComponent } from './components/crud/admin/crud-admin-liv
 import { CrudEditorLivrosComponent } from './components/crud/editor/crud-editor-livros/crud-editor-livros.component';
 import { CrudEditorReceitasComponent } from './components/crud/editor/crud-editor-receitas/crud-editor-receitas.component';
 import { CrudCozinheiroReceitasComponent } from './components/crud/cozinheiro/crud-cozinheiro-receitas/crud-cozinheiro-receitas.component';
-import { TestPdfComponent } from './components/test/test-pdf/test-pdf.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 export const routes: Routes = [
     {
@@ -31,7 +31,8 @@ export const routes: Routes = [
     },
     {
         path:"crud_admin_funcionarios",
-        component: CrudAdminComponent
+        component: CrudAdminComponent,
+        canActivate: [AuthGuard]
     },
     {
         path:"crud_admin_restaurantes",
@@ -56,11 +57,5 @@ export const routes: Routes = [
     {
         path: "crud_cozinheiro_receitas",
         component: CrudCozinheiroReceitasComponent
-    },
-    {
-        path:
-        "test",
-        component:
-        TestPdfComponent
     }
 ];

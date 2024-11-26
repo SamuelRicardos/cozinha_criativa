@@ -3,27 +3,19 @@
     <nav class="menu">
         <ul>
             <li>
-                <a 
-                    href="crud_admin_funcionarios" 
-                    class="link_funcionarios" 
+                <a href="crud_admin_funcionarios" class="link_funcionarios"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_funcionarios') }">
                     Funcionários
                 </a>
-                <a 
-                    href="crud_admin_restaurantes" 
-                    class="link_restaurantes" 
+                <a href="crud_admin_restaurantes" class="link_restaurantes"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_restaurantes') }">
                     Restaurantes
                 </a>
-                <a 
-                    href="crud_admin_receitas" 
-                    class="link_receitas" 
+                <a href="crud_admin_receitas" class="link_receitas"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_receitas') }">
                     Receitas
                 </a>
-                <a 
-                    href="crud_admin_livros" 
-                    class="link_livros" 
+                <a href="crud_admin_livros" class="link_livros"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_livros') }">
                     Livros
                 </a>
@@ -34,7 +26,7 @@
             </li>
         </ul>
     </nav>
-  </header>
+</header>
 
 <main>
     <p-card>
@@ -97,33 +89,41 @@
             </div>
             <div class="div_categoria">
                 <label class="label_modal">Categoria</label><br>
-                <p-dropdown optionLabel="descricao" formControlName="nome_categoria" [options]="receitasDescricao" placeholder="Selecione a categoria da receita" />
+                <p-dropdown optionLabel="nome" formControlName="nome_categoria" [options]="categorias"
+                    placeholder="Selecione a categoria da receita" />
             </div>
             <div class="div_quantidade_pessoas">
                 <label class="label_modal">Quantidade de pessoas</label><br>
-                <input pInputText formControlName="num_porcao" class="input_modal" autocomplete="off"
-                    type="number" placeholder="Para quantas pessoas?" />
+                <input pInputText formControlName="num_porcao" class="input_modal" autocomplete="off" type="number"
+                    placeholder="Para quantas pessoas?" />
             </div>
             <div class="div_upload_imagem">
                 <label class="label_modal">Baixar arquivo</label>
-                <p-fileUpload class="" mode="basic" chooseLabel="Escolha uma imagem" chooseIcon="pi pi-upload" name="demo[]"
-                     accept="image/*" maxFileSize="1000000" (onUpload)="onUpload()"/>
+                <p-fileUpload class="" mode="basic" chooseLabel="Escolha uma imagem" chooseIcon="pi pi-upload"
+                    name="demo[]" accept="image/*" maxFileSize="1000000" (onUpload)="onUpload()" />
             </div>
         </div>
 
         <div class="campo_input_maiores">
+
             <div class="descricao_receitas">
-                <label class="label_modal">Descrição da receita</label>
-                <p-editor formControlName="descricao" [style]="{ height: '100px' }" />
+                <label class="label_modal">Descrição da receita</label><br>
+                <textarea formControlName="descricao" rows="5" cols="30" pInputTextarea></textarea>
             </div>
-        <div class="ingredientes">
-                <label class="label_modal">Ind_inedita</label>
-                <input pInputText formControlName="ind_inedita" class="input_modal" autocomplete="off"
-                type="number" placeholder="Para quantas pessoas?" />
-        </div>
+            <div class="ingredientes">
+                <label class="label_modal">Ingredientes</label><br>
+                <div *ngFor="let ingrediente of ingredientes; let i = index" class="ingrediente-item">
+                    <input type="text" formControlName="ingredientes" [(ngModel)]="ingredientes[i].nome" class="input_modal"
+                        placeholder="Nome do ingrediente" />
+                    <input type="text" formControlName="ingredientes" [(ngModel)]="ingredientes[i].descricao" class="input_modal"
+                        placeholder="Descrição do ingrediente" />
+                    <button type="button" (click)="removerIngrediente(i)" class="remove-btn">Remover</button>
+                </div>
+                <button type="button" (click)="adicionarIngrediente()" class="add-btn">Adicionar Ingrediente</button>
+            </div>
             <div class="modo_de_preparo">
-                <label class="label_modal">Modo de preparo</label>
-                <p-editor formControlName="modo_preparo" [style]="{ height: '100px' }" />
+                <label class="label_modal">Modo de preparo</label><br>
+                <textarea formControlName="modo_preparo" rows="5" cols="30" pInputTextarea></textarea>
             </div>
         </div>
         <ng-template pTemplate="footer">

@@ -132,7 +132,7 @@ main {
 
 .input_modal {
     width: 97%;
-    margin: 2px 0px;
+    margin: 4px 0px 0px 0px;
 }
 .label_modal{
     color: #FF7F11;
@@ -194,6 +194,44 @@ background: #FF7F11;
 border: none;
 }
 
+:host ::ng-deep .p-inputtextarea {
+    width: 100%;
+}
+
 .label_modal_maior {
     margin-top: 100px;
+}
+
+.ingrediente-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+}
+
+.remove-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+}
+
+.remove-btn:hover {
+    background-color: #d32f2f;
+}
+
+.add-btn {
+    background-color: #FF7F11;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.add-btn:hover {
+    background-color: #388e3c;
 }

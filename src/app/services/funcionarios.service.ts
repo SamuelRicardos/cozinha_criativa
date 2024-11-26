@@ -33,9 +33,9 @@ export class FuncionarioService {
         return throwError(() => new Error('Erro ao processar a solicitação. Por favor, tente novamente mais tarde.'));
       }
 
-    adicionarFuncionarios(nome: string, nome_cargo: string, rg: string, salario: number) {
-        return this.httpClient.post<any>(`${this.apiUrl}/`, { nome, nome_cargo, rg, salario }).pipe(
-            tap((value: { nome: string; nome_cargo:string; rg: string; salario: number }) => {
+    adicionarFuncionarios(nome: string, email: string, senha: string, nome_cargo: string, rg: string, salario: number) {
+        return this.httpClient.post<any>(`${this.apiUrl}/`, { nome, email, senha, nome_cargo, rg, salario }).pipe(
+            tap((value: { nome: string; email: string; senha: string; nome_cargo:string; rg: string; salario: number }) => {
                 sessionStorage.setItem("nome", value.nome),
                 sessionStorage.setItem("rg", value.rg)
             }));

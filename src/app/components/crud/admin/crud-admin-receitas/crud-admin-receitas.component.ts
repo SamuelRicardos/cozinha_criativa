@@ -15,13 +15,14 @@ import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
 import { Router } from '@angular/router';
-import { CargosService } from '../../../../services/cargos.service';
 import { catchError, throwError } from 'rxjs';
+import { CategoriaService } from '../../../../services/categoria.service';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -45,7 +46,8 @@ import { catchError, throwError } from 'rxjs';
     ReactiveFormsModule,
     FileUploadModule,
     FormsModule,
-    EditorModule
+    EditorModule,
+    InputTextareaModule
   ],
   providers: [
     MessageService,
@@ -58,14 +60,16 @@ export class CrudAdminReceitasComponent {
   editarReceitas: string = "Editar receitas"
   excluirReceitas: string = "Excluir receitas"
   receitas: any[] = [];
-  receitasDescricao: any[] = [];
+  // receitasDescricao: any[] = [];
   items: any;
   visible: boolean = false;
   receitasForm!: FormGroup<any>;
   text: string = "";
+  categorias: any[] = [];
 
   constructor(
     private receitaService: ReceitaService,
+    private categoriaService: CategoriaService,
     private messagemService: MessageService,
     private router: Router,
   ) {
@@ -75,44 +79,77 @@ export class CrudAdminReceitasComponent {
       descricao: new FormControl('', Validators.required),
       nome_categoria: new FormControl('', Validators.required),
       modo_preparo: new FormControl('', Validators.required),
-      ind_inedita: new FormControl('', Validators.required)
+      ingredientes: new FormControl('', Validators.required),
     })
   }
 
   ngOnInit() {
     this.getReceitas();
-    this.getReceitasDescricao();
+    // this.getReceitasDescricao();
     this.configurarMenu();
+    // this.getCategorias();
+    this.categorias = [
+      {
+        'nome': 'carne'
+      }
+    ]
+    
   }
 
-  enviarReceitas(): void {
-  
-    // Obtém os valores do formulário
-    const receita = this.receitasForm.value;
-  
-    // Envia os dados ao serviço
-    this.receitaService
-      .adicionarReceitas(
-        receita.nome,
-        receita.descricao,
-        receita.nome_categoria?.descricao, // Verifique se este campo está no formato esperado pelo backend
-        receita.modo_preparo,
-        receita.num_porcao,
-        receita.ind_inedita
-      )
-      .pipe(
-        // Trata possíveis erros na requisição
-        catchError((error) => {
-          this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao adicionar receita.' });
-          return throwError(() => new Error(error));
-        })
-      )
-      .subscribe(() => {
-        this.messagemService.add({ severity: 'success', summary: 'Sucesso', detail: 'Receita adicionada com sucesso.' });
-        this.getReceitas(); // Atualiza a lista de receitas
-        this.visible = false;    // Fecha a modal
+  ingredientes: {
+descricao: any; nome: string 
+}[] = [];
+
+  // Adicionar um novo ingrediente
+  adicionarIngrediente(): void {
+      this.ingredientes.push({
+        nome: '',
+        descricao: ''
       });
   }
+  
+  // Remover um ingrediente
+  removerIngrediente(index: number): void {
+      this.ingredientes.splice(index, 1);
+  }
+  
+  enviarReceitas(): void {
+      // Obtém os valores do formulário
+      const receita = this.receitasForm.value;
+  
+      // Adiciona os ingredientes formatados
+      receita.ingredientes = this.ingredientes;
+  
+      // Envia os dados ao serviço
+      this.receitaService
+          .adicionarReceitas(
+              receita.nome,
+              receita.descricao,
+              receita.nome_categoria?.nome, // Verifique se este campo está no formato esperado pelo backend
+              receita.modo_preparo,
+              receita.num_porcao,
+              receita.ingredientes
+          )
+          .pipe(
+              catchError((error) => {
+                  this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao adicionar receita.' });
+                  return throwError(() => new Error(error));
+              })
+          )
+          .subscribe(() => {
+              this.messagemService.add({ severity: 'success', summary: 'Sucesso', detail: 'Receita adicionada com sucesso.' });
+              this.getReceitas(); // Atualiza a lista de receitas
+              this.visible = false;    // Fecha a modal
+          });
+  }
+
+  // getCategorias(): any {
+  //   this.categoriaService.getCategoria().subscribe((categorias: any) => {
+  //     this.categorias = categorias;
+  //   })
+  // }
+
+
 
   getReceitas(): any {
     this.receitaService.getReceitas().subscribe((dataReceitas: any) => {
@@ -121,14 +158,14 @@ export class CrudAdminReceitasComponent {
     });
   }
 
-  getReceitasDescricao(): any {
-    this.receitaService.getReceitas().subscribe((dataReceitas: any) => {
-      this.receitasDescricao = dataReceitas.map((receita: any) => ({
-        descricao: receita.categoria?.descricao,
-      }));
-      console.log(this.receitasDescricao);
-    });
-  }
+  // getReceitasDescricao(): any {
+  //   this.receitaService.getReceitas().subscribe((dataReceitas: any) => {
+  //     this.receitasDescricao = dataReceitas.map((receita: any) => ({
+  //       descricao: receita.categoria?.nome_categoria,
+  //     }));
+  //     console.log(this.receitasDescricao);
+  //   });
+  // }
 
   filtroReceitas(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;

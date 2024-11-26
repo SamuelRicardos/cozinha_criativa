@@ -90,6 +90,8 @@ export class CrudAdminComponent implements OnInit {
     this.funcionariosForm = new FormGroup({
       id_funcionario: new FormControl(''), // Controle para o ID
       nome: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required]),
+      senha: new FormControl('', [Validators.required]),
       rg: new FormControl('', [Validators.required]),
       salario: new FormControl('', [Validators.required]),
       nome_cargo: new FormControl('', [Validators.required]),
@@ -188,7 +190,7 @@ export class CrudAdminComponent implements OnInit {
 
     const funcionario = this.funcionariosForm.value;
     this.funcionarioService
-      .adicionarFuncionarios(funcionario.nome, funcionario.nome_cargo.nome, funcionario.rg, funcionario.salario)
+      .adicionarFuncionarios(funcionario.nome, funcionario.email, funcionario.senha, funcionario.nome_cargo.nome, funcionario.rg, funcionario.salario)
       .pipe(
         catchError((error) => {
           this.tostr.error('Erro ao adicionar funcionário.');
