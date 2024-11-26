@@ -50,4 +50,26 @@ export class ReceitaService {
             })
         );
     }
+
+    atualizarReceita(
+        id: number,
+        nome: string,
+        descricao: string,
+        nome_categoria: string,
+        modo_preparo: string,
+        num_porcao: number,
+        ingredientes: string
+    ) {
+        return this.httpClient.put<any>(
+            `${this.apiUrl}/${id}`, // Envia o ID no endpoint
+            { nome, descricao, nome_categoria, modo_preparo, num_porcao, ingredientes },
+            { responseType: 'text' as 'json' }
+        ).pipe(
+            tap(() => console.log('Receita atualizada com sucesso')),
+            catchError((error) => {
+                console.error('Erro ao atualizar receita:', error);
+                return throwError(() => error);
+            })
+        );
+    }
 }

@@ -59,14 +59,15 @@ import { ToastrService } from 'ngx-toastr';
 export class CrudAdminReceitasComponent {
   @ViewChild('dt2') dt2!: Table;
   editarReceitas: string = "Editar receitas"
-  excluirReceitas: string = "Excluir receitas"
+  verReceitas: string = "Ver receitas"
   receitas: any[] = [];
-  // receitasDescricao: any[] = [];
   items: any;
   visible: boolean = false;
   receitasForm!: FormGroup<any>;
   text: string = "";
   categorias: any[] = [];
+  isEditMode: boolean = false;
+  receitaSelecionada: any;
 
   constructor(
     private receitaService: ReceitaService,
@@ -87,7 +88,6 @@ export class CrudAdminReceitasComponent {
 
   ngOnInit() {
     this.getReceitas();
-    // this.getReceitasDescricao();
     this.configurarMenu();
     // this.getCategorias();
     this.categorias = [
@@ -95,64 +95,116 @@ export class CrudAdminReceitasComponent {
         'nome': 'carne'
       }
     ]
-    
+
   }
 
   ingredientes: {
-descricao: any; nome: string 
-}[] = [];
+    descricao: any; nome: string
+  }[] = [];
 
   // Adicionar um novo ingrediente
   adicionarIngrediente(): void {
-      this.ingredientes.push({
-        nome: '',
-        descricao: ''
-      });
+    this.ingredientes.push({
+      nome: '',
+      descricao: ''
+    });
   }
-  
+
   // Remover um ingrediente
   removerIngrediente(index: number): void {
-      this.ingredientes.splice(index, 1);
+    this.ingredientes.splice(index, 1);
   }
-  
+
   enviarReceitas(): void {
     const receita = this.receitasForm.value;
     receita.ingredientes = this.ingredientes;
 
     this.receitaService
-        .adicionarReceitas(
-            receita.nome,
-            receita.descricao,
-            receita.nome_categoria?.nome,
-            receita.modo_preparo,
-            receita.num_porcao,
-            receita.ingredientes
-        )
-        .pipe(
-            tap(() => console.log('Receita enviada com sucesso')),
-            catchError((error) => {
-                console.error('Erro capturado:', error);
-                this.tostr.error('Erro ao adicionar receitas');
-                return throwError(() => new Error(error));
-            })
-        )
-        .subscribe({
-            next: () => {
-                this.tostr.success('Receita adicionada com sucesso');
-                this.getReceitas(); // Atualiza a lista de receitas
-                this.visible = false; // Fecha a modal
-            },
-            error: (error) => console.error('Erro ao adicionar receita:', error)
-        });
+      .adicionarReceitas(
+        receita.nome,
+        receita.descricao,
+        receita.nome_categoria?.nome,
+        receita.modo_preparo,
+        receita.num_porcao,
+        receita.ingredientes
+      )
+      .pipe(
+        tap(() => console.log('Receita enviada com sucesso')),
+        catchError((error) => {
+          console.error('Erro capturado:', error);
+          this.tostr.error('Erro ao adicionar receitas');
+          return throwError(() => new Error(error));
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.tostr.success('Receita adicionada com sucesso');
+          this.getReceitas(); // Atualiza a lista de receitas
+          this.visible = false; // Fecha a modal
+        },
+        error: (error) => console.error('Erro ao adicionar receita:', error)
+      });
+  }
+
+  abrirModalEdicao(receita: any): void {
+    this.isEditMode = true;
+    this.receitaSelecionada = receita; // Armazena a receita atual para edição
+
+    // Atualizar o formulário com os valores da receita
+    this.receitasForm.patchValue({
+        id_receita: receita.id_receita,
+        nome: receita.nome,
+        descricao: receita.descricao,
+        nome_categoria: receita.nome_categoria, // Preenche com o nome da categoria
+        modo_preparo: receita.modo_preparo,
+        num_porcao: receita.num_porcao,
+        ingredientes: receita.ingredientes?.nome,
+    });
+
+    this.visible = true; // Abre a modal
 }
 
+alterarReceita(): void {
+  if (!this.isEditMode || !this.receitaSelecionada?.id_receita) {
+      console.error("Modo de edição não ativado ou ID da receita não encontrado!");
+      return;
+  }
+
+  const receita = this.receitasForm.value;
+  receita.ingredientes = this.ingredientes; // Atualiza os ingredientes caso tenham sido modificados
+
+  this.receitaService
+      .atualizarReceita(
+          this.receitaSelecionada.id_receita, // ID da receita a ser alterada
+          receita.nome,
+          receita.descricao,
+          receita.nome_categoria?.nome, // Certifica-se de enviar apenas o nome da categoria
+          receita.modo_preparo,
+          receita.num_porcao,
+          receita.ingredientes
+      )
+      .pipe(
+          tap(() => console.log('Receita alterada com sucesso')),
+          catchError((error) => {
+              console.error('Erro ao alterar receita:', error);
+              this.tostr.error('Erro ao alterar a receita');
+              return throwError(() => new Error(error));
+          })
+      )
+      .subscribe({
+          next: () => {
+              this.tostr.success('Receita alterada com sucesso');
+              this.getReceitas(); // Atualiza a lista de receitas
+              this.visible = false; // Fecha a modal
+          },
+          error: (error) => console.error('Erro ao alterar receita:', error)
+      });
+}
   // getCategorias(): any {
   //   this.categoriaService.getCategoria().subscribe((categorias: any) => {
   //     this.categorias = categorias;
   //   })
   // }
-
-
 
   getReceitas(): any {
     this.receitaService.getReceitas().subscribe((dataReceitas: any) => {
@@ -160,15 +212,6 @@ descricao: any; nome: string
       console.log(this.receitas)
     });
   }
-
-  // getReceitasDescricao(): any {
-  //   this.receitaService.getReceitas().subscribe((dataReceitas: any) => {
-  //     this.receitasDescricao = dataReceitas.map((receita: any) => ({
-  //       descricao: receita.categoria?.nome_categoria,
-  //     }));
-  //     console.log(this.receitasDescricao);
-  //   });
-  // }
 
   filtroReceitas(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;

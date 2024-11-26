@@ -43,7 +43,7 @@
                     <th>Categoria</th>
                     <th>Descrição</th>
                     <th>Data de lançamento</th>
-                    <th>Editar/Deletar</th>
+                    <th>Ver/Editar</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-product>
@@ -57,10 +57,10 @@
                     </td>
                     <td>{{ product.data_inclusao | date: 'dd/MM/yyyy'}}</td>
                     <td>
+                        <p-button class="btn_pencil" icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true"
+                        [pTooltip]="verReceitas" tooltipPosition="bottom" />
                         <p-button class="btn_pencil" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true"
-                            [pTooltip]="editarReceitas" tooltipPosition="bottom" />
-                        <p-button class="btn_trash" icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true"
-                            [pTooltip]="excluirReceitas" tooltipPosition="bottom" />
+                            [pTooltip]="editarReceitas" (click)="abrirModalEdicao(product)" tooltipPosition="bottom" />
                     </td>
                 </tr>
             </ng-template>
@@ -129,7 +129,7 @@
         <ng-template pTemplate="footer">
             <div>
                 <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-                <p-button label="Adicionar" class="button_modal_save" (onClick)="enviarReceitas()" />
+                <p-button label="Adicionar" class="button_modal_save" (onClick)="alterarReceita()" />
             </div>
         </ng-template>
     </p-dialog>
