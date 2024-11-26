@@ -79,7 +79,7 @@
 </main>
 
 <form [formGroup]="receitasForm">
-    <p-dialog header="Adicionar receita" [modal]="true" [(visible)]="visible"
+    <p-dialog header="{{ isEditMode ? 'Alterar receita' : 'Adicionar receita' }}"  [modal]="true" [(visible)]="visible"
         [style]="{ width: '80rem', height: '80rem'}">
         <div class="campos_input_menores">
             <div class="div_nome_receita">
@@ -96,11 +96,6 @@
                 <label class="label_modal">Quantidade de pessoas</label><br>
                 <input pInputText formControlName="num_porcao" class="input_modal" autocomplete="off" type="number"
                     placeholder="Para quantas pessoas?" />
-            </div>
-            <div class="div_upload_imagem">
-                <label class="label_modal">Baixar arquivo</label>
-                <p-fileUpload class="" mode="basic" chooseLabel="Escolha uma imagem" chooseIcon="pi pi-upload"
-                    name="demo[]" accept="image/*" maxFileSize="1000000" (onUpload)="onUpload()" />
             </div>
         </div>
 
@@ -129,7 +124,9 @@
         <ng-template pTemplate="footer">
             <div>
                 <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-                <p-button label="Adicionar" class="button_modal_save" (onClick)="alterarReceita()" />
+                <p-button label="{{ isEditMode ? 'Alterar' : 'Adicionar' }}"
+                class="button_modal_save"
+                (onClick)="isEditMode ? alterarReceita() : adicionarReceita()"></p-button>
             </div>
         </ng-template>
     </p-dialog>

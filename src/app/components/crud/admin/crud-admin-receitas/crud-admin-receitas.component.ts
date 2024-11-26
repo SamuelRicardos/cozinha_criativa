@@ -115,35 +115,31 @@ export class CrudAdminReceitasComponent {
     this.ingredientes.splice(index, 1);
   }
 
-  enviarReceitas(): void {
+  adicionarReceita(): void {
+  
     const receita = this.receitasForm.value;
     receita.ingredientes = this.ingredientes;
-
-    this.receitaService
-      .adicionarReceitas(
-        receita.nome,
-        receita.descricao,
-        receita.nome_categoria?.nome,
-        receita.modo_preparo,
-        receita.num_porcao,
-        receita.ingredientes
-      )
-      .pipe(
-        tap(() => console.log('Receita enviada com sucesso')),
-        catchError((error) => {
-          console.error('Erro capturado:', error);
-          this.tostr.error('Erro ao adicionar receitas');
-          return throwError(() => new Error(error));
-        })
-      )
-      .subscribe({
-        next: () => {
-          this.tostr.success('Receita adicionada com sucesso');
-          this.getReceitas(); // Atualiza a lista de receitas
-          this.visible = false; // Fecha a modal
-        },
-        error: (error) => console.error('Erro ao adicionar receita:', error)
-      });
+  
+    this.receitaService.adicionarReceitas(
+      receita.nome,
+      receita.descricao,
+      receita.nome_categoria?.nome,
+      receita.modo_preparo,
+      receita.num_porcao,
+      receita.ingredientes
+    )
+    .pipe(
+      tap(() => {
+        this.tostr.success('Receita adicionada com sucesso!');
+        this.visible = false;
+        this.getReceitas(); // Atualiza a lista de receitas
+      }),
+      catchError((error) => {
+        this.tostr.error('Erro ao adicionar receita.');
+        return throwError(error);
+      })
+    )
+    .subscribe();
   }
 
   abrirModalEdicao(receita: any): void {
@@ -152,54 +148,54 @@ export class CrudAdminReceitasComponent {
 
     // Atualizar o formulário com os valores da receita
     this.receitasForm.patchValue({
-        id_receita: receita.id_receita,
-        nome: receita.nome,
-        descricao: receita.descricao,
-        nome_categoria: receita.nome_categoria, // Preenche com o nome da categoria
-        modo_preparo: receita.modo_preparo,
-        num_porcao: receita.num_porcao,
-        ingredientes: receita.ingredientes?.nome,
+      id_receita: receita.id_receita,
+      nome: receita.nome,
+      descricao: receita.descricao,
+      nome_categoria: receita.nomeCategoria, // Preenche com o nome da categoria
+      modo_preparo: receita.modo_preparo,
+      num_porcao: receita.num_porcao,
+      ingredientes: receita.ingredientes?.nome,
     });
 
     this.visible = true; // Abre a modal
-}
-
-alterarReceita(): void {
-  if (!this.isEditMode || !this.receitaSelecionada?.id_receita) {
-      console.error("Modo de edição não ativado ou ID da receita não encontrado!");
-      return;
   }
 
-  const receita = this.receitasForm.value;
-  receita.ingredientes = this.ingredientes; // Atualiza os ingredientes caso tenham sido modificados
+  alterarReceita(): void {
+    if (!this.isEditMode || !this.receitaSelecionada?.id_receita) {
+      console.error("Modo de edição não ativado ou ID da receita não encontrado!");
+      return;
+    }
 
-  this.receitaService
+    const receita = this.receitasForm.value;
+    receita.ingredientes = this.ingredientes; // Atualiza os ingredientes caso tenham sido modificados
+
+    this.receitaService
       .atualizarReceita(
-          this.receitaSelecionada.id_receita, // ID da receita a ser alterada
-          receita.nome,
-          receita.descricao,
-          receita.nome_categoria?.nome, // Certifica-se de enviar apenas o nome da categoria
-          receita.modo_preparo,
-          receita.num_porcao,
-          receita.ingredientes
+        this.receitaSelecionada.id_receita, // ID da receita a ser alterada
+        receita.nome,
+        receita.descricao,
+        receita.nome_categoria?.nome, // Certifica-se de enviar apenas o nome da categoria
+        receita.modo_preparo,
+        receita.num_porcao,
+        receita.ingredientes
       )
       .pipe(
-          tap(() => console.log('Receita alterada com sucesso')),
-          catchError((error) => {
-              console.error('Erro ao alterar receita:', error);
-              this.tostr.error('Erro ao alterar a receita');
-              return throwError(() => new Error(error));
-          })
+        tap(() => console.log('Receita alterada com sucesso')),
+        catchError((error) => {
+          console.error('Erro ao alterar receita:', error);
+          this.tostr.error('Erro ao alterar a receita');
+          return throwError(() => new Error(error));
+        })
       )
       .subscribe({
-          next: () => {
-              this.tostr.success('Receita alterada com sucesso');
-              this.getReceitas(); // Atualiza a lista de receitas
-              this.visible = false; // Fecha a modal
-          },
-          error: (error) => console.error('Erro ao alterar receita:', error)
+        next: () => {
+          this.tostr.success('Receita alterada com sucesso');
+          this.getReceitas(); // Atualiza a lista de receitas
+          this.visible = false; // Fecha a modal
+        },
+        error: (error) => console.error('Erro ao alterar receita:', error)
       });
-}
+  }
   // getCategorias(): any {
   //   this.categoriaService.getCategoria().subscribe((categorias: any) => {
   //     this.categorias = categorias;
@@ -239,6 +235,16 @@ alterarReceita(): void {
     ];
   }
 
+  // Salvar ou alterar funcionário
+  salvarOuAlterarFuncionario(): void {
+
+    if (this.isEditMode) {
+      this.alterarReceita();
+    } else {
+      this.adicionarReceita();
+    }
+  }
+
   sairDaConta(): void {
     // Aqui você pode limpar qualquer dado armazenado na sessão
     sessionStorage.clear(); // Opcional: Remove todos os dados da sessão
@@ -247,9 +253,16 @@ alterarReceita(): void {
 
   showDialog() {
     this.visible = true;
+    this.resetarFormulario()
+    this.isEditMode = false;
   }
 
   onUpload() {
     this.messagemService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+  }
+
+  resetarFormulario() {
+    this.receitasForm.reset(); // Reseta todos os campos do formulário
+    this.receitaSelecionada = null;
   }
 }

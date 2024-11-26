@@ -41,7 +41,6 @@ import { Router } from '@angular/router';
   styleUrl: './crud-cozinheiro-receitas.component.scss'
 })
 export class CrudCozinheiroReceitasComponent {
-  apiUrl: string = "http://localhost:8080/receitas/"
   editarReceitas: string = "Editar receitas"
   verReceitas: string = "Ver receitas"
   products: any[] = [];

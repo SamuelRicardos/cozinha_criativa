@@ -60,6 +60,7 @@
                 <th>Cargo</th>
                 <th>Salário</th>
                 <th>Data de Admissão</th>
+                <th>Data de Demissão</th>
                 <th>Editar/Deletar</th>
             </tr>
         </ng-template>
@@ -70,6 +71,7 @@
                 <td>{{ product.nome_cargo }}</td>
                 <td>{{ product.salario | currency: 'BRL':'symbol' }}</td>
                 <td>{{ product.data_adm | date: 'dd/MM/yyyy'}}</td>
+                <td>{{ product.data_egresso | date: 'dd/MM/yyyy'}}</td>
                 <td>
                     <p-button 
                     class="btn_pencil" 
@@ -88,7 +90,7 @@
                     [text]="true" 
                     [raised]="true"
                     [pTooltip]="excluirFuncionario"
-                    (onClick)="deletarFuncionarios(product.id_funcionario)"
+                    (onClick)="deletarFuncionario(product.id_funcionario)"
                     tooltipPosition="bottom"
                      />
                 </td>
@@ -132,7 +134,7 @@
         placeholder="Digite o nome" />
     </div>
 
-    <div class="div_geral">
+    <div class="div_geral" *ngIf="!isEditMode">
       <label for="username" class="label_modal">Email*</label><br>
       <input 
         pInputText 
@@ -141,8 +143,8 @@
         formControlName="email" 
         placeholder="Digite o seu email" />
     </div>
-
-    <div class="div_geral">
+    
+    <div class="div_geral" *ngIf="!isEditMode">
       <label for="username" class="label_modal">Senha*</label><br>
       <input 
         pInputText 

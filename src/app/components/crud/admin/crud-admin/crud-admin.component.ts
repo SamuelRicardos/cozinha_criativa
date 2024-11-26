@@ -90,8 +90,8 @@ export class CrudAdminComponent implements OnInit {
     this.funcionariosForm = new FormGroup({
       id_funcionario: new FormControl(''), // Controle para o ID
       nome: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      senha: new FormControl('', [Validators.required]),
+      email: new FormControl(''),
+      senha: new FormControl(''),
       rg: new FormControl('', [Validators.required]),
       salario: new FormControl('', [Validators.required]),
       nome_cargo: new FormControl('', [Validators.required]),
@@ -203,20 +203,20 @@ export class CrudAdminComponent implements OnInit {
         this.visible = false;
       });
   }
-
-  deletarFuncionarios(id: number): void {
-    this.funcionarioService
-      .deletarFuncionario(id)
-      .pipe(
-        catchError((error) => {
-          this.tostr.error('Erro ao excluir funcionário.');
-          return throwError(() => new Error(error));
-        })
-      )
-      .subscribe(() => {
-        this.tostr.success('Funcionário excluído com sucesso.');
-        this.carregarFuncionarios();
-      })
+  
+  deletarFuncionario(id: number): void {
+      this.funcionarioService
+          .deletarFuncionario(id)
+          .pipe(
+              catchError((error) => {
+                  this.tostr.error('Erro ao excluir funcionário.');
+                  return throwError(() => new Error(error));
+              })
+          )
+          .subscribe(() => {
+              this.tostr.success('Funcionário excluído com sucesso.');
+              this.carregarFuncionarios(); // Atualiza a lista de funcionários
+          });
   }
 
   carregarCargos(): void {
