@@ -1,0 +1,102 @@
+<header class="cabecalho">
+    <img style="width: 120px; height: 100px;" src="../../../../../assets/logo (3).png">
+
+    <nav class="menu">
+        <ul>
+            <li>
+                <a href="crud_degustador_receitas" class="link_receitas">Avaliações</a>
+                <a class="cargo_usuario">Degustador</a>
+                <p-button class="btn_bars" (onClick)="menu.toggle($event)" icon=" pi pi-angle-down" />
+                <p-menu #menu [model]="items" [popup]="true" styleClass="w-full md:w-15rem"></p-menu>
+                <p-avatar icon="pi pi-user" class="mr-2" shape="circle" styleClass="w-full" />
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+<main>
+    <p-card>
+        <div class="header-content">
+            <h2>Receitas</h2>
+        </div>
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeReceitas', 'descricao', 'dtlancamento']"
+            [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="products"
+            [tableStyle]="{ 'min-width': '60rem' }" [scrollable]="true" scrollHeight="370px">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Descrição</th>
+                    <th>Data de lançamento</th>
+                    <th>Ver</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.nome }}</td>
+                    <td>{{ product.nomeCategoria }}</td>
+                    <td>{{ product.descricao }}</td>
+                    <td>{{ product.data_inclusao | date: 'dd/MM/yyyy'}}</td>
+                    <td>
+                        <p-button class="btn_eye" icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true"
+                            (onClick)="verReceita(product)" [pTooltip]="'Ver receita'" tooltipPosition="bottom">
+                        </p-button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <p-iconField iconPosition="left" class="ml-auto">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" placeholder="Pesquisar" (input)="filtroReceitas($event)" />
+                    </p-iconField>
+                </div>
+            </ng-template>
+        </p-table>
+    </p-card>
+</main>
+<form [formGroup]="receitasForm">
+    <p-dialog header="Detalhes da receita" [modal]="true" [(visible)]="visibleVerReceita" [style]="{ width: '50rem' }">
+        <div class="campo_detalhes">
+            <div class="detalhes_nome_receita">
+                <label class="label_modal">Nome da receita</label><br>
+                <input pInputText formControlName="nome_receita" [(ngModel)]="receitaSelecionada.nome"
+                    class="input_modal" autocomplete="off" [readonly]="true" />
+            </div>
+            <div class="detalhes_descricao">
+                <label class="label_modal">Descrição</label><br>
+                <input pInputText formControlName="descricao" [(ngModel)]="receitaSelecionada.descricao"
+                    class="input_modal" autocomplete="off" [readonly]="true" />
+            </div>
+            <div class="detalhes_ingredientes">
+                <label class="label_modal">Ingredientes</label>
+                <input pInputText formControlName="ingredientes" [(ngModel)]="receitaSelecionada.ingredientes"
+                    class="input_modal" autocomplete="off" [readonly]="true" />
+            </div>
+            <div class="detalhes_modo_preparo">
+                <label class="label_modal">Modo de preparo</label>
+                <input pInputText formControlName="modo_de_preparo" [(ngModel)]="receitaSelecionada.modo_preparo"
+                    class="input_modal" autocomplete="off" [readonly]="true" />
+            </div>
+            <div class="descricao_receitas">
+                <label class="label_modal">Comentario sobre a Receita</label>
+                <p-editor formControlName="descricao" [(ngModel)]="text" [style]="{ height: '100px' }" />
+            </div>
+            <div class="Avaliacao">
+                <label class="label_modal">Avaliação (um número de 1 a 5)</label>
+                <input type="number" pInputText formControlName="modo_de_preparo"
+                    [(ngModel)]="receitaSelecionada.avaliacao" class="input_modal_avaliacao" autocomplete="off" />
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <div>
+                <br>
+                <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+                <p-button label="Adicionar Avaliacao" class="button_modal_save" (onClick)="visible = false" />
+            </div>
+        </ng-template>
+    </p-dialog>
+</form>
