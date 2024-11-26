@@ -18,7 +18,8 @@
             position: relative;
 
             &.cargo_usuario {
-                margin-left: 550px; /* Alinha o cargo para a extrema direita */
+                margin-left: 550px;
+                /* Alinha o cargo para a extrema direita */
                 font-size: 23px;
                 font-weight: 600;
             }
@@ -26,7 +27,8 @@
             &::after {
                 content: "";
                 position: absolute;
-                bottom: -5px; /* Linha logo abaixo do texto */
+                bottom: -5px;
+                /* Linha logo abaixo do texto */
                 left: 0;
                 width: 0%;
                 height: 2px;
@@ -39,14 +41,17 @@
             }
 
             &:hover::after {
-                width: 100%; /* Linha cresce ao passar o mouse */
+                width: 100%;
+                /* Linha cresce ao passar o mouse */
             }
 
             &.active-link {
-                color: #FF7F11; /* Cor para o link ativo */
+                color: #FF7F11;
+                /* Cor para o link ativo */
 
                 &::after {
-                    width: 100%; /* Linha fixa para o link ativo */
+                    width: 100%;
+                    /* Linha fixa para o link ativo */
                 }
             }
         }
@@ -134,16 +139,18 @@ main {
     width: 97%;
     margin: 4px 0px 0px 0px;
 }
-.label_modal{
+
+.label_modal {
     color: #FF7F11;
 }
 
 :host ::ng-deep .button_modal_voltar .p-button {
-margin-top: 1.2rem;
-color: #FF7F11;
-background: none;
-border: solid 1px #FF7F11;
+    margin-top: 1.2rem;
+    color: #FF7F11;
+    background: none;
+    border: solid 1px #FF7F11;
 }
+
 :host ::ng-deep .button_modal_save .p-button {
     color: white;
     background: #FF7F11;
@@ -166,22 +173,28 @@ border: solid 1px #FF7F11;
 :host ::ng-deep .p-dropdown {
     margin: 2px 0px;
 }
+
 // :host ::ng-deep .p-dialog-content {
-    
+
 // }
 :host ::ng-deep .p-dialog-footer {
     border-top: 0.1px solid #d0cece;
 }
+
 :host ::ng-deep .p-dialog-header {
     color: #FF7F11;
     border-bottom: 0.1px solid #d0cece;
 }
+
 :host ::ng-deep .p-dialog-header .p-dialog-header-icon {
     color: #FF7F11;
 }
-:host ::ng-deep .input_modal:focus{
-    box-shadow: 0 0 0 0.2rem rgba(249, 165, 75, 0.5);  /* foco laranja mais claro */
-    outline: none; /* remove o outline padrão do foco */
+
+:host ::ng-deep .input_modal:focus {
+    box-shadow: 0 0 0 0.2rem rgba(249, 165, 75, 0.5);
+    /* foco laranja mais claro */
+    outline: none;
+    /* remove o outline padrão do foco */
 }
 
 div_nome_receita {
@@ -190,8 +203,8 @@ div_nome_receita {
 }
 
 :host ::ng-deep .p-fileupload-choose {
-background: #FF7F11;
-border: none;
+    background: #FF7F11;
+    border: none;
 }
 
 :host ::ng-deep .p-inputtextarea {
@@ -209,29 +222,41 @@ border: none;
     gap: 0.5rem;
 }
 
-.remove-btn {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 0.4rem 0.8rem;
-    cursor: pointer;
+:host ::ng-deep {
+    .remove-btn .p-button {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 0.81rem 1.25rem 0.90rem 1.25rem;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .remove-btn:hover {
+        background-color: #d32f2f;
+        border-radius: 6px;
+    }
+
+    .remove-btn:focus {
+        background-color: #d32f2f;
+        border-radius: 6px;
+    }
 }
 
-.remove-btn:hover {
-    background-color: #d32f2f;
-}
+
 
 .add-btn {
     background-color: #FF7F11;
     color: white;
     border: none;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    padding: 0.75rem 1.25rem;
     cursor: pointer;
     margin-top: 0.5rem;
+    font-size: 1rem;
 }
 
 .add-btn:hover {
-    background-color: #388e3c;
+    background-color: #f7831d;
 }

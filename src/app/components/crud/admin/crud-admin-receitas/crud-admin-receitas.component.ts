@@ -20,9 +20,10 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 import { CategoriaService } from '../../../../services/categoria.service';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -71,6 +72,7 @@ export class CrudAdminReceitasComponent {
     private receitaService: ReceitaService,
     private categoriaService: CategoriaService,
     private messagemService: MessageService,
+    private tostr: ToastrService,
     private router: Router,
   ) {
     this.receitasForm = new FormGroup({
@@ -114,34 +116,35 @@ descricao: any; nome: string
   }
   
   enviarReceitas(): void {
-      // Obtém os valores do formulário
-      const receita = this.receitasForm.value;
-  
-      // Adiciona os ingredientes formatados
-      receita.ingredientes = this.ingredientes;
-  
-      // Envia os dados ao serviço
-      this.receitaService
-          .adicionarReceitas(
-              receita.nome,
-              receita.descricao,
-              receita.nome_categoria?.nome, // Verifique se este campo está no formato esperado pelo backend
-              receita.modo_preparo,
-              receita.num_porcao,
-              receita.ingredientes
-          )
-          .pipe(
-              catchError((error) => {
-                  this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao adicionar receita.' });
-                  return throwError(() => new Error(error));
-              })
-          )
-          .subscribe(() => {
-              this.messagemService.add({ severity: 'success', summary: 'Sucesso', detail: 'Receita adicionada com sucesso.' });
-              this.getReceitas(); // Atualiza a lista de receitas
-              this.visible = false;    // Fecha a modal
-          });
-  }
+    const receita = this.receitasForm.value;
+    receita.ingredientes = this.ingredientes;
+
+    this.receitaService
+        .adicionarReceitas(
+            receita.nome,
+            receita.descricao,
+            receita.nome_categoria?.nome,
+            receita.modo_preparo,
+            receita.num_porcao,
+            receita.ingredientes
+        )
+        .pipe(
+            tap(() => console.log('Receita enviada com sucesso')),
+            catchError((error) => {
+                console.error('Erro capturado:', error);
+                this.tostr.error('Erro ao adicionar receitas');
+                return throwError(() => new Error(error));
+            })
+        )
+        .subscribe({
+            next: () => {
+                this.tostr.success('Receita adicionada com sucesso');
+                this.getReceitas(); // Atualiza a lista de receitas
+                this.visible = false; // Fecha a modal
+            },
+            error: (error) => console.error('Erro ao adicionar receita:', error)
+        });
+}
 
   // getCategorias(): any {
   //   this.categoriaService.getCategoria().subscribe((categorias: any) => {

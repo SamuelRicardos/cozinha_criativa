@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of, tap } from "rxjs";
+import { catchError, Observable, of, tap, throwError } from "rxjs";
 
 @Injectable({
     providedIn: "root"
@@ -24,23 +24,29 @@ export class ReceitaService {
     ) {
         // Obtenha o token do sessionStorage (ou de outro lugar onde está armazenado)
         const token = sessionStorage.getItem("auth-token");
-
+    
+        if (!token) {
+            console.error("Token de autenticação não encontrado!");
+            return throwError(() => new Error("Token de autenticação não encontrado!"));
+        }
+    
         // Configure os headers com o token
         const headers = {
             Authorization: `Barear ${token}`
         };
-
-        return this.httpClient.post<any>(
+    
+        return this.httpClient.post<string>(
             `${this.apiUrl}/`,
             { nome, descricao, nome_categoria, modo_preparo, num_porcao, ingredientes },
-            { headers } // Adicione os headers à requisição
+            { headers, responseType: 'text' as 'json' } // Adicionando responseType como 'text'
         ).pipe(
-            tap((value: { nome: string; descricao: string, nome_categoria: string, modo_preparo: string, num_porcao: number, ingredientes: string }) => {
-                // Armazene as informações no sessionStorage se necessário
-                sessionStorage.setItem("nome", value.nome),
-                    sessionStorage.setItem("descricao", value.descricao),
-                    sessionStorage.setItem("nome_categoria", value.nome_categoria),
-                    sessionStorage.setItem("modo_preparo", value.modo_preparo);
+            tap((response) => {
+                console.log("Resposta recebida:", response);
+                // Você pode adicionar qualquer lógica de manipulação aqui
+            }),
+            catchError((error) => {
+                console.error("Erro ao adicionar receita:", error);
+                return throwError(() => error);
             })
         );
     }

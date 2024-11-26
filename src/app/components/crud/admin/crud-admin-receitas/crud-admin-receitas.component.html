@@ -34,7 +34,7 @@
             <h2>Receitas</h2>
             <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar receita"></p-button>
         </div>
-        <p-table #dt2 dataKey="id" [globalFilterFields]="['nome', 'categoria.descricao', 'data_inclusao']"
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nome', 'nomeCategoria', 'data_inclusao']"
             [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="receitas"
             [tableStyle]="{ 'min-width': '60rem' }" [scrollable]="true" scrollHeight="370px">
             <ng-template pTemplate="header">
@@ -49,7 +49,7 @@
             <ng-template pTemplate="body" let-product>
                 <tr>
                     <td>{{ product.nome }}</td>
-                    <td>{{ product.nome_categoria }}</td>
+                    <td>{{ product.nomeCategoria }}</td>
                     <td>
                         <p class="descricao" [pTooltip]="product.descricao" tooltipPosition="right">
                             {{ product.descricao }}
@@ -113,11 +113,11 @@
             <div class="ingredientes">
                 <label class="label_modal">Ingredientes</label><br>
                 <div *ngFor="let ingrediente of ingredientes; let i = index" class="ingrediente-item">
-                    <input type="text" formControlName="ingredientes" [(ngModel)]="ingredientes[i].nome" class="input_modal"
+                    <input pInputText type="text" formControlName="ingredientes" [(ngModel)]="ingredientes[i].nome" class="input_modal"
                         placeholder="Nome do ingrediente" />
-                    <input type="text" formControlName="ingredientes" [(ngModel)]="ingredientes[i].descricao" class="input_modal"
+                    <input pInputText type="text" formControlName="ingredientes" [(ngModel)]="ingredientes[i].descricao" class="input_modal"
                         placeholder="Descrição do ingrediente" />
-                    <button type="button" (click)="removerIngrediente(i)" class="remove-btn">Remover</button>
+                    <p-button type="button" (click)="removerIngrediente(i)" icon="pi pi-trash" class="remove-btn" />
                 </div>
                 <button type="button" (click)="adicionarIngrediente()" class="add-btn">Adicionar Ingrediente</button>
             </div>
