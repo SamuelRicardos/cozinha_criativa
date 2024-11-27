@@ -22,6 +22,7 @@ import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
 import { Observable, of } from 'rxjs';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -73,7 +74,8 @@ export class CrudDegustadorReceitasComponent {
   constructor(
     private httpClient: HttpClient,
     private receitaService: ReceitaService,
-    private messagemService: MessageService
+    private messagemService: MessageService,
+    private tostr: ToastrService
   ) {
     this.receitasForm = new FormGroup({
       nome_receita: new FormControl('', [Validators.required, Validators.minLength(3)]),  // Corrigido para validação de nome
@@ -82,6 +84,7 @@ export class CrudDegustadorReceitasComponent {
       ingredientes: new FormControl('', Validators.required),  // Mantido como obrigatório
       modo_de_preparo: new FormControl('', Validators.required),  // Mantido como obrigatório
       avaliacao: new FormControl('', [Validators.required, Validators.min(1), Validators.max(5)]),  // Ajustado para validação de 1 a 5
+      comentario: new FormControl('', Validators.required),  // Mantido como obrigatório
     });
   }
 
@@ -152,20 +155,20 @@ export class CrudDegustadorReceitasComponent {
  
     const avaliacao = {
       id_receita: this.receitaSelecionada.id_receita,
-      descricao: this.receitasForm.value.descricao,
+      descricao: this.receitasForm.value.comentario,
       nota: this.receitasForm.value.avaliacao
     };
   
     // Envio da avaliação para o backend
     this.receitaService.adicionarAvaliacao(avaliacao).subscribe({
       next: (response) => {
-        this.messagemService.add({ severity: 'success', summary: 'Avaliação Adicionada', detail: 'A avaliação foi salva com sucesso.' });
+        this.tostr.success("Avaliação adicionada com sucesso")
         this.visibleVerReceita = false;
         this.loadReceitas();
       },
       error: (err) => {
         console.error('Erro ao adicionar avaliação:', err);
-        this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu um erro ao salvar a avaliação.' });
+        this.tostr.error("Erro ao adicionar avaliação")
       }
     });
   }

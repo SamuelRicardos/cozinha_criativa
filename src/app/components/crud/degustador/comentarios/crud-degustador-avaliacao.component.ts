@@ -1,4 +1,4 @@
-import { Component, Injectable, Pipe, PipeTransform, ViewChild } from '@angular/core';
+import { ApplicationRef, ChangeDetectorRef, Component, Injectable, Pipe, PipeTransform, ViewChild } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
 import { HttpClient } from "@angular/common/http";
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
 import { catchError, Observable, of, tap, throwError } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -49,8 +50,8 @@ import { catchError, Observable, of, tap, throwError } from 'rxjs';
   providers: [
     MessageService,
   ],
-  templateUrl: './crud-degustador-receitas.component.html',
-  styleUrl: './crud-degustador-receitas.component.scss'
+  templateUrl: './crud-degustador-avaliacao.component.html',
+  styleUrl: './crud-degustador-avaliacao.component.scss'
 })
 @Injectable({
   providedIn: "root"
@@ -72,10 +73,11 @@ export class CrudDegustadorComentariosComponent {
   receitaSelecionada: any = {};
 
   constructor(
+    private cdr: ChangeDetectorRef,
+    private appRef: ApplicationRef,
     private comentario: ReceitaService,
-    private httpClient: HttpClient,
     private receitaService: ReceitaService,
-    private messagemService: MessageService
+    private tostr: ToastrService
   ) {
     this.receitasForm = new FormGroup({
       nome_receita: new FormControl('', [Validators.required, Validators.minLength(3)]),  // Corrigido para validação de nome
@@ -87,16 +89,24 @@ export class CrudDegustadorComentariosComponent {
     });
   }
 
-  ExcluirReceita(receita: any) {
-
-    this.receitaSelecionada = receita;
-    this.visibleVerReceita = true;
+  ExcluirAvaliacao(id: number) {
+    this.receitaService.excluirAvaliacao(id).pipe(
+      catchError((error) => {
+        this.tostr.error("Erro ao excluir receita");
+        return throwError(() => new Error(error));
+      })
+    ).subscribe(() => {
+      this.getAvaliacao();
+      this.loadReceitas();
+      this.tostr.success("Sucesso ao remover avaliação de receita");
+      this.cdr.detectChanges(); // Força a detecção de mudanças
+    });
   }
-
   ngOnInit() {
     this.loadReceitas(); // Carregar as receitas com comentários e notas
     this.itemsMenu();
     this.getAvaliacao();
+    this.cdr.detectChanges();
   }
 
   getAvaliacao(): void {
@@ -110,16 +120,23 @@ export class CrudDegustadorComentariosComponent {
     });
   }
 
+  updateView() {
+    this.loadReceitas();
+    this.appRef.tick(); // Força a atualização da view
+  }
+
   loadReceitas(): void {
     this.receitaService.getReceitas().subscribe({
       next: (dataReceitas) => {
-        this.products = dataReceitas; // Armazena as receitas no array products
+        console.log("Receitas retornadas:", dataReceitas); // Log para depuração
+        this.products = dataReceitas; // Atualiza os produtos
       },
       error: (err) => {
-        console.error('Erro ao carregar receitas:', err);
+        console.error("Erro ao carregar receitas:", err);
       }
     });
   }
+
   adicionarAvaliacao(avaliacao: any) {
     this.receitaService.adicionarAvaliacao(avaliacao).subscribe({
       next: () => {
@@ -161,9 +178,5 @@ export class CrudDegustadorComentariosComponent {
 
   showDialog() {
     this.visible = true;
-  }
-
-  onUpload() {
-    this.messagemService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
   }
 }

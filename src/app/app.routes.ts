@@ -11,7 +11,7 @@ import { CrudEditorLivrosComponent } from './components/crud/editor/crud-editor-
 import { CrudEditorReceitasComponent } from './components/crud/editor/crud-editor-receitas/crud-editor-receitas.component';
 import { CrudCozinheiroReceitasComponent } from './components/crud/cozinheiro/crud-cozinheiro-receitas/crud-cozinheiro-receitas.component';
 import { CrudDegustadorReceitasComponent } from './components/crud/degustador/receitas/crud-degustador-receitas.component';
-import { CrudDegustadorComentariosComponent } from './components/crud/degustador/comentarios/crud-degustador-receitas.component';
+import { CrudDegustadorComentariosComponent } from './components/crud/degustador/comentarios/crud-degustador-avaliacao.component';
 
 import { AuthGuard } from './services/auth-guard.service';
 

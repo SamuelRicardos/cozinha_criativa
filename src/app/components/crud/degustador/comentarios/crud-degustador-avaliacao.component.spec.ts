@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CrudDegustadorComentariosComponent } from './crud-degustador-receitas.component';
+import { CrudDegustadorComentariosComponent } from './crud-degustador-avaliacao.component';
 
 describe('CrudDegustadorReceitasComponent', () => {
   let component: CrudDegustadorComentariosComponent;

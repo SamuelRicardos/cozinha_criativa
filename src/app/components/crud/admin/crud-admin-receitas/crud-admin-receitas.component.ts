@@ -213,7 +213,7 @@ export class CrudAdminReceitasComponent {
           this.getReceitas(); // Atualiza a lista de receitas
           this.visible = false; // Fecha a modal
         },
-        error: (error) => console.error('Erro ao alterar receita:', error)
+        error: (error: any) => console.error('Erro ao alterar receita:', error)
       });
   }
   // getCategorias(): any {
