@@ -67,7 +67,8 @@ export class CrudAdminReceitasComponent {
   text: string = "";
   categorias: any[] = [];
   isEditMode: boolean = false;
-  receitaSelecionada: any;
+  receitaSelecionada: any = {};
+  visibleVerReceita: boolean = false;
 
   constructor(
     private receitaService: ReceitaService,
@@ -158,6 +159,20 @@ export class CrudAdminReceitasComponent {
     });
 
     this.visible = true; // Abre a modal
+  }
+
+  verReceita(receita: any) {
+    this.receitaSelecionada = receita; // Armazena a receita selecionada
+    this.visibleVerReceita = true;    // Exibe a modal
+
+    if (Array.isArray(this.receitaSelecionada.ingredientes)) {
+      this.receitaSelecionada.ingredientes = this.receitaSelecionada.ingredientes
+        .map((ingrediente: any) => ingrediente.nome) // ou qualquer outro campo que represente o ingrediente
+        .join(', ');  // Concatena os ingredientes em uma string, separados por vírgula
+    }
+
+    this.visibleVerReceita = true;
+
   }
 
   alterarReceita(): void {

@@ -3,27 +3,19 @@
     <nav class="menu">
         <ul>
             <li>
-                <a 
-                    href="crud_admin_funcionarios" 
-                    class="link_funcionarios" 
+                <a href="crud_admin_funcionarios" class="link_funcionarios"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_funcionarios') }">
                     Funcionários
                 </a>
-                <a 
-                    href="crud_admin_restaurantes" 
-                    class="link_restaurantes" 
+                <a href="crud_admin_restaurantes" class="link_restaurantes"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_restaurantes') }">
                     Restaurantes
                 </a>
-                <a 
-                    href="crud_admin_receitas" 
-                    class="link_receitas" 
+                <a href="crud_admin_receitas" class="link_receitas"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_receitas') }">
                     Receitas
                 </a>
-                <a 
-                    href="crud_admin_livros" 
-                    class="link_livros" 
+                <a href="crud_admin_livros" class="link_livros"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_livros') }">
                     Livros
                 </a>
@@ -34,105 +26,72 @@
             </li>
         </ul>
     </nav>
-  </header>
+</header>
 <main>
     <p-card>
         <div class="header-content">
             <h2>Livros</h2>
             <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar livro"></p-button>
         </div>
-    <p-table
-    #dt2
-    dataKey="id"
-    [globalFilterFields]="['nomeLivro', 'autorLivro', 'isbn']" 
-    [paginator]="true" 
-    [rows]="5" 
-    [rowsPerPageOptions]="[5,10,20]" 
-    [value]="livro" 
-    [tableStyle]="{ 'min-width': '55rem' }"
-    [scrollable]="true"
-    scrollHeight="370px"
-    >
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Nome do livro</th>
-                <th>Autor</th>
-                <th>ISBN</th>
-                <th>Funcionalidades</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td>{{ product.nomeLivro }}</td>
-                <td>{{ product.autorLivro }}</td>
-                <td>{{ product.isbn }}</td>
-                <td>
-                    <p-button 
-                    class="btn_pencil" 
-                    icon="pi pi-eye" 
-                    [rounded]="true" 
-                    [text]="true" 
-                    [raised]="true" 
-                    [pTooltip]="visualizarLivro"
-                    tooltipPosition="bottom"/>
-                    <!-- (click)="criacaoPDF(product.id)" -->
-                    <p-button 
-                    class="btn_pencil" 
-                    icon="pi pi-download" 
-                    [rounded]="true" 
-                    [text]="true" 
-                    [raised]="true"
-                    [pTooltip]="baixarLivro"
-                    tooltipPosition="bottom">
-                </p-button>
-                <!-- (click)="baixarPDF()" -->
-                    <p-button 
-                    class="btn_trash"  
-                    icon="pi pi-pencil" 
-                    [rounded]="true" 
-                    [text]="true" 
-                    [raised]="true" 
-                    [pTooltip]="editarLivro"
-                    tooltipPosition="bottom"
-                    />
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <p-iconField iconPosition="left" class="ml-auto">
-                    <p-inputIcon>
-                        <i class="pi pi-search"></i>
-                    </p-inputIcon>
-                    <input 
-                        pInputText 
-                        type="text" 
-                        placeholder="Pesquisar"
-                        (input)="filtroReceitas($event)"
-                         />
-                </p-iconField>
-            </div>
-        </ng-template>    
-    </p-table>
-</p-card>
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeLivro', 'autorLivro', 'isbn']" [paginator]="true"
+            [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="livro" [tableStyle]="{ 'min-width': '55rem' }"
+            [scrollable]="true" scrollHeight="370px">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nome do livro</th>
+                    <th>Autor</th>
+                    <th>ISBN</th>
+                    <th>Funcionalidades</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.titulo }}</td>
+                    <td>{{ product.autorLivro }}</td>
+                    <td>{{ product.cod_isbn }}</td>
+                    <td>
+                        <p-button class="btn_pencil" icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true"
+                            [pTooltip]="visualizarLivro" tooltipPosition="bottom" />
+                        <!-- (click)="criacaoPDF(product.id)" -->
+                        <p-button class="btn_pencil" icon="pi pi-download" [rounded]="true" [text]="true"
+                            [raised]="true" [pTooltip]="baixarLivro" tooltipPosition="bottom">
+                        </p-button>
+                        <!-- (click)="baixarPDF()" -->
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <p-iconField iconPosition="left" class="ml-auto">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" placeholder="Pesquisar" (input)="filtroReceitas($event)" />
+                    </p-iconField>
+                </div>
+            </ng-template>
+        </p-table>
+    </p-card>
 </main>
-<p-dialog header="Cadastrar livro" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
-    <div class="">
-        <label for="username" class="label_modal">Nome do livro</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirLivro" autocomplete="off" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Autor</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirAutor" autocomplete="off" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">ISBN</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirISBN" autocomplete="off" />
-    </div>
-    <ng-template pTemplate="footer">
-        <div>
-            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+<p-dialog header="Criar Livro" [(visible)]="visible" [style]="{width: '450px'}">
+    <form [formGroup]="livrosForm" (ngSubmit)="adicionarLivro()">
+        <div class="field">
+            <label for="titulo">Título</label>
+            <input id="titulo" pInputText formControlName="titulo" class="input_modal" placeholder="Título do Livro" />
         </div>
-    </ng-template>
+        <div class="field">
+            <label for="isbn">ISBN</label>
+            <input id="isbn" pInputText formControlName="cod_isbn" class="input_modal" placeholder="Código ISBN" />
+        </div>
+        <div class="field">
+            <label for="receitas">Receitas</label>
+            <p-multiSelect formControlName="receitas" [options]="receitas" placeholder="Selecione as receitas"
+                optionLabel="nome" display="chip" class="input_modal" [showClear]="true"
+                [style]="{'width': '420px'}"></p-multiSelect>
+        </div>
+        <p-footer>
+            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+            <p-button label="Adicionar" class="button_modal_save" (onClick)="adicionarLivro()" />
+        </p-footer>
+    </form>
 </p-dialog>

@@ -19,6 +19,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { jsPDF } from "jspdf";
 import { ReceitaService } from '../../../../services/receitas.service';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-crud-admin-livros',
@@ -39,6 +40,7 @@ import { Router } from '@angular/router';
     DynamicDialogModule,
     MenuModule,
     AvatarModule,
+    ReactiveFormsModule
   ],
   providers: [
     MessageService
@@ -54,23 +56,35 @@ export class CrudAdminLivrosComponent {
   inserirAutor: string = "Insira um autor de um livro"
   inserirISBN: string = "Insira o ISBN de um livro"
   livro: any[] = [];
+  livrosForm!: FormGroup<any>;
   @ViewChild('dt2') dt2!: Table;
   visible: boolean = false;
   items: any;
-  descricaoReceitas: any[] = [];
+  receitas: any[] = [];
   logoUrl = '../../../../../assets/logo_melhorzinha.png'
   livroIdDois: any;
+  receitaSelecionada: any = {};
+  
   constructor(
     private livroService: LivroService,
     public messagemService: MessageService,
     private receitaService: ReceitaService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.getLivros();
     this.configurarMenu();
-    // this.getReceitas()
+    this.getReceitas()
+    this.inicializarFormulario()
+  }
+
+  inicializarFormulario(): void {
+    this.livrosForm = new FormGroup({
+      titulo: new FormControl(''), // Controle para o ID
+      cod_isbn: new FormControl('', [Validators.required]),
+      receitas: new FormControl('', [Validators.required]),
+    });
   }
 
   isActive(route: string): boolean {
@@ -84,14 +98,44 @@ export class CrudAdminLivrosComponent {
   getLivros(): any {
     this.livroService.getLivros().subscribe((dataLivros: any) => {
       this.livro = dataLivros;
+      console.log(this.livro)
     });
   }
 
-  // getReceitas(): any {
-  //   this.receitaService.getReceitasPorLivroId(this.livroIdDois).subscribe((dataReceitas) => {
-  //     this.descricaoReceitas = dataReceitas;
-  //   })
-  // }
+  getReceitas(): any {
+    this.receitaService.getReceitas().subscribe((dataReceitas) => {
+      this.receitas = dataReceitas;
+      console.log(this.receitas)
+    })
+  }
+
+  adicionarLivro(): void {
+    if (this.livrosForm.invalid) {
+      this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Preencha todos os campos obrigatórios!' });
+      return;
+    }
+  
+    // Obtendo os dados do formulário
+    const livro = {
+      titulo: this.livrosForm.value.titulo,
+      cod_isbn: this.livrosForm.value.cod_isbn,
+      receitasIds: this.livrosForm.value.receitas.map((receita: any) => receita.id_receita), // Extrai os IDs das receitas selecionadas
+      
+    };
+  console.log(livro)
+    // Enviando os dados para o backend
+    this.livroService.criarLivro(livro).subscribe({
+      next: () => {
+        this.messagemService.add({ severity: 'success', summary: 'Sucesso', detail: 'Livro cadastrado com sucesso!' });
+        this.visible = false; // Fecha o modal
+        this.getLivros(); // Atualiza a lista de livros
+        this.livrosForm.reset(); // Limpa o formulário
+      },
+      error: () => {
+        this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível cadastrar o livro. Tente novamente.' });
+      },
+    });
+  }
 
   filtroReceitas(event: Event) {
     const inputValue = (event.target as HTMLInputElement).value;

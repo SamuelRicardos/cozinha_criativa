@@ -1,23 +1,34 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { Observable, throwError } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class LivroService {
-    private dataLivros = [
-        { id: 1, nomeLivro: 'Receitas da vovó', autorLivro: 'Dona Márcia', isbn: '978-3-16-148410-0' },
-        { id: 2, nomeLivro: 'Isso é comida de verdade', autorLivro: 'Bryan Gomes', isbn: '978-0-14-312755-0' }
-    ];
 
-    getLivros(): Observable<any[]> {
-        return of(this.dataLivros);
-    }
+    apiUrl: string = "http://localhost:8080/livros"
 
-    getLivroPorId(id: number): Observable<any | undefined> {
-        const livro = this.dataLivros.find(l => l.id === id);
-        return of(livro);
+    constructor(private httpClient: HttpClient) { }
+
+    getLivros() {
+        return this.httpClient.get<any>(`${this.apiUrl}/`);
     }
     
+    criarLivro(livro: any): Observable<any> {
+        const token = sessionStorage.getItem("auth-token");
+    
+        if (!token) {
+            console.error("Token de autenticação não encontrado!");
+            return throwError(() => new Error("Token de autenticação não encontrado!"));
+        }
+    
+        // Configure os headers com o token
+        const headers = {
+            Authorization: `Bearer ${token}`
+        };
+
+        return this.httpClient.post(`${this.apiUrl}/`, livro, {headers , responseType: 'text' as 'json'})
+      }
 }

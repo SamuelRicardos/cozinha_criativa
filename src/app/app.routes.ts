@@ -45,7 +45,8 @@ export const routes: Routes = [
     },
     {
         path: "crud_admin_livros",
-        component: CrudAdminLivrosComponent
+        component: CrudAdminLivrosComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "crud_degustador_receitas",
