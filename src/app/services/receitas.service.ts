@@ -5,15 +5,62 @@ import { catchError, Observable, of, tap, throwError } from "rxjs";
 @Injectable({
     providedIn: "root"
 })
-
 export class ReceitaService {
-    apiUrl: string = "http://localhost:8080/receitas"
+    apiUrl: string = "http://localhost:8080/receitas";
+    apiUrlNota: string = "http://localhost:8080/avaliacao"
+    
     constructor(private httpClient: HttpClient) { }
 
-    getReceitas() {
-        return this.httpClient.get<any>(`${this.apiUrl}/`);
+    // Método para obter todas as receitas
+    getReceitas(): Observable<any[]> {
+        return this.httpClient.get<any[]>(`${this.apiUrl}/`).pipe(
+            tap(data => console.log("Receitas carregadas:", data)),
+            catchError(error => {
+                console.error("Erro ao carregar receitas:", error);
+                return throwError(() => error);
+            })
+        );
+    }
+    getAvaliacao(): Observable<any[]> {
+        return this.httpClient.get<any[]>(`${this.apiUrlNota}/`).pipe(
+            tap(data => console.log("Comentarios carregados:", data)),
+            catchError(error => {
+                console.error("Erro ao carregar comentarios:", error);
+                return throwError(() => error);
+            })
+        );
     }
 
+    // Método para adicionar uma avaliação
+    adicionarAvaliacao(avaliacao: any): Observable<any> {
+        const token = sessionStorage.getItem("auth-token");
+
+        if (!token) {
+            console.error("Token de autenticação não encontrado!");
+            return throwError(() => new Error("Token de autenticação não encontrado!"));
+        }
+
+        const headers = {
+            Authorization: `Bearer ${token}`
+        };
+
+        // Enviar a requisição para o endpoint de avaliação
+        return this.httpClient.post<any>(
+            `${this.apiUrlNota}/`,
+            avaliacao,
+            { headers, responseType:'text' as 'json'}
+        ).pipe(
+            tap(response => {
+                console.log("Avaliação adicionada com sucesso", response);
+            }),
+            catchError(error => {
+                console.error("Erro ao adicionar avaliação", error);
+                return throwError(() => error);
+            })
+        );
+    }
+
+    // Método para adicionar uma nova receita
     adicionarReceitas(
         nome: string,
         descricao: string,
@@ -22,29 +69,26 @@ export class ReceitaService {
         num_porcao: number,
         ingredientes: string
     ) {
-        // Obtenha o token do sessionStorage (ou de outro lugar onde está armazenado)
         const token = sessionStorage.getItem("auth-token");
-    
+
         if (!token) {
             console.error("Token de autenticação não encontrado!");
             return throwError(() => new Error("Token de autenticação não encontrado!"));
         }
-    
-        // Configure os headers com o token
+
         const headers = {
-            Authorization: `Barear ${token}`
+            Authorization: `Bearer ${token}`
         };
-    
+
         return this.httpClient.post<string>(
             `${this.apiUrl}/`,
             { nome, descricao, nome_categoria, modo_preparo, num_porcao, ingredientes },
             { headers, responseType: 'text' as 'json' } // Adicionando responseType como 'text'
         ).pipe(
-            tap((response) => {
+            tap(response => {
                 console.log("Resposta recebida:", response);
-                // Você pode adicionar qualquer lógica de manipulação aqui
             }),
-            catchError((error) => {
+            catchError(error => {
                 console.error("Erro ao adicionar receita:", error);
                 return throwError(() => error);
             })

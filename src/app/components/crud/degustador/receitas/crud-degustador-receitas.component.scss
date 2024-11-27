@@ -33,7 +33,7 @@
             }
 
             &.cargo_usuario {
-                margin-left: 1000px;
+                margin-left: 800px;
                 font-size: 23px;
                 font-weight: 600;
             }
@@ -54,6 +54,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 0;
+}
+:host ::ng-deep .p-inputtextarea {
+    width: 97%;
 }
 
 main {

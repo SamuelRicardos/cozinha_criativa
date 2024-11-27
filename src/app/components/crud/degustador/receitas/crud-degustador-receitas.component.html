@@ -5,6 +5,7 @@
         <ul>
             <li>
                 <a href="crud_degustador_receitas" class="link_receitas">Avaliações</a>
+                <a href="crud_degustador_comentarios" class="link_comentarios">Comentários</a>
                 <a class="cargo_usuario">Degustador</a>
                 <p-button class="btn_bars" (onClick)="menu.toggle($event)" icon=" pi pi-angle-down" />
                 <p-menu #menu [model]="items" [popup]="true" styleClass="w-full md:w-15rem"></p-menu>
@@ -82,12 +83,12 @@
                     class="input_modal" autocomplete="off" [readonly]="true" />
             </div>
             <div class="descricao_receitas">
-                <label class="label_modal">Comentario sobre a Receita</label>
-                <p-editor formControlName="descricao" [(ngModel)]="text" [style]="{ height: '100px' }" />
+                <label class="label_modal">Descrição da receita</label><br>
+                <textarea formControlName="descricao" rows="5" cols="30" pInputTextarea></textarea>
             </div>
-            <div class="Avaliacao">
-                <label class="label_modal">Avaliação (um número de 1 a 5)</label>
-                <input type="number" pInputText formControlName="modo_de_preparo"
+            <div class="avaliacao">
+                <label class="label_modal">Avalie a receita com um número de 1 a 5</label>
+                <input type="number" pInputText formControlName="avaliacao"
                     [(ngModel)]="receitaSelecionada.avaliacao" class="input_modal_avaliacao" autocomplete="off" />
             </div>
         </div>
@@ -95,7 +96,7 @@
             <div>
                 <br>
                 <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-                <p-button label="Adicionar Avaliacao" class="button_modal_save" (onClick)="visible = false" />
+                <p-button label="Adicionar Avaliacao" class="button_modal_save" (onClick)="adicionarAvaliacao()" />
             </div>
         </ng-template>
     </p-dialog>
