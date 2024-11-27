@@ -31,4 +31,24 @@ export class LivroService {
 
         return this.httpClient.post(`${this.apiUrl}/`, livro, {headers , responseType: 'text' as 'json'})
       }
+
+      getReceitasPorLivroId(livroId: number): Observable<any[]> {
+        return new Observable((observer) => {
+          this.getLivros().subscribe({
+            next: (livros) => {
+              // Encontra o livro com o id correspondente e retorna suas receitas
+              const livro = livros.find((l: any) => l.id === livroId);
+              if (livro) {
+                observer.next(livro.receitas || []);  // Caso o livro tenha receitas
+              } else {
+                observer.next([]);  // Caso não encontre o livro
+              }
+              observer.complete();
+            },
+            error: (err) => {
+              observer.error(err);  // Propaga erro caso aconteça
+            }
+          });
+        });
+      }
 }

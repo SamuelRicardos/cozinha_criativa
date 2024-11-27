@@ -67,7 +67,12 @@ export class CrudAdminReceitasComponent {
   text: string = "";
   categorias: any[] = [];
   isEditMode: boolean = false;
-  receitaSelecionada: any = {};
+  receitaSelecionada: any = {
+    nome: '',
+    descricao: '',
+    ingredientes: '',
+    modo_preparo: ''
+  };
   visibleVerReceita: boolean = false;
 
   constructor(
@@ -117,7 +122,7 @@ export class CrudAdminReceitasComponent {
   }
 
   adicionarReceita(): void {
-  
+  this.visible = true
     const receita = this.receitasForm.value;
     receita.ingredientes = this.ingredientes;
   
@@ -144,35 +149,35 @@ export class CrudAdminReceitasComponent {
   }
 
   abrirModalEdicao(receita: any): void {
+    // Fecha a modal de visualização, caso esteja aberta
+    this.visibleVerReceita = false;
+  
     this.isEditMode = true;
-    this.receitaSelecionada = receita; // Armazena a receita atual para edição
-
+    this.receitaSelecionada = receita;
+  
     // Atualizar o formulário com os valores da receita
     this.receitasForm.patchValue({
       id_receita: receita.id_receita,
       nome: receita.nome,
       descricao: receita.descricao,
-      nome_categoria: receita.nomeCategoria, // Preenche com o nome da categoria
+      nome_categoria: receita.nomeCategoria,
       modo_preparo: receita.modo_preparo,
       num_porcao: receita.num_porcao,
       ingredientes: receita.ingredientes?.nome,
     });
-
-    this.visible = true; // Abre a modal
+  
+    // Abre a modal de edição
+    this.visible = true;
   }
 
-  verReceita(receita: any) {
-    this.receitaSelecionada = receita; // Armazena a receita selecionada
-    this.visibleVerReceita = true;    // Exibe a modal
-
-    if (Array.isArray(this.receitaSelecionada.ingredientes)) {
-      this.receitaSelecionada.ingredientes = this.receitaSelecionada.ingredientes
-        .map((ingrediente: any) => ingrediente.nome) // ou qualquer outro campo que represente o ingrediente
-        .join(', ');  // Concatena os ingredientes em uma string, separados por vírgula
-    }
-
-    this.visibleVerReceita = true;
-
+  verReceita(receita: any): void {
+    this.receitaSelecionada = receita ? receita : {
+      nome: '',
+      descricao: '',
+      ingredientes: '',
+      modo_preparo: ''
+    };
+    this.visibleVerReceita = true; // Exibe a modal
   }
 
   alterarReceita(): void {

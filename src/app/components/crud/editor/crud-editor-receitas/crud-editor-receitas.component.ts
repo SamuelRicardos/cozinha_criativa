@@ -16,6 +16,8 @@ import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-crud-editor-receitas',
@@ -35,7 +37,9 @@ import { Router } from '@angular/router';
     DialogModule,
     DynamicDialogModule,
     MenuModule,
-    AvatarModule
+    AvatarModule,
+    InputTextareaModule,
+    ReactiveFormsModule
   ],
   templateUrl: './crud-editor-receitas.component.html',
   styleUrl: './crud-editor-receitas.component.scss'
@@ -46,16 +50,42 @@ export class CrudEditorReceitasComponent {
   @ViewChild('dt2') dt2!: Table;
   items: any;
   visible: boolean = false;
+  receitasForm!: FormGroup<any>;
+  visibleVerReceita: boolean = false;
+  receitaSelecionada: any = {};
 
   constructor(
     private receitaService: ReceitaService,
     private router: Router
 
-  ) { }
+  ) {
+    this.receitasForm = new FormGroup({
+      nome_receita: new FormControl('', [Validators.required, Validators.email]),
+      quantidade_pessoas: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      descricao: new FormControl('', Validators.required),
+      ingredientes: new FormControl('', Validators.required),
+      modo_de_preparo: new FormControl('', Validators.required),
+      avaliacao: new FormControl('', [Validators.required, Validators.maxLength(1), Validators.minLength(1)])
+    })
+   }
 
   ngOnInit() {
     this.getReceitas();
     this.configurarMenu();
+  }
+
+  verReceita(receita: any) {
+    this.receitaSelecionada = receita; // Armazena a receita selecionada
+    this.visibleVerReceita = true;    // Exibe a modal
+
+    if (Array.isArray(this.receitaSelecionada.ingredientes)) {
+      this.receitaSelecionada.ingredientes = this.receitaSelecionada.ingredientes
+        .map((ingrediente: any) => ingrediente.nome) // ou qualquer outro campo que represente o ingrediente
+        .join(', ');  // Concatena os ingredientes em uma string, separados por vírgula
+    }
+
+    this.visibleVerReceita = true;
+
   }
 
   isActive(route: string): boolean {

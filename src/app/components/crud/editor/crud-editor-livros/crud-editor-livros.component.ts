@@ -61,7 +61,8 @@ items: any;
     private livroService: LivroService,
     private receitaService: ReceitaService,
     private router: Router
-  ) { }
+  ) {
+   }
 
   ngOnInit() {
     this.getLivros();

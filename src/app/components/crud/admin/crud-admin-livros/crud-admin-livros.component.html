@@ -51,7 +51,7 @@
                     <td>{{ product.cod_isbn }}</td>
                     <td>
                         <p-button class="btn_pencil" icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true"
-                            [pTooltip]="visualizarLivro" tooltipPosition="bottom" />
+                            [pTooltip]="visualizarLivro" tooltipPosition="bottom" (click)="criacaoPDF(product.id)" />
                         <!-- (click)="criacaoPDF(product.id)" -->
                         <p-button class="btn_pencil" icon="pi pi-download" [rounded]="true" [text]="true"
                             [raised]="true" [pTooltip]="baixarLivro" tooltipPosition="bottom">
@@ -73,8 +73,14 @@
         </p-table>
     </p-card>
 </main>
-<p-dialog header="Criar Livro" [(visible)]="visible" [style]="{width: '450px'}">
+<p-dialog header="Criar Livro" [(visible)]="visible" [style]="{ width: '50rem', height: '30rem'}">
     <form [formGroup]="livrosForm" (ngSubmit)="adicionarLivro()">
+        <div class="field">
+            <label for="receitas">Receitas</label><br>
+            <p-multiSelect formControlName="receitas" [options]="receitas" placeholder="Selecione as receitas"
+                optionLabel="nome" display="chip" class="input_modal" [showClear]="true"
+                [style]="{'width': '97%'}"></p-multiSelect>
+        </div>
         <div class="field">
             <label for="titulo">Título</label>
             <input id="titulo" pInputText formControlName="titulo" class="input_modal" placeholder="Título do Livro" />
@@ -82,12 +88,6 @@
         <div class="field">
             <label for="isbn">ISBN</label>
             <input id="isbn" pInputText formControlName="cod_isbn" class="input_modal" placeholder="Código ISBN" />
-        </div>
-        <div class="field">
-            <label for="receitas">Receitas</label>
-            <p-multiSelect formControlName="receitas" [options]="receitas" placeholder="Selecione as receitas"
-                optionLabel="nome" display="chip" class="input_modal" [showClear]="true"
-                [style]="{'width': '420px'}"></p-multiSelect>
         </div>
         <p-footer>
             <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />

@@ -56,12 +56,15 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Nome</th>
+                <th>CNPJ</th>
                 <th>
-                    Estados
+                    Estado
                     <p-columnFilter 
-                    field="products" 
+                    field="estados"
                     matchMode="in" 
                     display="menu" 
+                    optionLabel="label"
+                    optionValue="value"
                     [showMatchModes]="false" 
                     [showOperator]="false" 
                     [showAddButton]="false"
@@ -88,15 +91,16 @@
                         
                     </p-columnFilter>
                 </th>
-                <th>Data de Admissão</th>
+                <th>Endereço</th>
                 <th>Editar/Deletar</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-product>
             <tr>
-                <td>{{ product.nomeRestaurante }}</td>
-                <td>{{ product.estadoRestaurante }}</td>
-                <td>{{ product.dtadmissao}}</td>
+                <td>{{ product.nome }}</td>
+                <td>{{ product.cnpj }}</td>
+                <td>{{ product.estado}}</td>
+                <td>{{ product.endereco}}</td>
                 <td>
                     <p-button 
                     class="btn_pencil" 
@@ -105,6 +109,7 @@
                     [text]="true" 
                     [raised]="true"
                     [pTooltip]="editarRestaurante"
+                    (onClick)="abrirModalEdicao(product)"
                     tooltipPosition="bottom"
                      />
                     <p-button 
@@ -114,6 +119,7 @@
                     [text]="true" 
                     [raised]="true"
                     [pTooltip]="excluirRestaurante"
+                    (onClick)="deletarRestaurante(product.id)"
                     tooltipPosition="bottom"
                     />
                 </td>
@@ -138,23 +144,45 @@
 </p-card>
 </main>
 
-<p-dialog header="Adicionar restaurante" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
-    <div class="">
-        <label for="username" class="label_modal">Nome</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirRestaurante" autocomplete="off" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Estados</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirEstados" autocomplete="off" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Data de admissão</label><br>
-        <input pInputText type="date" class="input_modal" autocomplete="off" />
-    </div>
-    <ng-template pTemplate="footer">
+<form [formGroup]="restaurantesForm">
+    <p-dialog
+      header="{{ isEditMode ? 'Alterar restaurante' : 'Adicionar restaurante' }}"
+      [modal]="true"
+      [(visible)]="visible"
+      [style]="{ width: '20rem' }"
+    >
+      <div class="">
+        <label for="nome" class="label_modal">Nome</label><br>
+        <input
+          pInputText
+          class="input_modal"
+          formControlName="nome"
+          [placeholder]="isEditMode ? 'Alterar nome do restaurante' : 'Inserir nome do restaurante'"
+          autocomplete="off"
+        />
+      </div>
+      <div class="">
+        <label for="cnpj" class="label_modal">CNPJ</label><br>
+        <input pInputText class="input_modal" formControlName="cnpj" autocomplete="off" />
+      </div>
+      <div class="">
+        <label for="endereco" class="label_modal">Endereço</label><br>
+        <input pInputText class="input_modal" formControlName="endereco" autocomplete="off" />
+      </div>
+      <div class="">
+        <label for="estado" class="label_modal">Estados</label><br>
+        <input pInputText class="input_modal" formControlName="estado" autocomplete="off" />
+      </div>
+  
+      <ng-template pTemplate="footer">
         <div>
-            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+          <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+          <p-button
+            label="{{ isEditMode ? 'Alterar' : 'Adicionar' }}"
+            class="button_modal_save"
+            (onClick)="isEditMode ? alterarRestaurante() : adicionarRestaurante()"
+          />
         </div>
-    </ng-template>
-</p-dialog>
+      </ng-template>
+    </p-dialog>
+  </form>

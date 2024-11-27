@@ -132,27 +132,26 @@
     </p-dialog>
 </form>
 
-<form [formGroup]="receitasForm">
-    <p-dialog header="Detalhes da receita" [(visible)]="visibleVerReceita" [modal]="true" [style]="{ width: '50rem' }">
+    <!-- <p-dialog header="Detalhes da receita" [(visible)]="visibleVerReceita" [modal]="true" [style]="{ width: '50rem' }">
         <div class="campo_detalhes">
             <div class="detalhes_nome_receita">
                 <label class="label_modal">Nome da receita</label><br>
-                <input pInputText formControlName="nome" [(ngModel)]="receitaSelecionada.nome"
+                <input pInputText  [(ngModel)]="receitaSelecionada.nome"
                     class="input_modal" autocomplete="off" [readonly]="true" />
             </div>
             <div class="detalhes_descricao">
                 <label class="label_modal">Descrição</label><br>
-                <input pInputText formControlName="descricao" [(ngModel)]="receitaSelecionada.descricao"
+                <input pInputText  [(ngModel)]="receitaSelecionada.descricao"
                     class="input_modal" autocomplete="off" [readonly]="true" />
             </div>
             <div class="detalhes_ingredientes">
                 <label class="label_modal">Ingredientes</label>
-                <input pInputText formControlName="ingredientes" [(ngModel)]="receitaSelecionada.ingredientes"
+                <input pInputText [(ngModel)]="receitaSelecionada.ingredientes"
                     class="input_modal" autocomplete="off" [readonly]="true" />
             </div>
             <div class="detalhes_modo_preparo">
                 <label class="label_modal">Modo de preparo</label>
-                <input pInputText formControlName="modo_preparo" [(ngModel)]="receitaSelecionada.modo_preparo"
+                <input pInputText [(ngModel)]="receitaSelecionada.modo_preparo"
                     class="input_modal" autocomplete="off" [readonly]="true" />
             </div>
             <ng-template pTemplate="footer">
@@ -162,5 +161,4 @@
                 </div>
             </ng-template>
         </div>
-    </p-dialog>
-</form>
+    </p-dialog> -->
