@@ -54,7 +54,7 @@
                             [pTooltip]="visualizarLivro" tooltipPosition="bottom" (click)="criacaoPDF(product.id)" />
                         <!-- (click)="criacaoPDF(product.id)" -->
                         <p-button class="btn_pencil" icon="pi pi-download" [rounded]="true" [text]="true"
-                            [raised]="true" [pTooltip]="baixarLivro" tooltipPosition="bottom">
+                            [raised]="true" [pTooltip]="baixarLivro" tooltipPosition="bottom" (click)="baixarPDF(product.id)">
                         </p-button>
                         <!-- (click)="baixarPDF()" -->
                     </td>
