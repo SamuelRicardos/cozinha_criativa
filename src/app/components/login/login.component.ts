@@ -53,8 +53,8 @@ export class LoginComponent {
           case 'cozinheiro':
             this.router.navigate(['crud_cozinheiro_receitas']);
             break;
-            case 'administrador':
-              this.router.navigate(['crud_admin_funcionarios']);
+            case 'admin':
+              this.router.navigate(['crud_degustador_receitas']);
               break;
           default:
             this.tostr.warning("Cargo não reconhecido, redirecionando para a página padrão.");

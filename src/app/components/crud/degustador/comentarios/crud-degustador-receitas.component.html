@@ -1,0 +1,55 @@
+<header class="cabecalho">
+    <img style="width: 120px; height: 100px;" src="../../../../../assets/logo (3).png">
+
+    <nav class="menu">
+        <ul>
+            <li>
+                <a href="crud_degustador_receitas" class="link_receitas">Avaliações</a>
+                <a href="crud_degustador_comentarios" class="link_comentarios">Comentários</a>
+                <a class="cargo_usuario">Degustador</a>
+                <p-button class="btn_bars" (onClick)="menu.toggle($event)" icon=" pi pi-angle-down" />
+                <p-menu #menu [model]="items" [popup]="true" styleClass="w-full md:w-15rem"></p-menu>
+                <p-avatar icon="pi pi-user" class="mr-2" shape="circle" styleClass="w-full" />
+            </li>
+        </ul>
+    </nav>
+
+</header>
+
+<main>
+    <p-card>
+        <div class="header-content">
+            <h2>Comentários das Receitas</h2>
+        </div>
+        <p-table #dt2 dataKey="id" [value]="avaliacao" [paginator]="true" [rows]="5"
+        [tableStyle]="{ 'min-width': '60rem' }">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nome da Receita</th>
+                    <th>Comentário</th>
+                    <th>Nota</th>
+                    <th>Ação</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-avaliacao>
+                <tr>
+                    <td>{{ avaliacao.nome_receita }}</td>
+                    <td>{{ avaliacao.descricao || 'Sem comentário' }}</td>
+                    <td>{{ avaliacao.nota !== null ? avaliacao.nota : 'Sem nota' }}</td>
+                    <td>
+                        <p-button 
+                            class="btn_trash" 
+                            icon="pi pi-trash" 
+                            [rounded]="true" 
+                            [text]="true" 
+                            [raised]="true"
+                            (onClick)="ExcluirReceita(avaliacao)" 
+                            [pTooltip]="'Excluir receita'" 
+                            tooltipPosition="bottom">
+                        </p-button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </p-card>
+</main>
