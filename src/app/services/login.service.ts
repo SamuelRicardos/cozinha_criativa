@@ -23,7 +23,7 @@ export class LoginService {
     }
 
     signup(nome: string, email: string, nome_cargo: string, rg: string, senha: string){
-      return this.httpClient.post<LoginResponse>(this.apiUrl + "/register", { nome, email, nome_cargo, rg, senha }).pipe(
+        return this.httpClient.post<LoginResponse>(this.apiUrl + "/register", { nome, email, nome_cargo, rg, senha }, {responseType: 'text' as 'json'}).pipe(
         tap((value) => {
           sessionStorage.setItem("auth-token", value.token)
           sessionStorage.setItem("username", value.name)

@@ -51,20 +51,33 @@ this.getCargos()
   }
   
   cadastro() {
-    const nomeCargo = this.cadastroForm.value.nome_cargo?.nome; // Extrai o nome do cargo selecionado
+    const nomeCargo = this.cadastroForm.value.nome_cargo?.nome;
+  
+    const payload = {
+      nome: this.cadastroForm.value.nome,
+      email: this.cadastroForm.value.email,
+      cargo: nomeCargo,
+      rg: this.cadastroForm.value.rg,
+      password: this.cadastroForm.value.password,
+    };
+  
+    console.log("Dados enviados:", payload); // Log para verificar o payload
   
     this.loginService.signup(
-      this.cadastroForm.value.nome,
-      this.cadastroForm.value.email,
-      nomeCargo, // Passa apenas o nome do cargo
-      this.cadastroForm.value.rg,
-      this.cadastroForm.value.password
+      payload.nome,
+      payload.email,
+      payload.cargo,
+      payload.rg,
+      payload.password
     ).subscribe({
       next: () => {
         this.toastr.success("Cadastro feito com sucesso!");
         this.router.navigate(["login"]);
       },
-      error: () => this.toastr.error("Erro inesperado! Tente novamente.")
+      error: (error) => {
+        console.error("Erro no cadastro:", error); // Log detalhado do erro
+        this.toastr.error("Erro inesperado! Tente novamente.");
+      },
     });
   }
 
