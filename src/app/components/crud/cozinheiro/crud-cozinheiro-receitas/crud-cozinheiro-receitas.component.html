@@ -42,9 +42,9 @@
                     <td>{{ product.data_inclusao | date: 'dd/MM/yyyy'}}</td>
                     <td>
                         <p-button class="btn_pencil" icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true"
-                            [pTooltip]="verReceitas" tooltipPosition="bottom" />
+                            [pTooltip]="verReceitas" (click)="abrirModalEdicao(product)" tooltipPosition="bottom" />
                         <p-button class="btn_trash" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true"
-                            [pTooltip]="editarReceitas" tooltipPosition="bottom" />
+                            [pTooltip]="editarReceitas"   tooltipPosition="bottom" />
                     </td>
                 </tr>
             </ng-template>
@@ -61,23 +61,55 @@
         </p-table>
     </p-card>
 </main>
-<p-dialog header="Adicionar receita" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
-    <div class="">
-        <label for="username" class="label_modal">Nome da receita</label><br>
-        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira o nome de uma receita" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Descrição</label><br>
-        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira a descricao de uma receita" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Data de lançamento</label><br>
-        <input pInputText class="input_modal" autocomplete="off" type="date" />
-    </div>
-    <ng-template pTemplate="footer">
-        <div>
-            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
+<form [formGroup]="receitasForm">
+    <p-dialog header="{{ isEditMode ? 'Alterar receita' : 'Adicionar receita' }}" [modal]="true" [(visible)]="visible"
+        [style]="{ width: '80rem', height: '80rem'}">
+        <div class="campos_input_menores">
+            <div class="div_nome_receita">
+                <label class="label_modal">Nome da receita</label><br>
+                <input pInputText formControlName="nome" class="input_modal" autocomplete="off"
+                    placeholder="Insira o nome de uma receita" [style]="{ width: '22.94rem'}" />
+            </div>
+            <div class="div_categoria">
+                <label class="label_modal">Categoria</label><br>
+                <p-dropdown optionLabel="nome" formControlName="nome_categoria" [options]="categorias"
+                    placeholder="Selecione a categoria da receita" />
+            </div>
+            <div class="div_quantidade_pessoas">
+                <label class="label_modal">Quantidade de pessoas</label><br>
+                <input pInputText formControlName="num_porcao" class="input_modal" autocomplete="off" type="number"
+                    placeholder="Para quantas pessoas?" />
+            </div>
         </div>
-    </ng-template>
-</p-dialog>
+
+        <div class="campo_input_maiores">
+
+            <div class="descricao_receitas">
+                <label class="label_modal">Descrição da receita</label><br>
+                <textarea formControlName="descricao" rows="5" cols="30" pInputTextarea></textarea>
+            </div>
+            <div class="ingredientes">
+                <label class="label_modal">Ingredientes</label><br>
+                <div *ngFor="let ingrediente of ingredientes; let i = index" class="ingrediente-item">
+                    <input pInputText type="text" formControlName="ingredientes" [(ngModel)]="ingredientes[i].nome"
+                        class="input_modal" placeholder="Nome do ingrediente" />
+                    <input pInputText type="text" formControlName="ingredientes" [(ngModel)]="ingredientes[i].descricao"
+                        class="input_modal" placeholder="Descrição do ingrediente" />
+                    <p-button type="button" (click)="removerIngrediente(i)" icon="pi pi-trash" class="remove-btn" />
+                </div>
+                <button type="button" (click)="adicionarIngrediente()" class="add-btn">Adicionar Ingrediente</button>
+            </div>
+            <div class="modo_de_preparo">
+                <label class="label_modal">Modo de preparo</label><br>
+                <textarea formControlName="modo_preparo" rows="5" cols="30" pInputTextarea></textarea>
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+            <div>
+                <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+                <p-button label="{{ isEditMode ? 'Alterar' : 'Adicionar' }}" class="button_modal_save"
+                    (onClick)="isEditMode ? alterarReceita() : adicionarReceita()"></p-button>
+            </div>
+        </ng-template>
+    </p-dialog>
+</form>

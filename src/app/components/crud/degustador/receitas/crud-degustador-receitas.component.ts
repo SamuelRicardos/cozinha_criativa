@@ -16,13 +16,14 @@ import { MenuModule } from 'primeng/menu';
 import { AvatarModule } from 'primeng/avatar';
 import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { FormControl, FormGroup, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
 import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -75,7 +76,8 @@ export class CrudDegustadorReceitasComponent {
     private httpClient: HttpClient,
     private receitaService: ReceitaService,
     private messagemService: MessageService,
-    private tostr: ToastrService
+    private tostr: ToastrService,
+    private router: Router
   ) {
     this.receitasForm = new FormGroup({
       nome_receita: new FormControl('', [Validators.required, Validators.minLength(3)]),  // Corrigido para validação de nome
@@ -144,6 +146,7 @@ export class CrudDegustadorReceitasComponent {
           {
             label: 'Sair',
             icon: 'pi pi-sign-out',
+            command: () => this.sairDaConta(), // Chama a função logout ao clicar
           }
         ]
       },
@@ -177,7 +180,10 @@ export class CrudDegustadorReceitasComponent {
     this.visible = true;
   }
 
-  onUpload() {
-    this.messagemService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
+  sairDaConta(): void {
+    // Aqui você pode limpar qualquer dado armazenado na sessão
+    localStorage.clear();
+    sessionStorage.clear(); // Opcional: Remove todos os dados da sessão
+    this.router.navigate(['/login']); // Redireciona para a tela de login
   }
 }

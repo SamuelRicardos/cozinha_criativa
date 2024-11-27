@@ -22,6 +22,7 @@ import { MessageService } from 'primeng/api';
 import { EditorModule } from 'primeng/editor';
 import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crud-admin-receitas',
@@ -77,7 +78,8 @@ export class CrudDegustadorComentariosComponent {
     private appRef: ApplicationRef,
     private comentario: ReceitaService,
     private receitaService: ReceitaService,
-    private tostr: ToastrService
+    private tostr: ToastrService,
+    private router: Router,
   ) {
     this.receitasForm = new FormGroup({
       nome_receita: new FormControl('', [Validators.required, Validators.minLength(3)]),  // Corrigido para validação de nome
@@ -170,10 +172,18 @@ export class CrudDegustadorComentariosComponent {
           {
             label: 'Sair',
             icon: 'pi pi-sign-out',
+            command: () => this.sairDaConta(), // Chama a função logout ao clicar
           }
         ]
       },
     ];
+  }
+
+  sairDaConta(): void {
+    // Aqui você pode limpar qualquer dado armazenado na sessão
+    localStorage.clear();
+    sessionStorage.clear(); // Opcional: Remove todos os dados da sessão
+    this.router.navigate(['/login']); // Redireciona para a tela de login
   }
 
   showDialog() {
