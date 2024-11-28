@@ -176,6 +176,10 @@ export class CrudDegustadorReceitasComponent {
     });
   }
 
+  isActive(route: string): boolean {
+    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
+  }
+
   showDialog() {
     this.visible = true;
   }

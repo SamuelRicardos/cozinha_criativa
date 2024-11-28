@@ -95,13 +95,7 @@ export class CrudAdminReceitasComponent {
   ngOnInit() {
     this.getReceitas();
     this.configurarMenu();
-    // this.getCategorias();
-    this.categorias = [
-      {
-        'nome': 'carne'
-      }
-    ]
-
+    this.getCategorias();
   }
 
   ingredientes: {
@@ -129,7 +123,7 @@ export class CrudAdminReceitasComponent {
     this.receitaService.adicionarReceitas(
       receita.nome,
       receita.descricao,
-      receita.nome_categoria?.nome,
+      receita.nome_categoria?.categoria,
       receita.modo_preparo,
       receita.num_porcao,
       receita.ingredientes
@@ -160,7 +154,7 @@ export class CrudAdminReceitasComponent {
       id_receita: receita.id_receita,
       nome: receita.nome,
       descricao: receita.descricao,
-      nome_categoria: receita.nomeCategoria,
+      nome_categoria: receita.nome_categoria?.categoria,
       modo_preparo: receita.modo_preparo,
       num_porcao: receita.num_porcao,
       ingredientes: receita.ingredientes?.nome,
@@ -194,7 +188,7 @@ export class CrudAdminReceitasComponent {
         this.receitaSelecionada.id_receita, // ID da receita a ser alterada
         receita.nome,
         receita.descricao,
-        receita.nome_categoria?.nome, // Certifica-se de enviar apenas o nome da categoria
+        receita.nome_categoria?.categoria, // Certifica-se de enviar apenas o nome da categoria
         receita.modo_preparo,
         receita.num_porcao,
         receita.ingredientes
@@ -216,11 +210,13 @@ export class CrudAdminReceitasComponent {
         error: (error: any) => console.error('Erro ao alterar receita:', error)
       });
   }
-  // getCategorias(): any {
-  //   this.categoriaService.getCategoria().subscribe((categorias: any) => {
-  //     this.categorias = categorias;
-  //   })
-  // }
+
+  getCategorias(): any {
+    this.categoriaService.getCategoria().subscribe((categorias: any) => {
+      this.categorias = categorias;
+      console.log(this.categorias)
+    })
+  }
 
   getReceitas(): any {
     this.receitaService.getReceitas().subscribe((dataReceitas: any) => {

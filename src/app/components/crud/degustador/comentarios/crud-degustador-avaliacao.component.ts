@@ -179,6 +179,10 @@ export class CrudDegustadorComentariosComponent {
     ];
   }
 
+  isActive(route: string): boolean {
+    return this.router.url === route; // Verifica se a URL atual é igual à rota passada
+  }
+
   sairDaConta(): void {
     // Aqui você pode limpar qualquer dado armazenado na sessão
     localStorage.clear();

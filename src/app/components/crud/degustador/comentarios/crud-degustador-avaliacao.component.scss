@@ -5,47 +5,55 @@
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 
     .menu {
+        display: flex;
+        align-items: center;
 
         a {
             font-size: 20px;
             text-transform: capitalize;
             margin: 0px 20px;
-            transition: 0.2s;
+            transition: color 0.2s ease-in-out;
             color: #000000;
             text-decoration: none;
             position: relative;
-            list-style-type: none;
-
-            &.link_funcionarios:focus {
-                color: #FF7F11;
-            }
-
-            &.link_restaurantes:focus {
-                color: #FF7F11;
-            }
-
-            &.link_receitas:focus {
-                color: #FF7F11;
-            }
-
-            &.link_livros:focus {
-                color: #FF7F11;
-            }
 
             &.cargo_usuario {
-                margin-left: 800px;
+                margin-left: 800px; /* Alinha o cargo para a extrema direita */
                 font-size: 23px;
                 font-weight: 600;
             }
 
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: -5px; /* Linha logo abaixo do texto */
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background-color: #FF7F11;
+                transition: width 0.3s ease-in-out;
+            }
+
+            &:hover {
+                color: #FF7F11;
+            }
+
+            &:hover::after {
+                width: 100%; /* Linha cresce ao passar o mouse */
+            }
+
+            &.active-link {
+                color: #FF7F11; /* Cor para o link ativo */
+
+                &::after {
+                    width: 100%; /* Linha fixa para o link ativo */
+                }
+            }
         }
+    }
 
-        li {
-            list-style-type: none;
-        }
-
-
-
+    li {
+        list-style-type: none;
     }
 }
 

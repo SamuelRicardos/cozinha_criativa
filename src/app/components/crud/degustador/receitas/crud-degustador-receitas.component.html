@@ -1,19 +1,23 @@
 <header class="cabecalho">
     <img style="width: 120px; height: 100px;" src="../../../../../assets/logo (3).png">
-
     <nav class="menu">
         <ul>
             <li>
-                <a href="crud_degustador_receitas" class="link_receitas">Avaliações</a>
-                <a href="crud_degustador_comentarios" class="link_comentarios">Comentários</a>
+                <a href="crud_degustador_receitas" class="link_receitas"
+                    [ngClass]="{ 'active-link': isActive('/crud_degustador_receitas') }">
+                    Avaliação
+                </a>
+                <a href="crud_degustador_comentarios" class="link_receitas"
+                [ngClass]="{ 'active-link': isActive('/crud_degustador_comentarios') }">
+                Comentários
+            </a>
                 <a class="cargo_usuario">Degustador</a>
-                <p-button class="btn_bars" (onClick)="menu.toggle($event)" icon=" pi pi-angle-down" />
+                <p-button class="btn_bars" (onClick)="menu.toggle($event)" icon=" pi pi-angle-down"></p-button>
                 <p-menu #menu [model]="items" [popup]="true" styleClass="w-full md:w-15rem"></p-menu>
-                <p-avatar icon="pi pi-user" class="mr-2" shape="circle" styleClass="w-full" />
+                <p-avatar icon="pi pi-user" class="mr-2" shape="circle" styleClass="w-full"></p-avatar>
             </li>
         </ul>
     </nav>
-
 </header>
 
 <main>
