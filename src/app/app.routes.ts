@@ -39,11 +39,13 @@ export const routes: Routes = [
     },
     {
         path:"crud_admin_restaurantes",
-        component: CrudAdminRestaurantesComponent
+        component: CrudAdminRestaurantesComponent,
+        canActivate: [AuthGuard]
     },
     {
         path:"crud_admin_receitas",
-        component: CrudAdminReceitasComponent
+        component: CrudAdminReceitasComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "crud_admin_livros",

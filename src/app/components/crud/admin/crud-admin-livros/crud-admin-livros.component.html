@@ -54,7 +54,8 @@
                             [pTooltip]="visualizarLivro" tooltipPosition="bottom" (click)="criacaoPDF(product.id)" />
                         <!-- (click)="criacaoPDF(product.id)" -->
                         <p-button class="btn_pencil" icon="pi pi-download" [rounded]="true" [text]="true"
-                            [raised]="true" [pTooltip]="baixarLivro" tooltipPosition="bottom" (click)="baixarPDF(product.id)">
+                            [raised]="true" [pTooltip]="baixarLivro" tooltipPosition="bottom"
+                            (click)="baixarPDF(product.id)">
                         </p-button>
                         <!-- (click)="baixarPDF()" -->
                     </td>
@@ -73,25 +74,31 @@
         </p-table>
     </p-card>
 </main>
-<p-dialog header="Criar Livro" [(visible)]="visible" [style]="{ width: '50rem', height: '30rem'}">
-    <form [formGroup]="livrosForm" (ngSubmit)="adicionarLivro()">
-        <div class="field">
-            <label for="receitas">Receitas</label><br>
-            <p-multiSelect formControlName="receitas" [options]="receitas" placeholder="Selecione as receitas"
-                optionLabel="nome" display="chip" class="input_modal" [showClear]="true"
-                [style]="{'width': '97%'}"></p-multiSelect>
+<form [formGroup]="livrosForm" (ngSubmit)="adicionarLivro()">
+    <p-dialog header="Criar Livro" [(visible)]="visible" [style]="{ width: '50rem', height: '30rem'}">
+        <ng-template pTemplate="body">
+            <div class="corpo">
+            <div class="descricao_receitas">
+                <label for="receitas">Receitas</label><br>
+                <p-multiSelect formControlName="receitas" [options]="receitas" placeholder="Selecione as receitas"
+                    optionLabel="nome" display="chip" class="input_modal" [showClear]="true"
+                    [style]="{'width': '100%'}"></p-multiSelect><br>
+            </div>
+            <div class="descricao_receitas">
+                <label for="titulo">Título</label><br>
+                <input id="titulo" pInputText formControlName="titulo" class="input_modal" placeholder="Título do Livro" [style]="{'width': '100%'}" /><br>
+            </div>
+            <div class="modo_de_preparo">
+                <label for="isbn">ISBN</label><br>
+                <input id="isbn" pInputText formControlName="cod_isbn" class="input_modal" placeholder="Código ISBN" [style]="{'width': '100%'}" /><br>
+            </div>
         </div>
-        <div class="field">
-            <label for="titulo">Título</label>
-            <input id="titulo" pInputText formControlName="titulo" class="input_modal" placeholder="Título do Livro" />
-        </div>
-        <div class="field">
-            <label for="isbn">ISBN</label>
-            <input id="isbn" pInputText formControlName="cod_isbn" class="input_modal" placeholder="Código ISBN" />
-        </div>
-        <p-footer>
-            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-            <p-button label="Adicionar" class="button_modal_save" (onClick)="adicionarLivro()" />
-        </p-footer>
-    </form>
-</p-dialog>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <p-footer>
+                <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+                <p-button label="Adicionar" class="button_modal_save" (onClick)="adicionarLivro()" />
+            </p-footer>
+        </ng-template>
+    </p-dialog>
+</form>
