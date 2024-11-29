@@ -57,6 +57,13 @@
     }
 }
 
+.descricao {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 200px;
+}
+
 .header-content {
     display: flex;
     justify-content: space-between;

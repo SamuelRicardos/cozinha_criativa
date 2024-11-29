@@ -24,7 +24,7 @@
         <div class="header-content">
             <h2>Receitas</h2>
         </div>
-        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeReceitas', 'descricao', 'dtlancamento']"
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nome', 'nomeCategoria', 'descricao', 'data_inclusao']"
             [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="products"
             [tableStyle]="{ 'min-width': '60rem' }" [scrollable]="true" scrollHeight="370px">
             <ng-template pTemplate="header">
@@ -65,54 +65,34 @@
         </p-table>
     </p-card>
 </main>
-<p-dialog header="Adicionar receita" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
-    <div class="">
-        <label for="username" class="label_modal">Nome da receita</label><br>
-        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira o nome de uma receita" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Descrição</label><br>
-        <input pInputText class="input_modal" autocomplete="off" placeholder="Insira a descricao de uma receita" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Data de lançamento</label><br>
-        <input pInputText class="input_modal" autocomplete="off" type="date" />
-    </div>
-    <ng-template pTemplate="footer">
-        <div>
-            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
-        </div>
-    </ng-template>
-</p-dialog>
 <form [formGroup]="receitasForm">
     <p-dialog header="Detalhes da receita" [modal]="true" [(visible)]="visibleVerReceita" [style]="{ width: '50rem' }">
-        <div class="campo_detalhes">
+        <div class="corpo">
             <div class="detalhes_nome_receita">
                 <label class="label_modal">Nome da receita</label><br>
                 <input pInputText formControlName="nome_receita" [(ngModel)]="receitaSelecionada.nome"
-                    class="input_modal" autocomplete="off" [readonly]="true" />
+                    class="input_modal" autocomplete="off" [readonly]="true" [style]="{'width': '100%'}" />
             </div>
             <div class="detalhes_descricao">
                 <label class="label_modal">Descrição</label><br>
                 <input pInputText formControlName="descricao" [(ngModel)]="receitaSelecionada.descricao"
-                    class="input_modal" autocomplete="off" [readonly]="true" />
+                    class="input_modal" autocomplete="off" [readonly]="true" [style]="{'width': '100%'}" />
             </div>
             <div class="detalhes_ingredientes">
-                <label class="label_modal">Ingredientes</label>
+                <label class="label_modal">Ingredientes</label><br>
                 <input pInputText formControlName="ingredientes" [(ngModel)]="receitaSelecionada.ingredientes"
-                    class="input_modal" autocomplete="off" [readonly]="true" />
+                    class="input_modal" autocomplete="off" [readonly]="true" [style]="{'width': '100%'}" />
             </div>
             <div class="detalhes_modo_preparo">
-                <label class="label_modal">Modo de preparo</label>
+                <label class="label_modal">Modo de preparo</label><br>
                 <input pInputText formControlName="modo_de_preparo" [(ngModel)]="receitaSelecionada.modo_preparo"
-                    class="input_modal" autocomplete="off" [readonly]="true" />
+                    class="input_modal" autocomplete="off" [readonly]="true" [style]="{'width': '100%'}" />
             </div>
         </div>
         <ng-template pTemplate="footer">
             <div>
                 <br>
-                <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+                <p-button label="Voltar" class="button_modal_voltar" (onClick)="visibleVerReceita = false" />
             </div>
         </ng-template>
     </p-dialog>

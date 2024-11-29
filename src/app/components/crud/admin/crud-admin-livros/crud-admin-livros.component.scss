@@ -18,7 +18,8 @@
             position: relative;
 
             &.cargo_usuario {
-                margin-left: 550px; /* Alinha o cargo para a extrema direita */
+                margin-left: 550px;
+                /* Alinha o cargo para a extrema direita */
                 font-size: 23px;
                 font-weight: 600;
             }
@@ -26,7 +27,8 @@
             &::after {
                 content: "";
                 position: absolute;
-                bottom: -5px; /* Linha logo abaixo do texto */
+                bottom: -5px;
+                /* Linha logo abaixo do texto */
                 left: 0;
                 width: 0%;
                 height: 2px;
@@ -39,14 +41,17 @@
             }
 
             &:hover::after {
-                width: 100%; /* Linha cresce ao passar o mouse */
+                width: 100%;
+                /* Linha cresce ao passar o mouse */
             }
 
             &.active-link {
-                color: #FF7F11; /* Cor para o link ativo */
+                color: #FF7F11;
+                /* Cor para o link ativo */
 
                 &::after {
-                    width: 100%; /* Linha fixa para o link ativo */
+                    width: 100%;
+                    /* Linha fixa para o link ativo */
                 }
             }
         }
@@ -163,7 +168,7 @@ input_modal {
 }
 
 :host ::ng-deep .p-dialog-content {
-padding: 30px;
+    padding: 100px;
 }
 
 .corpo {

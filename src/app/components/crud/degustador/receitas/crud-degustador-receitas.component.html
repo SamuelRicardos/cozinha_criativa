@@ -25,7 +25,7 @@
         <div class="header-content">
             <h2>Receitas</h2>
         </div>
-        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeReceitas', 'descricao', 'dtlancamento']"
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nome', 'nomeCategoria', 'descricao', 'data_inclusao']"
             [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="products"
             [tableStyle]="{ 'min-width': '60rem' }" [scrollable]="true" scrollHeight="370px">
             <ng-template pTemplate="header">

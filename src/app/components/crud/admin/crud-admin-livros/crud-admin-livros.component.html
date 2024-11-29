@@ -33,7 +33,7 @@
             <h2>Livros</h2>
             <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar livro"></p-button>
         </div>
-        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeLivro', 'autorLivro', 'isbn']" [paginator]="true"
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['titulo', 'nomeAutor', 'cod_isbn']" [paginator]="true"
             [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="livro" [tableStyle]="{ 'min-width': '55rem' }"
             [scrollable]="true" scrollHeight="370px">
             <ng-template pTemplate="header">
@@ -75,7 +75,7 @@
     </p-card>
 </main>
 <form [formGroup]="livrosForm" (ngSubmit)="adicionarLivro()">
-    <p-dialog header="Criar Livro" [(visible)]="visible" [style]="{ width: '50rem', height: '30rem'}">
+    <p-dialog header="Criar Livro" [(visible)]="visible" [style]="{ width: '50rem', height: '80%'}">
         <ng-template pTemplate="body">
             <div class="corpo">
             <div class="descricao_receitas">

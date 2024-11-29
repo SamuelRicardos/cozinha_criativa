@@ -3,27 +3,19 @@
     <nav class="menu">
         <ul>
             <li>
-                <a 
-                    href="crud_admin_funcionarios" 
-                    class="link_funcionarios" 
+                <a href="crud_admin_funcionarios" class="link_funcionarios"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_funcionarios') }">
                     Funcionários
                 </a>
-                <a 
-                    href="crud_admin_restaurantes" 
-                    class="link_restaurantes" 
+                <a href="crud_admin_restaurantes" class="link_restaurantes"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_restaurantes') }">
                     Restaurantes
                 </a>
-                <a 
-                    href="crud_admin_receitas" 
-                    class="link_receitas" 
+                <a href="crud_admin_receitas" class="link_receitas"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_receitas') }">
                     Receitas
                 </a>
-                <a 
-                    href="crud_admin_livros" 
-                    class="link_livros" 
+                <a href="crud_admin_livros" class="link_livros"
                     [ngClass]="{ 'active-link': isActive('/crud_admin_livros') }">
                     Livros
                 </a>
@@ -34,155 +26,105 @@
             </li>
         </ul>
     </nav>
-  </header>
+</header>
 <main>
     <p-card>
         <div class="header-content">
             <h2>Restaurantes</h2>
             <p-button class="btn_restaurante" label="Adicionar restaurante" (onClick)="showDialog()"></p-button>
         </div>
-    <p-table
-    #dt2
-    dataKey="id"
-    [globalFilterFields]="['nomeRestaurante', 'estadoRestaurante', 'dtadmissao']" 
-    [paginator]="true" 
-    [rows]="5" 
-    [rowsPerPageOptions]="[5,10,20]" 
-    [value]="products" 
-    [tableStyle]="{ 'min-width': '60rem' }"
-    [scrollable]="true"
-    scrollHeight="370px"
-    >
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Nome</th>
-                <th>CNPJ</th>
-                <th>
-                    Estado
-                    <p-columnFilter 
-                    field="estados"
-                    matchMode="in" 
-                    display="menu" 
-                    optionLabel="label"
-                    optionValue="value"
-                    [showMatchModes]="false" 
-                    [showOperator]="false" 
-                    [showAddButton]="false"
-                    [showApplyButton]="true"
-                    [showClearButton]="false"
-                    
-                    >
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-multiSelect
-                            [(ngModel)]="valoresSelecionados" 
-                            [options]="products"
-                            [filter]="true"
-                            [showToggleAll]="false"
-                            placeholder="Selecionar" 
-                            (onChange)="filtroRest($event.value)"
-                            optionLabel="estadoRestaurante">
-                            
-                                <ng-template let-product pTemplate="item">
-                                    <span class="ml-1 mt-1">{{ product.estadoRestaurante }}</span>
-                                </ng-template>
-                                
-                            </p-multiSelect>
-                        </ng-template>
-                        
-                    </p-columnFilter>
-                </th>
-                <th>Endereço</th>
-                <th>Editar/Deletar</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-product>
-            <tr>
-                <td>{{ product.nome }}</td>
-                <td>{{ product.cnpj }}</td>
-                <td>{{ product.estado}}</td>
-                <td>{{ product.endereco}}</td>
-                <td>
-                    <p-button 
-                    class="btn_pencil" 
-                    icon="pi pi-pencil" 
-                    [rounded]="true" 
-                    [text]="true" 
-                    [raised]="true"
-                    [pTooltip]="editarRestaurante"
-                    (onClick)="abrirModalEdicao(product)"
-                    tooltipPosition="bottom"
-                     />
-                    <p-button 
-                    class="btn_trash"  
-                    icon="pi pi-trash" 
-                    [rounded]="true" 
-                    [text]="true" 
-                    [raised]="true"
-                    [pTooltip]="excluirRestaurante"
-                    (onClick)="deletarRestaurante(product.id)"
-                    tooltipPosition="bottom"
-                    />
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="caption">
-            <div class="flex">
-                <p-iconField iconPosition="left" class="ml-auto">
-                    <p-inputIcon>
-                        <i class="pi pi-search"></i>
-                    </p-inputIcon>
-                    <input 
-                        pInputText 
-                        type="text" 
-                        placeholder="Pesquisar"
-                        (input)="filtroRestaurantes($event)"
-                         />
-                </p-iconField>
-            </div>
-        </ng-template>    
-    </p-table>
-</p-card>
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['nome', 'cnpj', 'estado', 'endereco']"
+            [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="products"
+            [tableStyle]="{ 'min-width': '60rem' }" [scrollable]="true" scrollHeight="370px">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nome</th>
+                    <th>CNPJ</th>
+                    <th>
+                        Estado
+                        <p-columnFilter field="estados" matchMode="in" display="menu" optionLabel="label"
+                            optionValue="value" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false"
+                            [showApplyButton]="true" [showClearButton]="false">
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [(ngModel)]="valoresSelecionados" [options]="products" [filter]="true"
+                                    [showToggleAll]="false" placeholder="Selecionar"
+                                    (onChange)="filtroRest($event.value)" optionLabel="estadoRestaurante">
+
+                                    <ng-template let-product pTemplate="item">
+                                        <span class="ml-1 mt-1">{{ product.estadoRestaurante }}</span>
+                                    </ng-template>
+
+                                </p-multiSelect>
+                            </ng-template>
+
+                        </p-columnFilter>
+                    </th>
+                    <th>Endereço</th>
+                    <th>Editar/Deletar</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>{{ product.nome }}</td>
+                    <td>{{ product.cnpj }}</td>
+                    <td>{{ product.estado}}</td>
+                    <td>{{ product.endereco}}</td>
+                    <td>
+                        <p-button class="btn_pencil" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true"
+                            [pTooltip]="editarRestaurante" (onClick)="abrirModalEdicao(product)"
+                            tooltipPosition="bottom" />
+                        <p-button class="btn_trash" icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true"
+                            [pTooltip]="excluirRestaurante" (onClick)="deletarRestaurante(product.id)"
+                            tooltipPosition="bottom" />
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <p-iconField iconPosition="left" class="ml-auto">
+                        <p-inputIcon>
+                            <i class="pi pi-search"></i>
+                        </p-inputIcon>
+                        <input pInputText type="text" placeholder="Pesquisar" (input)="filtroRestaurantes($event)" />
+                    </p-iconField>
+                </div>
+            </ng-template>
+        </p-table>
+    </p-card>
 </main>
 
 <form [formGroup]="restaurantesForm">
-    <p-dialog
-      header="{{ isEditMode ? 'Alterar restaurante' : 'Adicionar restaurante' }}"
-      [modal]="true"
-      [(visible)]="visible"
-      [style]="{ width: '20rem' }"
-    >
-      <div class="">
-        <label for="nome" class="label_modal">Nome</label><br>
-        <input
-          pInputText
-          class="input_modal"
-          formControlName="nome"
-          [placeholder]="isEditMode ? 'Alterar nome do restaurante' : 'Inserir nome do restaurante'"
-          autocomplete="off"
-        />
-      </div>
-      <div class="">
-        <label for="cnpj" class="label_modal">CNPJ</label><br>
-        <input pInputText class="input_modal" formControlName="cnpj" autocomplete="off" />
-      </div>
-      <div class="">
-        <label for="endereco" class="label_modal">Endereço</label><br>
-        <input pInputText class="input_modal" formControlName="endereco" autocomplete="off" />
-      </div>
-      <div class="">
-        <label for="estado" class="label_modal">Estados</label><br>
-        <input pInputText class="input_modal" formControlName="estado" autocomplete="off" />
-      </div>
-  
-      <ng-template pTemplate="footer">
-        <div>
-          <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-          <p-button
-            label="{{ isEditMode ? 'Alterar' : 'Adicionar' }}"
-            class="button_modal_save"
-            (onClick)="isEditMode ? alterarRestaurante() : adicionarRestaurante()"
-          />
+    <p-dialog header="{{ isEditMode ? 'Alterar restaurante' : 'Adicionar restaurante' }}" [modal]="true"
+        [(visible)]="visible" [style]="{ width: '40rem' }">
+        <div class="corpo">
+            <div class="">
+                <label for="nome" class="label_modal">Nome</label><br>
+                <input pInputText class="input_modal" formControlName="nome"
+                    [placeholder]="isEditMode ? 'Alterar nome do restaurante' : 'Inserir nome do restaurante'"
+                    autocomplete="off" [style]="{'width': '100%'}" />
+            </div>
+            <div class="">
+                <label for="cnpj" class="label_modal">CNPJ</label><br>
+                <input pInputText class="input_modal" formControlName="cnpj" autocomplete="off"
+                    placeholder="Insira um CPNJ" [style]="{'width': '100%'}" />
+            </div>
+            <div class="">
+                <label for="endereco" class="label_modal">Endereço</label><br>
+                <input pInputText class="input_modal" formControlName="endereco" autocomplete="off"
+                    placeholder="Insira um endereco" [style]="{'width': '100%'}" />
+            </div>
+            <div class="">
+                <label for="estado" class="label_modal">Estado</label><br>
+                <input pInputText class="input_modal" formControlName="estado" autocomplete="off"
+                    placeholder="Insira um estado" [style]="{'width': '100%'}" />
+            </div>
         </div>
-      </ng-template>
+        <ng-template pTemplate="footer">
+            <div>
+                <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+                <p-button label="{{ isEditMode ? 'Alterar' : 'Adicionar' }}" class="button_modal_save"
+                    (onClick)="isEditMode ? alterarRestaurante() : adicionarRestaurante()" />
+            </div>
+        </ng-template>
     </p-dialog>
-  </form>
+</form>

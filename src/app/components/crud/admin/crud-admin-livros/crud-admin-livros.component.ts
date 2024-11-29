@@ -20,6 +20,7 @@ import { jsPDF } from "jspdf";
 import { ReceitaService } from '../../../../services/receitas.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-crud-admin-livros',
@@ -71,7 +72,8 @@ export class CrudAdminLivrosComponent {
     private livroService: LivroService,
     public messagemService: MessageService,
     private receitaService: ReceitaService,
-    private router: Router
+    private router: Router,
+    private tostr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -114,7 +116,7 @@ export class CrudAdminLivrosComponent {
 
   adicionarLivro(): void {
     if (this.livrosForm.invalid) {
-      this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Preencha todos os campos obrigatórios!' });
+      this.tostr.warning('Preencha todos os campos obrigatórios!');
       return;
     }
 
@@ -123,7 +125,7 @@ export class CrudAdminLivrosComponent {
 
     // Verifique se o nome do usuário está disponível
     if (!nomeAutor) {
-      this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Nome do autor não encontrado!' });
+      this.tostr.warning('Nome do autor não encontrado!');
       return;
     }
 
@@ -135,18 +137,16 @@ export class CrudAdminLivrosComponent {
       autorLivro: nomeAutor, // Atribuindo o nome do autor
     };
 
-    console.log(livro);
-
     // Enviando os dados para o backend
     this.livroService.criarLivro(livro).subscribe({
       next: () => {
-        this.messagemService.add({ severity: 'success', summary: 'Sucesso', detail: 'Livro cadastrado com sucesso!' });
+        this.tostr.success('Livro cadastrado com sucesso!');
         this.visible = false; // Fecha o modal
         this.getLivros(); // Atualiza a lista de livros
         this.livrosForm.reset(); // Limpa o formulário
       },
       error: () => {
-        this.messagemService.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível cadastrar o livro. Tente novamente.' });
+        this.tostr.error('Não foi possível cadastrar o livro. Tente novamente.');
       },
     });
   }

@@ -120,38 +120,90 @@ margin-top: 50px;
     padding: 23px;
 }
 
-.input_modal {
+input_modal {
     width: 97%;
-    margin: 10px 0px;
+    margin: 4px 0px 0px 0px;
 }
-.label_modal{
-    color: white;
+
+.label_modal {
+    color: #FF7F11;
 }
+
 :host ::ng-deep .button_modal_voltar .p-button {
-color: white;
-background: #CC5E00;
-border: none;
+    margin-top: 1.2rem;
+    color: #FF7F11;
+    background: none;
+    border: solid 1px #FF7F11;
 }
+
 :host ::ng-deep .button_modal_save .p-button {
     color: white;
-    background: #CC5E00;
+    background: #FF7F11;
     border: none;
 }
+
+.campos_input_menores {
+    display: flex;
+    margin-top: 0.5rem;
+    gap: 20px
+}
+
+.campo_input_maiores {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+    gap: 20px;
+}
+
+:host ::ng-deep .p-dropdown {
+    margin: 2px 0px;
+}
+
 :host ::ng-deep .p-dialog-content {
-    background: #FF7F11;
+    padding: 100px;
 }
+
+.corpo {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
 :host ::ng-deep .p-dialog-footer {
-    background: #FF7F11;
+    border-top: 0.1px solid #d0cece;
 }
+
 :host ::ng-deep .p-dialog-header {
-    background: #FF7F11;
-    color: white;
+    color: #FF7F11;
+    border-bottom: 0.1px solid #d0cece;
 }
+
 :host ::ng-deep .p-dialog-header .p-dialog-header-icon {
-    color: white;
-    background-color: #FF7F11;
+    color: #FF7F11;
 }
-:host ::ng-deep .input_modal:focus{
-    box-shadow: 0 0 0 0.2rem rgba(249, 165, 75, 0.5);  /* foco laranja mais claro */
-    outline: none; /* remove o outline padrão do foco */
+
+:host ::ng-deep .input_modal:focus {
+    box-shadow: 0 0 0 0.2rem rgba(249, 165, 75, 0.5);
+    /* foco laranja mais claro */
+    outline: none;
+    /* remove o outline padrão do foco */
+}
+
+div_nome_receita {
+    padding: 0;
+    margin: 0;
+}
+
+:host ::ng-deep .p-fileupload-choose {
+    background: #FF7F11;
+    border: none;
+}
+
+:host ::ng-deep .p-inputtextarea {
+    width: 100%;
+}
+
+.label_modal_maior {
+    margin-top: 100px;
 }

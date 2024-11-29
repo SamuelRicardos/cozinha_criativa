@@ -273,10 +273,6 @@ export class CrudAdminReceitasComponent {
     this.isEditMode = false;
   }
 
-  onUpload() {
-    this.messagemService.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode' });
-  }
-
   resetarFormulario() {
     this.receitasForm.reset(); // Reseta todos os campos do formulário
     this.receitaSelecionada = null;

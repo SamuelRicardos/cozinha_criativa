@@ -25,8 +25,8 @@
             <h2>Livros</h2>
             <p-button class="btn_receita" (onClick)="showDialog()" label="Adicionar livro"></p-button>
         </div>
-        <p-table #dt2 dataKey="id" [globalFilterFields]="['nomeLivro', 'autorLivro', 'isbn']" [paginator]="true"
-            [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="products" [tableStyle]="{ 'min-width': '55rem' }"
+        <p-table #dt2 dataKey="id" [globalFilterFields]="['titulo', 'nomeAutor', 'cod_isbn']" [paginator]="true"
+            [rows]="5" [rowsPerPageOptions]="[5,10,20]" [value]="livro" [tableStyle]="{ 'min-width': '55rem' }"
             [scrollable]="true" scrollHeight="370px">
             <ng-template pTemplate="header">
                 <tr>
@@ -43,9 +43,9 @@
                     <td>{{ product.cod_isbn }}</td>
                     <td>
                         <p-button class="btn_pencil" icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true"
-                            [pTooltip]="visualizarLivro" (click)="criacaoPDF()" tooltipPosition="bottom" />
+                            [pTooltip]="visualizarLivro" (click)="criacaoPDF(product.id)" tooltipPosition="bottom" />
                         <p-button class="btn_pencil" icon="pi pi-download" [rounded]="true" [text]="true"
-                            [raised]="true" (click)="baixarPDF()" [pTooltip]="baixarLivro" tooltipPosition="bottom" />
+                            [raised]="true" (click)="baixarPDF(product.id)" [pTooltip]="baixarLivro" tooltipPosition="bottom" />
                     </td>
                 </tr>
             </ng-template>
@@ -62,23 +62,37 @@
         </p-table>
     </p-card>
 </main>
-<p-dialog header="Cadastrar livro" [modal]="true" [(visible)]="visible" [style]="{ width: '20rem' }">
-    <div class="">
-        <label for="username" class="label_modal">Nome do livro</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirLivro" autocomplete="off" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">Autor</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirAutor" autocomplete="off" />
-    </div>
-    <div class="">
-        <label for="email" class="label_modal">ISBN</label><br>
-        <input pInputText class="input_modal" [placeholder]="inserirISBN" autocomplete="off" />
-    </div>
-    <ng-template pTemplate="footer">
-        <div>
-            <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
-            <p-button label="Adicionar" class="button_modal_save" (onClick)="visible = false" />
-        </div>
-    </ng-template>
-</p-dialog>
+<form [formGroup]="livrosForm" (ngSubmit)="adicionarLivro()">
+    <p-dialog header="Criar Livro" [(visible)]="visible" [style]="{ width: '50rem', height: '80%'}">
+        <ng-template pTemplate="body">
+            <div class="corpo">
+                <div class="descricao_receitas">
+                    <label for="receitas">Receitas</label><br>
+                    <p-multiSelect formControlName="receitas" [options]="receitas" placeholder="Selecione as receitas"
+                        optionLabel="nome" display="chip" class="input_modal" [showClear]="true"
+                        [style]="{'width': '100%'}"></p-multiSelect><br>
+                </div>
+                <div class="descricao_receitas">
+                    <label for="titulo">Título</label><br>
+                    <input id="titulo" pInputText formControlName="titulo" class="input_modal" placeholder="Título do Livro" [style]="{'width': '100%'}" /><br>
+                </div>
+                <div class="modo_de_preparo">
+                    <label for="isbn">ISBN</label><br>
+                    <input id="isbn" pInputText formControlName="cod_isbn" class="input_modal" placeholder="Código ISBN" [style]="{'width': '100%'}" /><br>
+                </div>
+            </div>
+        </ng-template>
+        
+        <!-- Mensagem de erro caso o formulário esteja inválido -->
+        <ng-template pTemplate="footer">
+                        <!-- Exibe a mensagem caso o formulário seja inválido -->
+                        <div *ngIf="livrosForm.invalid && livrosForm.touched" class="error-message">
+                            <p>Por favor, preencha todos os campos corretamente.</p>
+                        </div>
+            <p-footer>
+                <p-button label="Voltar" class="button_modal_voltar" (onClick)="visible = false" />
+                <p-button label="Adicionar" class="button_modal_save" (onClick)="adicionarLivro()" [disabled]="livrosForm.invalid" />
+            </p-footer>
+        </ng-template>
+    </p-dialog>
+</form>

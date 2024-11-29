@@ -207,5 +207,12 @@ export class CrudAdminRestaurantesComponent implements OnInit {
 
   showDialog() {
     this.visible = true;
+    this.resetarFormulario()
+    this.isEditMode = false;
+  }
+
+  resetarFormulario() {
+    this.restaurantesForm.reset(); // Reseta todos os campos do formulário
+    this.restauranteSelecionado = null;
   }
 }
