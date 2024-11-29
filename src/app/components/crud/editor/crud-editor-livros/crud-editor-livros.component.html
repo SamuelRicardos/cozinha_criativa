@@ -38,16 +38,14 @@
             </ng-template>
             <ng-template pTemplate="body" let-product>
                 <tr>
-                    <td>{{ product.nomeLivro }}</td>
-                    <td>{{ product.autorLivro }}</td>
-                    <td>{{ product.isbn }}</td>
+                    <td>{{ product.titulo }}</td>
+                    <td>{{ nomeAutor }}</td>
+                    <td>{{ product.cod_isbn }}</td>
                     <td>
                         <p-button class="btn_pencil" icon="pi pi-eye" [rounded]="true" [text]="true" [raised]="true"
                             [pTooltip]="visualizarLivro" (click)="criacaoPDF()" tooltipPosition="bottom" />
                         <p-button class="btn_pencil" icon="pi pi-download" [rounded]="true" [text]="true"
                             [raised]="true" (click)="baixarPDF()" [pTooltip]="baixarLivro" tooltipPosition="bottom" />
-                        <p-button class="btn_trash" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true"
-                            [pTooltip]="editarLivro" tooltipPosition="bottom" />
                     </td>
                 </tr>
             </ng-template>

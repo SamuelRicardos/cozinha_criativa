@@ -56,6 +56,7 @@ export class CrudEditorLivrosComponent {
   @ViewChild('dt2') dt2!: Table;
   visible: boolean = false;
 items: any;
+  nomeAutor: any;
 
   constructor(
     private livroService: LivroService,
@@ -67,6 +68,7 @@ items: any;
   ngOnInit() {
     this.getLivros();
     this.configurarMenu();
+    this.nomeAutor = sessionStorage.getItem('username') || 'Nome não encontrado';
   }
 
   isActive(route: string): boolean {
