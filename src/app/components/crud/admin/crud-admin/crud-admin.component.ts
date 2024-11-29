@@ -214,7 +214,7 @@ export class CrudAdminComponent implements OnInit {
               })
           )
           .subscribe(() => {
-              this.tostr.success('Funcionário excluído com sucesso.');
+              this.tostr.success('Funcionário demitido com sucesso.');
               this.carregarFuncionarios(); // Atualiza a lista de funcionários
           });
   }

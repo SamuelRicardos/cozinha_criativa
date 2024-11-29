@@ -54,22 +54,27 @@ export const routes: Routes = [
     },
     {
         path: "crud_degustador_receitas",
-        component: CrudDegustadorReceitasComponent
+        component: CrudDegustadorReceitasComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "crud_degustador_comentarios",
-        component: CrudDegustadorComentariosComponent
+        component: CrudDegustadorComentariosComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "crud_editor_livros",
-        component: CrudEditorLivrosComponent
+        component: CrudEditorLivrosComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "crud_editor_receitas",
-        component: CrudEditorReceitasComponent
+        component: CrudEditorReceitasComponent,
+        canActivate: [AuthGuard]
     },
     {
         path: "crud_cozinheiro_receitas",
-        component: CrudCozinheiroReceitasComponent
+        component: CrudCozinheiroReceitasComponent,
+        canActivate: [AuthGuard]
     }
 ];
