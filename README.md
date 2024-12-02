@@ -20,7 +20,10 @@ Antes de instalar o Angular, é necessário instalar o **Node.js**, pois ele for
 
 - Link para informações e documentação: [Node.js Blog Oficial](https://nodejs.org/pt/blog/release/v20.17.0)  
 - Link direto para download: [Node.js v20.17.0 (Windows x64)](https://nodejs.org/dist/v20.17.0/node-v20.17.0-x64.msi)  
--Se você for no terminal e executar o comando node -v e aparecer a versão significa que ele foi instalado corretamente.
+- Após a instalação, abra o terminal e execute o comando:  
+```bash
+node -v
+```
 
 ### 2. Instalar o Angular
 
