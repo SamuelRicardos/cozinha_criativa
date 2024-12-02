@@ -25,11 +25,29 @@ Antes de instalar o Angular, é necessário instalar o **Node.js**, pois ele for
 node -v
 ```
 
-### 2. Instalar o Angular
+### 2. Instalar o Angular  
 
-- Logo após de baixar o node é necessário baixar o angular pelo terminal do seu computador, coloque: npm install -g @angular/cli@17.3.4
-- Se você for no terminal e executar o comando ng --version e aparecer a versão do Angular significa que ela foi baixada corretamente.
-- Depois de abrir o projeto no VSCODE, execute no terminal do VScode, o comando npm install para que sejam instaladas as dependências do projeto.
+Após instalar o **Node.js**, siga os passos abaixo para instalar o **Angular CLI**:  
+
+1. **Instalar o Angular CLI:**  
+   - No terminal, execute o comando:  
+     ```bash
+     npm install -g @angular/cli@17.3.4
+     ```  
+
+2. **Verificar a instalação do Angular CLI:**  
+   - Para confirmar a instalação, execute:  
+     ```bash
+     ng --version
+     ```  
+   - Se a versão do Angular for exibida no terminal, o Angular CLI foi instalado com sucesso.  
+
+3. **Instalar as dependências do projeto:**  
+   - Após abrir o projeto no **VS Code**, instale as dependências necessárias executando:  
+     ```bash
+     npm install
+     ```  
+   - Esse comando irá baixar todas as dependências listadas no arquivo `package.json` e preparará o projeto para ser executado.
 
 ---
 
