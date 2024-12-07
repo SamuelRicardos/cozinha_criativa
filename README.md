@@ -38,7 +38,7 @@ Após instalar o **Node.js**, siga os passos abaixo para instalar o **Angular CL
 2. **Verificar a instalação do Angular CLI:**  
    - Para confirmar a instalação, execute:  
      ```bash
-     ng --version
+     ng version
      ```  
    - Se a versão do Angular for exibida no terminal, o Angular CLI foi instalado com sucesso.  
 
