@@ -17,6 +17,11 @@ import { AuthGuard } from './services/auth-guard.service';
 
 export const routes: Routes = [
     {
+        path: "",
+        redirectTo: "login",
+        pathMatch: "full" // Garante que a rota vazia seja considerada
+    },
+    {
         path: "login",
         component: LoginComponent
     },
